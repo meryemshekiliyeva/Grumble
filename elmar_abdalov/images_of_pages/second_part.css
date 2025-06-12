@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f8f9fa;
+    line-height: 1.6;
+}
+
+.complaints-section {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+}
+
+.text-content {
+    flex: 1;
+    max-width: 400px;
+}
+
+.main-heading {
+    font-size: 48px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+    margin-bottom: 24px;
+}
+
+.sub-heading {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 16px;
+    color: #718096;
+    line-height: 1.6;
+}
+
+.companies-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 32px;
+    max-width: 700px;
+}
+
+.company-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.company-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+}
+
+.company-icon:hover {
+    transform: translateY(-2px);
+}
+
+.kapital-bank {
+    background-color: #5865F2;
+}
+
+.azercell {
+    background-color: #00A86B;
+}
+
+.trendyol {
+    background-color: #FF6B35;
+}
+
+.azal {
+    background-color: #EF4444;
+}
+
+.atasigorta {
+    background-color: #8B5CF6;
+}
+
+.azerenerji {
+    background-color: #06B6D4;
+}
+
+.bolt-food {
+    background-color: #EC4899;
+}
+
+.azerpost {
+    background-color: #8BC34A;
+}
+
+.kontakt-home {
+    background-color: #6B7280;
+}
+
+.bravo {
+    background-color: #FF5722;
+}
+
+.company-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.company-category {
+    font-size: 14px;
+    color: #9CA3AF;
+    font-weight: 400;
+}
+
+@media (max-width: 1024px) {
+    .content-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .companies-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        max-width: none;
+    }
+    
+    .main-heading {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .companies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 24px;
+    }
+    
+    .company-icon {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .main-heading {
+        font-size: 28px;
+    }
+    
+    .sub-heading {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .companies-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(10, 1fr);
+    }
+    
+    .complaints-section {
+        padding: 40px 0;
+    }
+    
+    .container {
+        padding: 0 16px;
+    }
+}
