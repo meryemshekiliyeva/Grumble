@@ -1,2 +1,0 @@
-# Grumble
-Final Group Project
