@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grumble - Səsinizi Eşitdirin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <nav class="navbar">
+                <!-- Logo -->
+                <a href="#" class="logo">
+                    
+                    <span class="logo-text">Grumble</span>
+                </a>
+
+                <!-- Navigation Menu -->
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a href="#complaints">Rəylər</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#companies">Şirkətlər</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="#about">Haqqımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#faq">FAQ</a>
+                    </li>
+                </ul>
+
+                <!-- Mobile Toggle -->
+                <div class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <!-- CTA Button -->
+                <button class="cta-button" id="ctaButton">
+                    + Rəy bildir
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                Problemlərinizi həll edin, səsinizi eşitdirin
+            </h1>
+            <p class="hero-subtitle">
+                Şirkətlərlə bağlı yaşadığınız problemləri paylaşın və həllini tapın. 
+                Milyonlarla istifadəçi təcrübəsindən faydalanın və daha yaxşı xidmət alın.
+            </p>
+            
+            <!-- Email Form -->
+            <form class="email-form" id="emailForm">
+                
+             <button type="submit" class="hero-button">
+            
+            <p class="form-note">
+                + Rəy yaz
+            </p>
+        </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section class="companies-section" id="companies">
+        <div class="companies-container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    Ən çox şikayət edilən şirkətlər
+                </h2>
+                <div class="section-description">
+                    <h3 class="section-subtitle">
+                        Şəffaflıq və hesabatlılıq üçün.
+                    </h3>
+                    <p class="section-text">
+                        İstifadəçilərimizin ən çox şikayət etdiyi şirkətləri izləyin və 
+                        öz təcrübənizi paylaşın. Birlikdə daha yaxşı xidmət tələb edək.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Companies Grid -->
+            <div class="companies-grid">
+                <!-- Row 1 -->
+                <div class="company-item" data-company="bank">
+                    <div class="company-icon bank">🏦</div>
+                    <div class="company-name">Kapital Bank</div>
+                    <div class="company-category">Bank Xidmətləri</div>
+                </div>
+
+                <div class="company-item" data-company="telecom">
+                    <div class="company-icon telecom">📱</div>
+                    <div class="company-name">Azercell</div>
+                    <div class="company-category">Telekom</div>
+                </div>
+
+                <div class="company-item" data-company="ecommerce">
+                    <div class="company-icon ecommerce">🛒</div>
+                    <div class="company-name">Trendyol</div>
+                    <div class="company-category">E-ticarət</div>
+                </div>
+
+                <div class="company-item" data-company="airline">
+                    <div class="company-icon airline">✈️</div>
+                    <div class="company-name">AZAL</div>
+                    <div class="company-category">Havayolu</div>
+                </div>
+
+                <div class="company-item" data-company="insurance">
+                    <div class="company-icon insurance">🛡️</div>
+                    <div class="company-name">AtaSığorta</div>
+                    <div class="company-category">Sığorta</div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="company-item" data-company="utility">
+                    <div class="company-icon utility">⚡</div>
+                    <div class="company-name">Azerenerji</div>
+                    <div class="company-category">Kommunal</div>
+                </div>
+
+                <div class="company-item" data-company="food">
+                    <div class="company-icon food">🍕</div>
+                    <div class="company-name">Bolt Food</div>
+                    <div class="company-category">Yemək Çatdırılması</div>
+                </div>
+
+                <div class="company-item" data-company="delivery">
+                    <div class="company-icon delivery">📦</div>
+                    <div class="company-name">Azerpost</div>
+                    <div class="company-category">Kuryer Xidməti</div>
+                </div>
+
+                <div class="company-item" data-company="tech">
+                    <div class="company-icon tech">💻</div>
+                    <div class="company-name">Kontakt Home</div>
+                    <div class="company-category">Texnika Mağazası</div>
+                </div>
+
+                <div class="company-item" data-company="retail">
+                    <div class="company-icon retail">🏪</div>
+                    <div class="company-name">Bravo</div>
+                    <div class="company-category">Supermarket</div>
+                </div>
+            </div>
+
+            <!-- Section Footer -->
+            <div class="section-footer">
+                <span class="popular-badge">POPULYAR</span>
+                <span class="footer-text">
+                    <span class="highlight">BÜTÜN ŞİRKƏTLƏRDƏ</span> şikayət bildirmək imkanı
+                    <span class="arrow">→</span>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complaints Carousel Section -->
+    <section class="complaints-section" id="complaints">
+        <div class="section-content">
+            <!-- Header Section -->
+            <div class="complaints-header">
+                <div class="header-content">
+                    <div class="avatar-large">📢</div>
+                    <div class="header-text">
+                        <h3>Həll edilmiş <span class="highlight-number">15,000+</span> şikayət</h3>
+                        <p>İstifadəçilərimiz platformamızda problemlərini paylaşır və həll tapırlar.</p>
+                    </div>
+                </div>
+
+                <div class="stats-item">
+                    <div class="stats-number">500+</div>
+                    <div class="stats-label">Günlük şikayət</div>
+                </div>
+
+                <div class="rating-item">
+                    <div class="rating-number">4.8</div>
+                    <div class="rating-stars">★★★★★</div>
+                    <div class="rating-label">1,250 qiymət</div>
+                </div>
+            </div>
+
+            <!-- Carousel Container -->
+            <div class="carousel-container">
+                <button class="carousel-nav prev" id="prevBtn">‹</button>
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Complaint Card 1 -->
+                    <div class="complaint-card">
+                        <div class="card-header">
+                            <div class="user-avatar">AS</div>
+                            <div class="user-info">
+                                <h4>Anar Səfərov</h4>
+                                <div class="user-company">Kapital Bank</div>
+                            </div>
+                        </div>
+                        <p class="complaint-text">
+                            Bank kartımdan icazəsiz pul çıxarılıb. Müraciət etdikdən sonra 3 gün ərzində problemim həll edildi və pulun geri qaytarıldı.
+                        </p>
+                        <div class="card-footer">
+                            <div class="complaint-status status-resolved">
+                                <div class="status-dot"></div>
+                                Həll edilib
+                            </div>
+                            <div class="complaint-date">15 DEC</div>
+                        </div>
+                    </div>
+
+                    <!-- Complaint Card 2 -->
+                    <div class="complaint-card">
+                        <div class="card-header">
+                            <div class="user-avatar">LM</div>
+                            <div class="user-info">
+                                <h4>Leyla Məmmədova</h4>
+                                <div class="user-company">Trendyol</div>
+                            </div>
+                        </div>
+                        <p class="complaint-text">
+                            Sifariş etdiyim məhsul gəlmədi. Şikayətimi burda paylaşdıqdan sonra şirkət mənimlə əlaqə saxladı və problemim həll olundu.
+                        </p>
+                        <div class="card-footer">
+                            <div class="complaint-status status-resolved">
+                                <div class="status-dot"></div>
+                                Həll edilib
+                            </div>
+                            <div class="complaint-date">12 DEC</div>
+                        </div>
+                    </div>
+
+                    <!-- Complaint Card 3 -->
+                    <div class="complaint-card">
+                        <div class="card-header">
+                            <div class="user-avatar">RH</div>
+                            <div class="user-info">
+                                <h4>Rəşad Həsənov</h4>
+                                <div class="user-company">Azercell</div>
+                            </div>
+                        </div>
+                        <p class="complaint-text">
+                            İnternet sürəti çox aşağı idi. Burada şikayətimi paylaşdıqdan sonra texniki komanda mənimlə əlaqə saxladı və problemi düzəltdi.
+                        </p>
+                        <div class="card-footer">
+                            <div class="complaint-status status-pending">
+                                <div class="status-dot"></div>
+                                İncelenir
+                            </div>
+                            <div class="complaint-date">10 DEC</div>
+                        </div>
+                    </div>
+
+                    <!-- Complaint Card 4 -->
+                    <div class="complaint-card">
+                        <div class="card-header">
+                            <div class="user-avatar">NQ</div>
+                            <div class="user-info">
+                                <h4>Nigar Quliyeva</h4>
+                                <div class="user-company">Bolt Food</div>
+                            </div>
+                        </div>
+                        <p class="complaint-text">
+                            Yemək sifariş etmişdim, lakin gələn yemək soyuq idi. Şikayətimi burada paylaşdım və şirkət təzə yemək göndərdi.
+                        </p>
+                        <div class="card-footer">
+                            <div class="complaint-status status-resolved">
+                                <div class="status-dot"></div>
+                                Həll edilib
+                            </div>
+                            <div class="complaint-date">8 DEC</div>
+                        </div>
+                    </div>
+
+                    <!-- Complaint Card 5 -->
+                    <div class="complaint-card">
+                        <div class="card-header">
+                            <div class="user-avatar">EV</div>
+                            <div class="user-info">
+                                <h4>Elvin Vəliyev</h4>
+                                <div class="user-company">Kontakt Home</div>
+                            </div>
+                        </div>
+                        <p class="complaint-text">
+                            Aldığım televizorda defekt var idi. Mağazaya müraciət etdim, lakin həll tapa bilmədik. Burda paylaşdıqdan sonra dəyişdirdilər.
+                        </p>
+                        <div class="card-footer">
+                            <div class="complaint-status status-resolved">
+                                <div class="status-dot"></div>
+                                Həll edilib
+                            </div>
+                            <div class="complaint-date">5 DEC</div>
+                        </div>
+                    </div>
+
+                    <!-- Complaint Card 6 -->
+                    <div class="complaint-card">
+                        <div class="card-header">
+                            <div class="user-avatar">SA</div>
+                            <div class="user-info">
+                                <h4>Səbinə Abbasova</h4>
+                                <div class="user-company">AZAL</div>
+                            </div>
+                        </div>
+                        <p class="complaint-text">
+                            Uçuş təxirə salındı, lakin vaxtında məlumat verilmədi. Şikayətimi burada yazdım və şirkət üzr istəyib kompensasiya verdi.
+                        </p>
+                        <div class="card-footer">
+                            <div class="complaint-status status-resolved">
+                                <div class="status-dot"></div>
+                                Həll edilib
+                            </div>
+                            <div class="complaint-date">3 DEC</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-nav next" id="nextBtn">›</button>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="complaints-footer">
+                <div class="footer-text">
+                    <span class="footer-highlight">10,000+</span> həll edilmiş şikayət platformamızda
+                    <span class="platform-badge">
+                        <div class="badge-icon">✓</div>
+                        <div class="badge-text">TƏSDİQLƏNMİŞ</div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <!-- Header Section -->
+        <div class="categories-header">
+            <div class="header-left">
+                <div class="big-number">
+                    50+
+                    <div class="number-badge">KATEQORİYA</div>
+                </div>
+                <div class="number-annotation">
+                    ← Platformamız bütün sahələri əhatə edir.
+                </div>
+            </div>
+            <div class="header-right">
+                <h2 class="categories-title">Şikayət kateqoriyaları.</h2>
+                <h3 class="categories-subtitle">Geniş və əhatəli kateqoriyalar.</h3>
+                <p class="categories-description">
+                    Platformamızın geniş kateqoriya kitabxanası sizə istənilən sahədə 
+                    şikayət bildirmək imkanı verir və problemlərinizi düzgün yerə yönləndirir.
+                </p>
+            </div>
+        </div>
+
+        <!-- Animated Categories -->
+        <div class="categories-container">
+            <!-- Row 1 - Left to Right -->
+            <div class="category-row">
+                <div class="category-bubble banking">
+                    <div class="category-icon">🏦</div>
+                    <div class="category-name">Bank Xidmətləri</div>
+                    <div class="category-description">Kredit və əmanətlər</div>
+                </div>
+                <div class="category-bubble telecom">
+                    <div class="category-icon">📱</div>
+                    <div class="category-name">Telekom</div>
+                    <div class="category-description">Mobil və internet</div>
+                </div>
+                <div class="category-bubble ecommerce">
+                    <div class="category-icon">🛒</div>
+                    <div class="category-name">E-ticarət</div>
+                    <div class="category-description">Onlayn alış-veriş</div>
+                </div>
+                <div class="category-bubble food">
+                    <div class="category-icon">🍕</div>
+                    <div class="category-name">Yemək Çatdırılması</div>
+                    <div class="category-description">Restoran və kafelər</div>
+                </div>
+                <div class="category-bubble transport">
+                    <div class="category-icon">🚗</div>
+                    <div class="category-name">Nəqliyyat</div>
+                    <div class="category-description">Taksi və avtobus</div>
+                </div>
+                <div class="category-bubble utility">
+                    <div class="category-icon">⚡</div>
+                    <div class="category-name">Kommunal</div>
+                    <div class="category-description">Su, qaz, elektrik</div>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="category-bubble banking">
+                    <div class="category-icon">🏦</div>
+                    <div class="category-name">Bank Xidmətləri</div>
+                    <div class="category-description">Kredit və əmanətlər</div>
+                </div>
+                <div class="category-bubble telecom">
+                    <div class="category-icon">📱</div>
+                    <div class="category-name">Telekom</div>
+                    <div class="category-description">Mobil və internet</div>
+                </div>
+                <div class="category-bubble ecommerce">
+                    <div class="category-icon">🛒</div>
+                    <div class="category-name">E-ticarət</div>
+                    <div class="category-description">Onlayn alış-veriş</div>
+                </div>
+                <div class="category-bubble food">
+                    <div class="category-icon">🍕</div>
+                    <div class="category-name">Yemək Çatdırılması</div>
+                    <div class="category-description">Restoran və kafelər</div>
+                </div>
+            </div>
+
+            <!-- Row 2 - Right to Left -->
+            <div class="category-row">
+                <div class="category-bubble healthcare">
+                    <div class="category-icon">🏥</div>
+                    <div class="category-name">Səhiyyə</div>
+                    <div class="category-description">Xəstəxana və klinika</div>
+                </div>
+                <div class="category-bubble education">
+                    <div class="category-icon">🎓</div>
+                    <div class="category-name">Təhsil</div>
+                    <div class="category-description">Məktəb və universitet</div>
+                </div>
+                <div class="category-bubble government">
+                    <div class="category-icon">🏛️</div>
+                    <div class="category-name">Dövlət Xidmətləri</div>
+                    <div class="category-description">ASAN və digər</div>
+                </div>
+                <div class="category-bubble insurance">
+                    <div class="category-icon">🛡️</div>
+                    <div class="category-name">Sığorta</div>
+                    <div class="category-description">Həyat və əmlak</div>
+                </div>
+                <div class="category-bubble retail">
+                    <div class="category-icon">🏪</div>
+                    <div class="category-name">Pərakəndə</div>
+                    <div class="category-description">Supermarket və mağaza</div>
+                </div>
+                <div class="category-bubble entertainment">
+                    <div class="category-icon">🎬</div>
+                    <div class="category-name">Əyləncə</div>
+                    <div class="category-description">Kino və teatr</div>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="category-bubble healthcare">
+                    <div class="category-icon">🏥</div>
+                    <div class="category-name">Səhiyyə</div>
+                    <div class="category-description">Xəstəxana və klinika</div>
+                </div>
+                <div class="category-bubble education">
+                    <div class="category-icon">🎓</div>
+                    <div class="category-name">Təhsil</div>
+                    <div class="category-description">Məktəb və universitet</div>
+                </div>
+                <div class="category-bubble government">
+                    <div class="category-icon">🏛️</div>
+                    <div class="category-name">Dövlət Xidmətləri</div>
+                    <div class="category-description">ASAN və digər</div>
+                </div>
+                <div class="category-bubble insurance">
+                    <div class="category-icon">🛡️</div>
+                    <div class="category-name">Sığorta</div>
+                    <div class="category-description">Həyat və əmlak</div>
+                </div>
+            </div>
+
+            <!-- Row 3 - Left to Right -->
+            <div class="category-row">
+                <div class="category-bubble banking">
+                    <div class="category-icon">✈️</div>
+                    <div class="category-name">Havayolu</div>
+                    <div class="category-description">Uçuş və biletlər</div>
+                </div>
+                <div class="category-bubble telecom">
+                    <div class="category-icon">🏨</div>
+                    <div class="category-name">Turizm</div>
+                    <div class="category-description">Otel və səyahət</div>
+                </div>
+                <div class="category-bubble ecommerce">
+                    <div class="category-icon">💻</div>
+                    <div class="category-name">Texnologiya</div>
+                    <div class="category-description">IT və proqram</div>
+                </div>
+                <div class="category-bubble food">
+                    <div class="category-icon">🚚</div>
+                    <div class="category-name">Kuryer</div>
+                    <div class="category-description">Çatdırılma xidməti</div>
+                </div>
+                <div class="category-bubble transport">
+                    <div class="category-icon">🏠</div>
+                    <div class="category-name">Daşınmaz Əmlak</div>
+                    <div class="category-description">Ev və ofis</div>
+                </div>
+                <div class="category-bubble utility">
+                    <div class="category-icon">💼</div>
+                    <div class="category-name">Biznes Xidmətləri</div>
+                    <div class="category-description">Konsultasiya və audit</div>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="category-bubble banking">
+                    <div class="category-icon">✈️</div>
+                    <div class="category-name">Havayolu</div>
+                    <div class="category-description">Uçuş və biletlər</div>
+                </div>
+                <div class="category-bubble telecom">
+                    <div class="category-icon">🏨</div>
+                    <div class="category-name">Turizm</div>
+                    <div class="category-description">Otel və səyahət</div>
+                </div>
+                <div class="category-bubble ecommerce">
+                    <div class="category-icon">💻</div>
+                    <div class="category-name">Texnologiya</div>
+                    <div class="category-description">IT və proqram</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+<section class="faq-section" id="faq">
+    <div class="faq-container">
+        <!-- Header -->
+        <div class="faq-header">
+            <h2 class="faq-title">Tez-tez verilən suallar</h2>
+            <p class="faq-subtitle">
+                Platformamız haqqında ən çox verilən sualların cavabları
+            </p>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="faq-items">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item">
+                <div class="faq-question" data-faq="1">
+                    <h3>Platformanızda şikayət bildirmək pulludur?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer" id="answer-1">
+                    <p>Xeyr, platformamızda şikayət bildirmək tamamilə pulsuzdur. Biz istifadəçilərimizin problemlərini həll etmək üçün sərbəst və açıq bir platforma yaratmışıq.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="faq-item">
+                <div class="faq-question" data-faq="2">
+                    <h3>Şikayətim nə qədər müddətdə həll olunur?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer" id="answer-2">
+                    <p>Orta hesabla şikayətlərin 89%-i ilk 72 saat ərzində həll olunur. Şirkətlər platformamızda paylaşılan şikayətlərə tez cavab vermək üçün hazırlanmışdır.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="faq-item">
+                <div class="faq-question" data-faq="3">
+                    <h3>Şəxsi məlumatlarım təhlükəsizdirmi?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer" id="answer-3">
+                    <p>Bəli, tamamilə təhlükəsizdir. Biz məlumat təhlükəsizliği standartlarına uyğun olaraq şəxsi məlumatlarınızı qoruyuruq.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="faq-item">
+                <div class="faq-question" data-faq="4">
+                    <h3>Hansı şirkətlər platformanızda təmsil olunur?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer" id="answer-4">
+                    <p>Platformamızda 120+ şirkət təmsil olunur. Bank xidmətlərindən telekom şirkətlərinə, e-ticarət saytlarından dövlət qurumlarına qədər geniş spektr.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="faq-item">
+                <div class="faq-question" data-faq="5">
+                    <h3>Şikayətimi necə daha effektiv yazım?</h3>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer" id="answer-5">
+                    <p>Effektiv şikayət üçün: problemin tarixini və detallarını dəqiq yazın, emosional dil istifadə etməyin, faktlara əsaslanın.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="footer-wrapper">
+        <div class="footer-main">
+            <div class="footer-grid">
+                <!-- Brand Section -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="footer-logo-text">Grumble</span>
+                    </div>
+                    <p class="footer-description">
+                        Şirkətlərlə bağlı problemlərinizi paylaşın və həllini tapın. 
+                        Milyonlarla istifadəçi təcrübəsindən faydalanın.
+                    </p>
+                    <div class="footer-social-icons">
+                        <a href="#" class="footer-social-icon" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="footer-social-icon" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="footer-social-icon" title="twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="footer-social-icon" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Company Section -->
+                <div class="footer-column">
+                    <h3>Şirkət</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Biz kimik</a></li>
+                        <li>
+                            <a href="#">Xidmətlərimiz</a>
+                            <span class="hot-badge">Hot</span>
+                        </li>
+                        <li><a href="#">Müştərilərimiz</a></li>
+                        <li><a href="#">Əlaqə</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services Section -->
+                <div class="footer-column">
+                    <h3>Xidmətlərimiz</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Şikayət bildirimi</a></li>
+                        <li><a href="#">Şirkət monitorinqi</a></li>
+                        <li><a href="#">Həll strategiyası</a></li>
+                        <li><a href="#">Müştəri dəstəyi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Help Section -->
+                <div class="footer-column">
+                    <h3>Kömək lazımdır?</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-label">Birbaşa zəng edin?</div>
+                            <div class="contact-value">(012) 567 89 01</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-label">Dəstək lazımdır?</div>
+                            <div class="contact-value">
+                                <a href="mailto:help@sikayetplatforma.az">help@grumble.az</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Section -->
+                <div class="footer-column newsletter-section">
+                    <h3>Xəbər bülletenimizə abunə olun</h3>
+                    <p class="newsletter-description">
+                        Ən son xəbərləri əldə etmək üçün xəbər bülletenimizə abunə olun.
+                    </p>
+                    <form class="newsletter-form">
+                        <div class="newsletter-input-container">
+                            <input 
+                                type="email" 
+                                class="newsletter-input" 
+                                placeholder="E-mail ünvanınızı daxil edin"
+                                required
+                            >
+                            <button type="submit" class="send-button">💌</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2025 Grumble tərəfindən hazırlanmışdır
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="#">Məxfilik siyasəti</a>
+                    <a href="#">İstifadə şərtləri</a>
+                    <a href="#">Müəllif hüquqları</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
