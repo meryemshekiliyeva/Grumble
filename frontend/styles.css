@@ -1,4 +1,3 @@
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +11,6 @@ body {
     background: #ffffff;
 }
 
-/* Header Styles */
 .header {
     background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
@@ -34,7 +32,6 @@ body {
     padding: 16px 0;
 }
 
-/* Logo */
 .logo {
     display: flex;
     align-items: center;
@@ -62,7 +59,6 @@ body {
     color: #111827;
 }
 
-/* Navigation Menu */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -90,7 +86,6 @@ body {
     opacity: 0.6;
 }
 
-/* CTA Button */
 .cta-button {
     background: #111827;
     color: white;
@@ -107,7 +102,6 @@ body {
     background: #374151;
 }
 
-/* Mobile Menu Toggle */
 .mobile-toggle {
     display: none;
     flex-direction: column;
@@ -123,7 +117,7 @@ body {
     transition: 0.3s;
 }
 
-/* Hero Section */
+
 .hero {
     padding: 80px 0 100px;
     text-align: center;
@@ -155,7 +149,7 @@ body {
     margin-right: auto;
 }
 
-/* Hero Button - Large Size */
+
 .hero-button {
     background: #3b82f6;
     color: white;
@@ -178,8 +172,6 @@ body {
 }
 
 
-
-/* Companies Section */
 .companies-section {
     max-width: 1200px;
     margin: 0 auto;
@@ -257,17 +249,46 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Company specific colors */
-.company-icon.bank { background: linear-gradient(135deg, #6366f1, #4f46e5); }
-.company-icon.telecom { background: linear-gradient(135deg, #10b981, #059669); }
-.company-icon.ecommerce { background: linear-gradient(135deg, #f59e0b, #d97706); }
-.company-icon.airline { background: linear-gradient(135deg, #ef4444, #dc2626); }
-.company-icon.insurance { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-.company-icon.utility { background: linear-gradient(135deg, #06b6d4, #0891b2); }
-.company-icon.food { background: linear-gradient(135deg, #ec4899, #db2777); }
-.company-icon.delivery { background: linear-gradient(135deg, #84cc16, #65a30d); }
-.company-icon.tech { background: linear-gradient(135deg, #6b7280, #4b5563); }
-.company-icon.retail { background: linear-gradient(135deg, #f97316, #ea580c); }
+
+.company-icon.bank {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+.company-icon.telecom {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.company-icon.ecommerce {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.company-icon.airline {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.company-icon.insurance {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.company-icon.utility {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+.company-icon.food {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.company-icon.delivery {
+    background: linear-gradient(135deg, #84cc16, #65a30d);
+}
+
+.company-icon.tech {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+}
+
+.company-icon.retail {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
 
 .company-name {
     font-size: 16px;
@@ -318,7 +339,6 @@ body {
     font-size: 14px;
 }
 
-/* Complaints Section */
 .complaints-section {
     max-width: 1200px;
     margin: 120px auto;
@@ -329,7 +349,7 @@ body {
     overflow: hidden;
 }
 
-/* Background pattern */
+
 .complaints-section::before {
     content: '';
     position: absolute;
@@ -338,7 +358,7 @@ body {
     right: 0;
     bottom: 0;
     background-image: radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -347,7 +367,7 @@ body {
     z-index: 1;
 }
 
-/* Header Section */
+
 .complaints-header {
     display: grid;
     grid-template-columns: 1fr auto auto;
@@ -434,7 +454,7 @@ body {
     font-weight: 500;
 }
 
-/* Carousel Container */
+
 .carousel-container {
     position: relative;
     overflow: hidden;
@@ -448,7 +468,7 @@ body {
     will-change: transform;
 }
 
-/* Complaint Cards */
+
 .complaint-card {
     min-width: 380px;
     background: white;
@@ -551,7 +571,6 @@ body {
     border-radius: 6px;
 }
 
-/* Footer Section */
 .complaints-footer {
     text-align: center;
     padding-top: 40px;
@@ -593,7 +612,7 @@ body {
     color: #059669;
 }
 
-/* Navigation Arrows */
+
 .carousel-nav {
     position: absolute;
     top: 50%;
@@ -627,7 +646,7 @@ body {
     right: -24px;
 }
 
-/* Categories Section */
+
 .categories-section {
     max-width: 1400px;
     margin: 120px auto;
@@ -636,7 +655,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Header Section */
+
 .categories-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -706,7 +725,7 @@ body {
     line-height: 1.6;
 }
 
-/* Animated Categories Container */
+
 .categories-container {
     margin: 60px 0;
     position: relative;
@@ -787,21 +806,56 @@ body {
     font-weight: 500;
 }
 
-/* Category specific colors on hover */
-.category-bubble.banking:hover { border-color: #6366f1; }
-.category-bubble.telecom:hover { border-color: #10b981; }
-.category-bubble.ecommerce:hover { border-color: #f59e0b; }
-.category-bubble.food:hover { border-color: #ec4899; }
-.category-bubble.transport:hover { border-color: #ef4444; }
-.category-bubble.utility:hover { border-color: #06b6d4; }
-.category-bubble.healthcare:hover { border-color: #8b5cf6; }
-.category-bubble.education:hover { border-color: #84cc16; }
-.category-bubble.government:hover { border-color: #6b7280; }
-.category-bubble.insurance:hover { border-color: #f97316; }
-.category-bubble.retail:hover { border-color: #14b8a6; }
-.category-bubble.entertainment:hover { border-color: #f43f5e; }
 
-/* Keyframes for animations */
+.category-bubble.banking:hover {
+    border-color: #6366f1;
+}
+
+.category-bubble.telecom:hover {
+    border-color: #10b981;
+}
+
+.category-bubble.ecommerce:hover {
+    border-color: #f59e0b;
+}
+
+.category-bubble.food:hover {
+    border-color: #ec4899;
+}
+
+.category-bubble.transport:hover {
+    border-color: #ef4444;
+}
+
+.category-bubble.utility:hover {
+    border-color: #06b6d4;
+}
+
+.category-bubble.healthcare:hover {
+    border-color: #8b5cf6;
+}
+
+.category-bubble.education:hover {
+    border-color: #84cc16;
+}
+
+.category-bubble.government:hover {
+    border-color: #6b7280;
+}
+
+.category-bubble.insurance:hover {
+    border-color: #f97316;
+}
+
+.category-bubble.retail:hover {
+    border-color: #14b8a6;
+}
+
+.category-bubble.entertainment:hover {
+    border-color: #f43f5e;
+}
+
+
 @keyframes scrollLeft {
     0% {
         transform: translateX(0);
@@ -820,12 +874,12 @@ body {
     }
 }
 
-/* Pause animation on hover */
+
 .categories-container:hover .category-row {
     animation-play-state: paused;
 }
 
-/* Smooth fade edges */
+
 .categories-container::before,
 .categories-container::after {
     content: '';
@@ -847,7 +901,7 @@ body {
     background: linear-gradient(to left, white, transparent);
 }
 
-/* Statistics Section */
+
 .statistics-section {
     max-width: 1200px;
     margin: 120px auto;
@@ -859,7 +913,7 @@ body {
     overflow: hidden;
 }
 
-/* Background decoration */
+
 .statistics-section::before {
     content: '';
     position: absolute;
@@ -876,7 +930,7 @@ body {
     z-index: 1;
 }
 
-/* Top Statistics Row */
+
 .stats-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -904,7 +958,7 @@ body {
     text-transform: capitalize;
 }
 
-/* Platform Icons */
+
 .platforms-row {
     display: flex;
     justify-content: center;
@@ -930,19 +984,58 @@ body {
     transform: translateY(-4px);
 }
 
-/* Platform specific styles */
-.platform-icon.kapital { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
-.platform-icon.azercell { background: linear-gradient(135deg, #10b981, #059669); color: white; }
-.platform-icon.trendyol { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
-.platform-icon.bolt { background: linear-gradient(135deg, #84cc16, #65a30d); color: white; }
-.platform-icon.azal { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-.platform-icon.asan { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
-.platform-icon.kontakt { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; }
-.platform-icon.bravo { background: linear-gradient(135deg, #ec4899, #db2777); color: white; }
-.platform-icon.azerpost { background: linear-gradient(135deg, #f97316, #ea580c); color: white; }
-.platform-icon.ata { background: linear-gradient(135deg, #64748b, #475569); color: white; }
 
-/* Main Visual Section */
+.platform-icon.kapital {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+}
+
+.platform-icon.azercell {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.platform-icon.trendyol {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+}
+
+.platform-icon.bolt {
+    background: linear-gradient(135deg, #84cc16, #65a30d);
+    color: white;
+}
+
+.platform-icon.azal {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.platform-icon.asan {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+}
+
+.platform-icon.kontakt {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: white;
+}
+
+.platform-icon.bravo {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    color: white;
+}
+
+.platform-icon.azerpost {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+}
+
+.platform-icon.ata {
+    background: linear-gradient(135deg, #64748b, #475569);
+    color: white;
+}
+
+
 .main-visual {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -951,7 +1044,7 @@ body {
     position: relative;
 }
 
-/* Character */
+
 .character {
     width: 200px;
     height: 200px;
@@ -1016,7 +1109,6 @@ body {
     border-radius: 8px;
 }
 
-/* Big Number */
 .stats-big-number {
     font-size: 180px;
     font-weight: 900;
@@ -1047,7 +1139,7 @@ body {
     font-weight: 500;
 }
 
-/* Handwritten Annotation */
+
 .annotation {
     text-align: center;
     position: relative;
@@ -1073,7 +1165,7 @@ body {
     transform: rotate(-45deg);
 }
 
-/* Animations */
+
 @keyframes float {
     0%, 100% {
         transform: translateY(0px);
@@ -1092,7 +1184,7 @@ body {
     }
 }
 
-/* Footer */
+
 .footer-wrapper {
     max-width: 1200px;
     margin: 120px auto 0;
@@ -1102,7 +1194,7 @@ body {
     position: relative;
 }
 
-/* Decorative lines */
+
 .footer-wrapper::before {
     content: '';
     position: absolute;
@@ -1111,11 +1203,11 @@ body {
     right: 0;
     height: 60px;
     background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 8px,
-        rgba(255, 255, 255, 0.03) 8px,
-        rgba(255, 255, 255, 0.03) 16px
+            45deg,
+            transparent,
+            transparent 8px,
+            rgba(255, 255, 255, 0.03) 8px,
+            rgba(255, 255, 255, 0.03) 16px
     );
     pointer-events: none;
 }
@@ -1133,7 +1225,6 @@ body {
     margin-bottom: 60px;
 }
 
-/* Logo Section */
 .footer-brand {
     max-width: 300px;
 }
@@ -1196,7 +1287,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* Footer Columns */
+
 .footer-column h3 {
     color: #ffffff;
     font-size: 18px;
@@ -1235,7 +1326,7 @@ body {
     text-transform: uppercase;
 }
 
-/* Contact Info */
+
 .contact-info {
     color: #9ca3af;
     font-size: 15px;
@@ -1266,7 +1357,7 @@ body {
     color: #34d399;
 }
 
-/* Newsletter */
+
 .newsletter-form {
     margin-top: 24px;
 }
@@ -1321,7 +1412,7 @@ body {
     transform: translateY(-1px);
 }
 
-/* Footer Bottom */
+
 .footer-bottom {
     display: flex;
     justify-content: space-between;
@@ -1362,7 +1453,7 @@ body {
     color: #e5e7eb;
 }
 
-/* Mobile Responsive */
+
 @media (max-width: 1024px) {
     .section-header,
     .categories-header {
@@ -1681,7 +1772,6 @@ body {
     }
 }
 
-/* FAQ Section */
 .faq-section {
     max-width: 1000px;
     margin: 120px auto;
@@ -1761,7 +1851,6 @@ body {
     color: #4b5563;
 }
 
-/* Mobile menu animation */
 .mobile-toggle.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
@@ -1774,7 +1863,7 @@ body {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* Animation keyframes */
+
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -1790,7 +1879,7 @@ body {
     animation: slideIn 0.6s ease-out;
 }
 
-/* Counter animation */
+
 .stat-number.animate {
     opacity: 0;
     animation: countUp 2s ease-out forwards;
@@ -1807,34 +1896,43 @@ body {
     }
 }
 
-/* Hover animations for companies */
-.company-item:hover .company-icon.bank { 
-    background: linear-gradient(135deg, #4f46e5, #3730a3); 
+
+.company-item:hover .company-icon.bank {
+    background: linear-gradient(135deg, #4f46e5, #3730a3);
 }
-.company-item:hover .company-icon.telecom { 
-    background: linear-gradient(135deg, #059669, #047857); 
+
+.company-item:hover .company-icon.telecom {
+    background: linear-gradient(135deg, #059669, #047857);
 }
-.company-item:hover .company-icon.ecommerce { 
-    background: linear-gradient(135deg, #d97706, #b45309); 
+
+.company-item:hover .company-icon.ecommerce {
+    background: linear-gradient(135deg, #d97706, #b45309);
 }
-.company-item:hover .company-icon.airline { 
-    background: linear-gradient(135deg, #dc2626, #b91c1c); 
+
+.company-item:hover .company-icon.airline {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
 }
-.company-item:hover .company-icon.insurance { 
-    background: linear-gradient(135deg, #7c3aed, #6d28d9); 
+
+.company-item:hover .company-icon.insurance {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
 }
-.company-item:hover .company-icon.utility { 
-    background: linear-gradient(135deg, #0891b2, #0e7490); 
+
+.company-item:hover .company-icon.utility {
+    background: linear-gradient(135deg, #0891b2, #0e7490);
 }
-.company-item:hover .company-icon.food { 
-    background: linear-gradient(135deg, #db2777, #be185d); 
+
+.company-item:hover .company-icon.food {
+    background: linear-gradient(135deg, #db2777, #be185d);
 }
-.company-item:hover .company-icon.delivery { 
-    background: linear-gradient(135deg, #65a30d, #4d7c0f); 
+
+.company-item:hover .company-icon.delivery {
+    background: linear-gradient(135deg, #65a30d, #4d7c0f);
 }
-.company-item:hover .company-icon.tech { 
-    background: linear-gradient(135deg, #4b5563, #374151); 
+
+.company-item:hover .company-icon.tech {
+    background: linear-gradient(135deg, #4b5563, #374151);
 }
-.company-item:hover .company-icon.retail { 
-    background: linear-gradient(135deg, #ea580c, #c2410c); 
+
+.company-item:hover .company-icon.retail {
+    background: linear-gradient(135deg, #ea580c, #c2410c);
 }
