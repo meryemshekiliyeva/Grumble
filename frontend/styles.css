@@ -1526,6 +1526,12 @@ body {
 }
 
 @media (max-width: 768px) {
+    .hero-button {
+        margin-left: 80px;
+    }
+
+
+
     .nav-menu {
         display: none;
         position: absolute;
