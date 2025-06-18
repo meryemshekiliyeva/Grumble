@@ -1526,11 +1526,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    .hero-button {
-        margin-left: 80px;
-    }
-
-
 
     .nav-menu {
         display: none;
@@ -1775,6 +1770,11 @@ body {
     .footer-bottom-links {
         flex-direction: column;
         gap: 12px;
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 
