@@ -1,0 +1,22 @@
+[
+  {
+    "title": "E-ticarət",
+    "description": "Onlayn alış-veriş",
+    "icon": "🛒"
+  },
+  {
+    "title": "Yemək Çatdırılması",
+    "description": "Restoran və kafelər",
+    "icon": "🍕"
+  },
+  {
+    "title": "Nəqliyyat",
+    "description": "Taksi və avtobus",
+    "icon": "🚗"
+  },
+  {
+    "title": "Kommunal",
+    "description": "Su, qaz, elektrik",
+    "icon": "⚡"
+  }
+]
