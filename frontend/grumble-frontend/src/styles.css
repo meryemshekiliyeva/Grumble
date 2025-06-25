@@ -1562,8 +1562,13 @@ body {
         font-size: 16px;
     }
 
+    .email-form-container {
+        display: flex;
+        justify-content: center;
+    }
+
     .email-form {
-        flex-direction: column;
+        /*flex-direction: column;*/
         max-width: 300px;
     }
 
