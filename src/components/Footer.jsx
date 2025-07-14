@@ -88,8 +88,8 @@ const Footer = () => {
             <div className="flex">
               <input
                 type="email"
-                placeholder="E-mail ünvanınızı daxil edin"
-                className="flex-1 px-3 py-2 bg-gray-600 text-white placeholder-gray-400 rounded-l border-0 focus:outline-none focus:ring-2 focus:ring-red-500"
+                placeholder="E-mail"
+                className="w-48 px-3 py-2 bg-gray-600 text-white placeholder-gray-400 rounded-l border-0 focus:outline-none focus:ring-2 focus:ring-red-500"
               />
               <button className="px-4 py-2 bg-red-500 text-white rounded-r hover:bg-red-600 transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
