@@ -63,12 +63,21 @@ const Complaints = () => {
 
 	return (
 		<div className="container max-w-screen-2xl py-8">
-			<h1 className="text-3xl font-bold tracking-tight text-center">
-				Bütün Şikayətlər
-			</h1>
-			<p className="text-center text-muted-foreground mt-2 mb-8">
-				Son şikayətlər lentini izləyin və başqalarının təcrübələrini oxuyun.
-			</p>
+			{/* Prettier header section */}
+			<div className="flex flex-col items-center justify-center mb-10 bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 rounded-xl py-8 shadow">
+				<div className="flex items-center gap-3 mb-3">
+					<span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/80 text-white text-3xl shadow">
+						{/* Example icon: emoji */}
+						💬
+					</span>
+					<h1 className="text-4xl font-extrabold tracking-tight text-primary drop-shadow">
+						Bütün Şikayətlər
+					</h1>
+				</div>
+				<p className="text-lg text-muted-foreground max-w-xl text-center">
+					Ən son şikayətləri izləyin və başqalarının təcrübələrini oxuyun. Sizin səsiniz önəmlidir!
+				</p>
+			</div>
 			<div className="flex justify-center mb-8">
 				<input
 					type="text"
