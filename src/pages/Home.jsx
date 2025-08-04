@@ -338,7 +338,7 @@ const Home = () => {
             {/* Right side - Title and description */}
             <div className="lg:w-3/5">
               <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6 text-gray-900 leading-tight">
-                Şikayət <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">kateqoriyaları</span>
+                Şikayət <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">kateqoriyaları</span>.
               </h2>
               <p className="text-xl text-gray-700 mb-4 font-medium">
                 Geniş və əhatəli kateqoriyalar.
@@ -451,7 +451,7 @@ const Home = () => {
               {/* Testimonials */}
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 {testimonials.map((testimonial, index) => (
-                  <div key={index} className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-gray-200 shadow-lg">
+                  <div key={index} className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border shadow-lg">
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white font-bold">
                         {testimonial.avatar}
@@ -479,7 +479,7 @@ const Home = () => {
 
               {/* Bottom stats */}
               <div className="text-center">
-                <div className="inline-flex items-center space-x-3 bg-card/60 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-200">
+                <div className="inline-flex items-center space-x-3 bg-card/60 backdrop-blur-sm rounded-full px-6 py-3 border">
                   <span className="text-sm font-medium text-foreground">10,000+ həll edilmiş şikayət platformamızda</span>
                   <div className="flex items-center space-x-1 bg-green-100 text-green-700 px-3 py-1 rounded-full">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

@@ -2,8 +2,8 @@ import React from 'react';
 
 const ComplaintCard = ({ title, company, author, date, summary }) => {
   return (
-    <div className="bg-card text-card-foreground rounded-xl border border-gray-200 shadow-lg transition-transform hover:-translate-y-1">
-      <div className="p-6">
+    <div className="bg-card text-card-foreground rounded-xl border shadow-lg transition-transform hover:-translate-y-1 flex flex-col justify-between h-full">
+      <div className="p-6 flex-1">
         <div className="flex items-start justify-between">
           <div className="space-y-1">
             <h3 className="text-xl font-bold text-primary">{title}</h3>
@@ -15,7 +15,7 @@ const ComplaintCard = ({ title, company, author, date, summary }) => {
         </div>
         <p className="mt-4 text-sm text-foreground/80">{summary}</p>
       </div>
-      <div className="flex items-center justify-between p-4 bg-muted/20 border-t border-gray-100">
+      <div className="flex items-center justify-between p-4 bg-muted/20 border-t">
         <div className="flex items-center space-x-2">
             <img
                 className="w-8 h-8 rounded-full"

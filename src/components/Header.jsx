@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId) => {
     if (location.pathname !== '/') {
-      // If not on home page, navigate to home first then scroll
       window.location.href = `/#${sectionId}`;
       return;
     }
@@ -38,6 +38,25 @@ const Header = () => {
           </svg>
           <span className="font-bold text-lg">Grumble</span>
         </NavLink>
+        <button
+          className="flex md:hidden items-center justify-center h-10 w-10 rounded focus:outline-none"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label="Open menu"
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="18" x2="20" y2="18" />
+          </svg>
+        </button>
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           <button
             onClick={() => scrollToSection('testimonials')}
@@ -68,6 +87,46 @@ const Header = () => {
             Giriş
           </Link>
         </div>
+        {menuOpen && (
+          <div className="absolute top-16 left-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40 shadow-md md:hidden z-50">
+            <nav className="flex flex-col items-center px-4 py-2 space-y-2 text-sm font-medium">
+              <button
+                onClick={() => {
+                  scrollToSection('testimonials');
+                  setMenuOpen(false);
+                }}
+                className="w-full text-center transition-colors hover:text-primary cursor-pointer"
+              >
+                Şikayətlər
+              </button>
+              <button
+                onClick={() => {
+                  scrollToSection('categories');
+                  setMenuOpen(false);
+                }}
+                className="w-full text-center transition-colors hover:text-primary cursor-pointer"
+              >
+                Kateqoriyalar
+              </button>
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  (isActive ? 'text-primary' : 'transition-colors hover:text-primary') + ' w-full text-center'
+                }
+                onClick={() => setMenuOpen(false)}
+              >
+                Haqqımızda
+              </NavLink>
+              <Link
+                to="/login"
+                className="w-full px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md hover:bg-primary/20 text-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                Giriş
+              </Link>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );

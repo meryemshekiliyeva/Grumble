@@ -158,13 +158,13 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 
 @keyframes scroll-right {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
   100% {
     transform: translateX(0);
@@ -247,19 +247,19 @@ h1, h2, h3, h4, h5, h6, p, span, div {
 }
 
 .category-card:hover {
-  border: 0.5px solid #d1d5db !important;
+  border: 0.5px solid #9ca3af !important;
   box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: translateY(-2px);
 }
 
 /* Special hover effect for the center card */
 .category-card.center-card {
-  border: 0.5px solid #e5e7eb !important;
+  border: 2px solid #374151 !important;
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
 .category-card.center-card:hover {
-  border: 0.5px solid #d1d5db !important;
+  border: 2px solid #1f2937 !important;
   box-shadow: 0 20px 40px -4px rgba(0, 0, 0, 0.15), 0 8px 16px -4px rgba(0, 0, 0, 0.1);
   transform: translateY(-4px) scale(1.02);
 }
