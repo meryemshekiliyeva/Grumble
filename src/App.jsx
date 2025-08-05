@@ -11,6 +11,14 @@ import NewComplaint from './pages/NewComplaint';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
+import AdminLayout from './admin/AdminLayout';
+import AdminDashboard from './admin/Dashboard';
+import ComplaintsList from './admin/ComplaintsList';
+import ComplaintView from './admin/ComplaintView';
+import UserList from './admin/UserList';
+import UserView from './admin/UserView';
+import CompanyList from './admin/CompanyList';
+import CompanyView from './admin/CompanyView';
 
 function App() {
   return (
@@ -27,6 +35,15 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
+        </Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="complaints" element={<ComplaintsList />} />
+          <Route path="complaints/:id" element={<ComplaintView />} />
+          <Route path="users" element={<UserList />} />
+          <Route path="users/:id" element={<UserView />} />
+          <Route path="companies" element={<CompanyList />} />
+          <Route path="companies/:id" element={<CompanyView />} />
         </Route>
       </Routes>
     </BrowserRouter>
