@@ -349,13 +349,13 @@ const Home = () => {
 
               {/* Feature highlights */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center gap-3 bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-white/30">
+                <div className="flex items-center gap-3 bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-white/20 shadow-sm hover:border-white/40 transition-all duration-300">
                   <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                     <span className="text-blue-600 text-sm">🎯</span>
                   </div>
                   <span className="text-sm font-medium text-gray-700">Dəqiq kateqoriyalaşdırma</span>
                 </div>
-                <div className="flex items-center gap-3 bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-white/30">
+                <div className="flex items-center gap-3 bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-white/20 shadow-sm hover:border-white/40 transition-all duration-300">
                   <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
                     <span className="text-purple-600 text-sm">⚡</span>
                   </div>
@@ -383,7 +383,6 @@ const Home = () => {
                   <CategoryCard
                     key={`row2-${index}`}
                     {...category}
-                    isCenter={category.name === 'Dövlət Xidmətləri'}
                   />
                 ))}
               </div>
@@ -451,7 +450,7 @@ const Home = () => {
               {/* Testimonials */}
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 {testimonials.map((testimonial, index) => (
-                  <div key={index} className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border shadow-lg">
+                  <div key={index} className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-gray-200/40 shadow-sm hover:shadow-md hover:border-gray-300/50 transition-all duration-300">
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white font-bold">
                         {testimonial.avatar}
@@ -479,7 +478,7 @@ const Home = () => {
 
               {/* Bottom stats */}
               <div className="text-center">
-                <div className="inline-flex items-center space-x-3 bg-card/60 backdrop-blur-sm rounded-full px-6 py-3 border">
+                <div className="inline-flex items-center space-x-3 bg-card/60 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-200/50 shadow-sm hover:border-gray-300/60 transition-all duration-300">
                   <span className="text-sm font-medium text-foreground">10,000+ həll edilmiş şikayət platformamızda</span>
                   <div className="flex items-center space-x-1 bg-green-100 text-green-700 px-3 py-1 rounded-full">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

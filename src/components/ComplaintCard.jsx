@@ -2,7 +2,7 @@ import React from 'react';
 
 const ComplaintCard = ({ title, company, author, date, summary }) => {
   return (
-    <div className="bg-card text-card-foreground rounded-xl border shadow-lg transition-transform hover:-translate-y-1 flex flex-col justify-between h-full">
+    <div className="bg-card text-card-foreground rounded-xl border border-gray-200/60 shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md hover:border-gray-300/70 flex flex-col justify-between h-full">
       <div className="p-6 flex-1">
         <div className="flex items-start justify-between">
           <div className="space-y-1">

@@ -1,8 +1,6 @@
-@import "tailwindcss";
-
-/* Import Google Fonts for better Azerbaijani character support */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap');
 
+@import "tailwindcss";
 :root {
   --background: #f9f9f9;
   --foreground: #333333;
