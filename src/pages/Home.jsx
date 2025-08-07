@@ -33,7 +33,7 @@ const testimonials = [
     name: 'Elvin Valiyev',
     company: 'Kontakt Home',
     avatar: 'EV',
-    message: 'Aldığım televizorda defekt var idi. Mağazaya müraciət etdim, lakin həll tapa bilmədik. Burda paylaşdıqdan sonra dayışdırılar.',
+    message: 'Aldığım televizorda defekt var idi. Mağazaya müraciət etdim, lakin həll tapa bilmədik. Burda paylaşdıqdan sonra dəyişdirdilər.',
     status: 'Həll edilib',
     date: '5 DEC',
     resolved: true
@@ -42,7 +42,7 @@ const testimonials = [
     name: 'Səbinə Abbasova',
     company: 'AZAL',
     avatar: 'SA',
-    message: 'Uçuş təxirə salındı, lakin vaxtında məlumat verilmədi. Şikayətimi burada yazdım və çirkin üzr istəyib kompensasiya verdi.',
+    message: 'Uçuş təxirə salındı, lakin vaxtında məlumat verilmədi. Şikayətimi burada yazdım və şirkət üzr istəyib kompensasiya verdi.',
     status: 'Həll edilib',
     date: '3 DEC',
     resolved: true
