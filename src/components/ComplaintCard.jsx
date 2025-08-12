@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 const ComplaintCard = ({ title, company, author, date, summary, status = 'pending', likes = 0, comments = 0, onLike, onComment }) => {
   const { user, isAuthenticated } = useAuth();
