@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getPasswordResetEmailTemplate, sendEmail } from '../utils/emailTemplates';
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1); // 1: Email input, 2: Code verification, 3: New password
@@ -22,13 +23,22 @@ const ForgotPassword = () => {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      // Generate reset code
+      const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      // Send password reset email
+      const emailTemplate = getPasswordResetEmailTemplate('İstifadəçi', resetCode);
+      await sendEmail(formData.email, emailTemplate);
+
       setIsLoading(false);
       setMessage('Təsdiq kodu e-poçt ünvanınıza göndərildi.');
       setStep(2);
-    }, 2000);
+    } catch (error) {
+      setIsLoading(false);
+      setMessage('E-poçt göndərilmədi. Yenidən cəhd edin.');
+    }
   };
 
   const handleCodeVerification = async (e) => {

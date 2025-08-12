@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import ComplaintCard from '../components/ComplaintCard';
 import CompanyCard from '../components/CompanyCard';
 import CategoryCard from '../components/CategoryCard';
@@ -51,74 +53,74 @@ const testimonials = [
 
 const mostComplainedCompanies = [
   {
-    name: 'CityNet',
-    category: 'İnternet Provayderi',
-    complaintCount: 247,
-    icon: '🏢',
-    bgColor: '#6c5ce7'
-  },
-  {
-    name: 'Trendyol',
-    category: 'E-ticarət',
-    complaintCount: 189,
-    icon: '🛒',
-    bgColor: '#e17055'
-  },
-  {
-    name: 'Wolt',
-    category: 'Yemək Çatdırılması',
-    complaintCount: 156,
-    icon: '🍕',
-    bgColor: '#00b894'
-  },
-  {
-    name: 'AZAL',
-    category: 'Havayolu',
-    complaintCount: 134,
-    icon: '✈️',
-    bgColor: '#e84393'
-  },
-  {
     name: 'Azercell',
     category: 'Telekom',
-    complaintCount: 128,
-    icon: '📱',
-    bgColor: '#0984e3'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Azercell_logo.svg/200px-Azercell_logo.svg.png',
+    bgColor: '#0066CC',
+    companyId: 'azercell'
   },
   {
     name: 'Kapital Bank',
-    category: 'Bank',
-    complaintCount: 112,
-    icon: '🏦',
-    bgColor: '#6c5ce7'
-  },
-  {
-    name: 'Bravo',
-    category: 'Supermarket',
-    complaintCount: 98,
-    icon: '🛍️',
-    bgColor: '#fd79a8'
-  },
-  {
-    name: 'Azərpoçt',
-    category: 'Poçt Xidməti',
-    complaintCount: 87,
-    icon: '📦',
-    bgColor: '#00cec9'
+    category: 'Banklər',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
+    bgColor: '#E31E24',
+    companyId: 'kapital-bank'
   },
   {
     name: 'Bolt Food',
     category: 'Yemək Çatdırılması',
-    complaintCount: 76,
-    icon: '🚗',
-    bgColor: '#fdcb6e'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Bolt_logo.svg/200px-Bolt_logo.svg.png',
+    bgColor: '#34D186',
+    companyId: 'bolt-food'
   },
   {
-    name: 'AtaSigorta',
-    category: 'Sığorta',
-    complaintCount: 65,
-    icon: '🛡️',
-    bgColor: '#a29bfe'
+    name: 'AZAL',
+    category: 'Havayolu',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Azerbaijan_Airlines_logo.svg/200px-Azerbaijan_Airlines_logo.svg.png',
+    bgColor: '#003366',
+    companyId: 'azal'
+  },
+  {
+    name: 'Bakcell',
+    category: 'Telekom',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bakcell_logo.svg/200px-Bakcell_logo.svg.png',
+    bgColor: '#FF6600',
+    companyId: 'bakcell'
+  },
+  {
+    name: 'Nar Mobile',
+    category: 'Telekom',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nar_logo.svg/200px-Nar_logo.svg.png',
+    bgColor: '#8B0000',
+    companyId: 'nar-mobile'
+  },
+  {
+    name: 'Azərsu',
+    category: 'Kommunal',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Azersu_logo.svg/200px-Azersu_logo.svg.png',
+    bgColor: '#0066CC',
+    companyId: 'azersu'
+  },
+  {
+    name: 'Azərişıq',
+    category: 'Kommunal',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Azerishiq_logo.svg/200px-Azerishiq_logo.svg.png',
+    bgColor: '#FFD700',
+    companyId: 'azerishiq'
+  },
+  {
+    name: 'BiP',
+    category: 'Nəqliyyat',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/BiP_logo.svg/200px-BiP_logo.svg.png',
+    bgColor: '#FF4500',
+    companyId: 'bip'
+  },
+  {
+    name: 'PAŞA Bank',
+    category: 'Banklər',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/PASHA_Bank_logo.svg/200px-PASHA_Bank_logo.svg.png',
+    bgColor: '#a29bfe',
+    companyId: 'pasha-bank'
   }
 ];
 
@@ -127,109 +129,145 @@ const categories = [
     name: 'Telekom',
     description: 'Mobil və internet',
     icon: '📱',
-    bgColor: '#6c5ce7'
+    bgColor: '#6c5ce7',
+    categoryId: 'telekommunikasiya',
+    brands: ['Azercell', 'Bakcell', 'Nar', 'Delta Telecom', 'AzTelecom', 'Naxtel']
   },
   {
     name: 'E-ticarət',
     description: 'Onlayn alış veriş',
     icon: '🛒',
-    bgColor: '#e17055'
+    bgColor: '#e17055',
+    categoryId: 'e-ticarət',
+    brands: ['Trendyol', 'Embawood', 'Kontakt Home', 'Irshad', 'Optimal', 'Baku Electronics']
   },
   {
     name: 'Yemək Çatdırılması',
     description: 'Restoran və kafelər',
     icon: '🍕',
-    bgColor: '#00b894'
+    bgColor: '#00b894',
+    categoryId: 'yemek-catdirilmasi',
+    brands: ['Bolt Food', 'Wolt', 'Yemeksepeti', 'Glovo', 'Sürücü', 'Foodpanda']
   },
   {
     name: 'Nəqliyyat',
     description: 'Taksi və avtobus',
     icon: '🚗',
-    bgColor: '#e84393'
+    bgColor: '#e84393',
+    categoryId: 'neqliyyat',
+    brands: ['Bolt', 'Uber', 'BiP', 'Bakı Taksi', 'Bakı Metropoliteni', 'BakuBus']
   },
   {
     name: 'Kommunal',
     description: 'Su, qaz, elektrik',
     icon: '⚡',
-    bgColor: '#fdcb6e'
+    bgColor: '#fdcb6e',
+    categoryId: 'kommunal',
+    brands: ['Azersu', 'Azerishiq', 'Azerigas', 'Socar Gas', 'Bakı Su Şirkəti', 'Sumqayıt Su']
   },
   {
-    name: 'Bank Xidmətləri',
+    name: 'Banklər',
     description: 'Kredit və əmanət',
     icon: '🏦',
-    bgColor: '#0984e3'
+    bgColor: '#0984e3',
+    categoryId: 'banklar',
+    brands: ['Kapital Bank', 'Pasha Bank', 'AccessBank', 'Rabitabank', 'Unibank', 'Bank of Baku']
   },
   {
     name: 'Təhsil',
     description: 'Məktəb və universitet',
     icon: '🎓',
-    bgColor: '#a29bfe'
+    bgColor: '#a29bfe',
+    categoryId: 'tehsil',
+    brands: ['ADA University', 'Bakı Dövlət Universiteti', 'UNEC', 'Xəzər Universiteti', 'Qafqaz Universiteti', 'AMEA']
   },
   {
     name: 'Dövlət Xidmətləri',
     description: 'ASAN və digər',
     icon: '🏛️',
-    bgColor: '#fd79a8'
+    bgColor: '#fd79a8',
+    categoryId: 'dovlet-xidmetleri',
+    brands: ['ASAN Xidmət', 'e-Gov', 'Dövlət Qeydiyyat Xidməti', 'Vergi Nazirliyi', 'Əmək Nazirliyi', 'Ədliyyə Nazirliyi']
   },
   {
     name: 'Sığorta',
     description: 'Həyat və əmlak',
     icon: '🛡️',
-    bgColor: '#00cec9'
+    bgColor: '#00cec9',
+    categoryId: 'sigorta',
+    brands: ['PASHA Sığorta', 'Qala Sığorta', 'AXA Sığorta', 'ASCO Sığorta', 'Atəşgah Sığorta', 'Azərbaycan Sığorta']
   },
   {
     name: 'Pərakəndə',
     description: 'Supermarket və mağaza',
     icon: '🏪',
-    bgColor: '#6c5ce7'
+    bgColor: '#6c5ce7',
+    categoryId: 'perakende',
+    brands: ['Bravo', 'Araz', 'Bazarstore', 'Neptun', 'Coşqun', 'Favorit']
   },
   {
     name: 'Əyləncə',
     description: 'Kino və teatr',
     icon: '🎭',
-    bgColor: '#e17055'
+    bgColor: '#e17055',
+    categoryId: 'eylence',
+    brands: ['CinemaPlus', 'Park Cinema', 'Nizami Kino Mərkəzi', 'Gənclik Mall Cinema', 'Flame Towers Cinema', 'Dəniz Mall Cinema']
   },
   {
     name: 'Səhiyyə',
     description: 'Xəstəxana və klinika',
     icon: '🏥',
-    bgColor: '#00b894'
+    bgColor: '#00b894',
+    categoryId: 'sehiyye',
+    brands: ['Mərkəzi Klinika', 'Liv Hospital', 'Acıbadem', 'Yeni Klinika', 'Medicus', 'Avicenna']
   },
   {
     name: 'Havayolu',
     description: 'Uçuş və biletlər',
     icon: '✈️',
-    bgColor: '#e84393'
+    bgColor: '#e84393',
+    categoryId: 'havayolu',
+    brands: ['AZAL', 'Buta Airways', 'Turkish Airlines', 'Qatar Airways', 'Emirates', 'Lufthansa']
   },
   {
     name: 'Turizm',
     description: 'Otel və səyahət',
     icon: '🏨',
-    bgColor: '#fdcb6e'
+    bgColor: '#fdcb6e',
+    categoryId: 'turizm',
+    brands: ['Fairmont Baku', 'Four Seasons', 'JW Marriott', 'Hilton Baku', 'Hyatt Regency', 'Kempinski']
   },
   {
     name: 'Texnologiya',
     description: 'IT və proqram',
     icon: '💻',
-    bgColor: '#0984e3'
+    bgColor: '#0984e3',
+    categoryId: 'texnologiya',
+    brands: ['ASAN Radio', 'Azercell Telecom', 'Pronet', 'Azintelecom', 'Bakinternet', 'Ultel']
   },
   {
     name: 'Kuryer',
     description: 'Çatdırılma xidməti',
     icon: '📦',
-    bgColor: '#a29bfe'
+    bgColor: '#a29bfe',
+    categoryId: 'kuryer',
+    brands: ['Azerpost', 'DHL', 'FedEx', 'UPS', 'Onex', 'Sürətli Kuryer']
   },
   {
     name: 'Daşınmaz Əmlak',
     description: 'Ev və ofis',
     icon: '🏠',
-    bgColor: '#fd79a8'
+    bgColor: '#fd79a8',
+    categoryId: 'dasinmaz-emlak',
+    brands: ['Pasha Construction', 'Akkord', 'Baghlan Group', 'Gilan Holding', 'AF Group', 'Kolin İnşaat']
   },
   {
     name: 'Biznes Xidmətləri',
     description: 'Konsultasiya və audit',
     icon: '💼',
-    bgColor: '#00cec9'
+    bgColor: '#00cec9',
+    categoryId: 'biznes-xidmetleri',
+    brands: ['PwC Azerbaijan', 'KPMG', 'Deloitte', 'EY', 'BDO', 'Grant Thornton']
   }
 ];
 
@@ -257,6 +295,32 @@ const faqData = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  const handleComplaintSubmit = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    navigate('/yeni-sikayetler');
+  };
+
+  const handleShowAllCompanies = () => {
+    navigate('/companies');
+  };
+
+
+
+  const handleLike = (complaintId) => {
+    console.log('Liked complaint:', complaintId);
+    // TODO: Implement like functionality with backend
+  };
+
+  const handleComment = (complaintId) => {
+    console.log('Comment on complaint:', complaintId);
+    // TODO: Implement comment functionality with backend
+  };
   return (
     <div className="w-full">
       <section className="w-full py-16 md:py-20 lg:py-24 bg-muted/20">
@@ -267,7 +331,10 @@ const Home = () => {
           <p className="mx-auto max-w-2xl text-muted-foreground md:text-xl mt-4">
             Grumble səsinizin eşidildiyi platformadır. Təcrübələrinizi paylaşın və başqalarının hekayələrini oxuyun.
           </p>
-          <button className="mt-6 px-8 py-3 text-lg font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
+          <button
+            onClick={handleComplaintSubmit}
+            className="mt-6 px-8 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
+          >
             Şikayət Göndər
           </button>
         </div>
@@ -285,11 +352,18 @@ const Home = () => {
           </div>
           <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {mostComplainedCompanies.map((company, index) => (
-              <CompanyCard key={index} {...company} />
+              <CompanyCard
+                key={index}
+                {...company}
+
+              />
             ))}
           </div>
           <div className="text-center mt-8">
-            <button className="px-6 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md hover:bg-primary/20 transition-colors">
+            <button
+              onClick={handleShowAllCompanies}
+              className="px-6 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors"
+            >
               BÜTÜN ŞİRKƏTLƏRİ GÖSTƏR →
             </button>
           </div>
@@ -518,9 +592,14 @@ const Home = () => {
           <h2 className="text-3xl font-bold tracking-tighter text-center mb-10">
             Son Şikayətlər
           </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
             {mockComplaints.map((complaint, index) => (
-              <ComplaintCard key={index} {...complaint} />
+              <ComplaintCard
+                key={index}
+                {...complaint}
+                onLike={() => handleLike(index)}
+                onComment={() => handleComment(index)}
+              />
             ))}
           </div>
         </div>

@@ -1,8 +1,12 @@
 import React from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import UserProfileDropdown from './UserProfileDropdown';
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout, isAuthenticated } = useAuth();
 
   const scrollToSection = (sectionId) => {
     if (location.pathname !== '/') {
@@ -18,6 +22,11 @@ const Header = () => {
         block: 'start'
       });
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -66,9 +75,13 @@ const Header = () => {
           <Link to="/new-complaint" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
             Yeni Şikayət
           </Link>
-          <Link to="/login" className="hidden md:inline-flex px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md hover:bg-primary/20">
-            Giriş
-          </Link>
+          {isAuthenticated ? (
+            <UserProfileDropdown user={user} onLogout={handleLogout} />
+          ) : (
+            <Link to="/login" className="hidden md:inline-flex px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md hover:bg-primary/20">
+              Giriş
+            </Link>
+          )}
         </div>
       </div>
     </header>

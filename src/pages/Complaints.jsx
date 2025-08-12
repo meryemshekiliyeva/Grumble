@@ -53,6 +53,16 @@ const complaints = [
 const Complaints = () => {
 	const [search, setSearch] = useState('');
 
+	const handleLike = (complaintId) => {
+		console.log('Liked complaint:', complaintId);
+		// TODO: Implement like functionality with backend
+	};
+
+	const handleComment = (complaintId) => {
+		console.log('Comment on complaint:', complaintId);
+		// TODO: Implement comment functionality with backend
+	};
+
 	const filteredComplaints = complaints.filter(
 		(c) =>
 			c.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -90,7 +100,12 @@ const Complaints = () => {
 			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{filteredComplaints.length > 0 ? (
 					filteredComplaints.map((complaint, idx) => (
-						<ComplaintCard key={idx} {...complaint} />
+						<ComplaintCard
+							key={idx}
+							{...complaint}
+							onLike={() => handleLike(idx)}
+							onComment={() => handleComment(idx)}
+						/>
 					))
 				) : (
 					<div className="col-span-full text-center text-muted-foreground py-12">

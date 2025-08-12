@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const NewComplaint = () => {
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [complaintId, setComplaintId] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     company: '',
@@ -20,7 +25,35 @@ const NewComplaint = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
     console.log('New complaint:', formData);
+
+    // Generate a random complaint ID
+    const newComplaintId = 'SK' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    setComplaintId(newComplaintId);
+
+    // Save complaint to localStorage (simulate database)
+    const complaint = {
+      id: newComplaintId,
+      ...formData,
+      author: user.name,
+      authorEmail: user.email,
+      date: new Date().toLocaleDateString('az-AZ'),
+      status: 'pending',
+      likes: 0,
+      comments: 0
+    };
+
+    const existingComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+    existingComplaints.push(complaint);
+    localStorage.setItem('userComplaints', JSON.stringify(existingComplaints));
+
+    setShowSuccess(true);
   };
 
   const categories = [
@@ -28,6 +61,42 @@ const NewComplaint = () => {
     'Telekom', 'Dövlət Xidmətləri', 'Sığorta', 'Təhsil', 'Səhiyyə',
     'Kommunal', 'Pərakəndə', 'Havayolu', 'Turizm', 'Texnologiya'
   ];
+
+  if (showSuccess) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Şikayətiniz Qəbul Edildi!</h2>
+          <p className="text-gray-600 mb-6">
+            Şikayətiniz uğurla göndərildi və incelenmə üçün qəbul edildi.
+          </p>
+          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+            <p className="text-sm text-gray-500 mb-1">Şikayət Nömrəsi:</p>
+            <p className="text-lg font-bold text-blue-600">{complaintId}</p>
+          </div>
+          <div className="space-y-3">
+            <Link
+              to="/my-complaints"
+              className="block w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            >
+              Şikayətlərimə Bax
+            </Link>
+            <Link
+              to="/"
+              className="block w-full px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
+            >
+              Ana Səhifəyə Qayıt
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
