@@ -19,25 +19,15 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSocialLogin = async (userData) => {
+  const handleSocialLogin = async (provider) => {
     setLoading(true);
     setError('');
 
     try {
-      // Simulate social login API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      const socialUser = {
-        ...userData,
-        type: 'user'
-      };
-
-      localStorage.setItem('grumble_user', JSON.stringify(socialUser));
-      login(socialUser);
-      navigate('/');
+      // Redirect to OAuth provider
+      window.location.href = `/api/auth/${provider}`;
     } catch (err) {
-      setError(`${userData.provider} ilə giriş zamanı xəta baş verdi`);
-    } finally {
+      setError(`${provider} ilə giriş zamanı xəta baş verdi`);
       setLoading(false);
     }
   };
@@ -71,33 +61,18 @@ const Login = () => {
     try {
       const currentFormData = activeTab === 'user' ? formData : companyFormData;
 
-      // Mock user database
-      const mockUsers = [
-        { email: 'test@example.com', password: '123456', name: 'Mryam Şkiliyeva', type: 'user' },
-        { email: 'company@example.com', password: '123456', name: 'Şirkət Nümayəndəsi', type: 'company' }
-      ];
+      if (activeTab === 'user') {
+        const result = await login(currentFormData.email, currentFormData.password);
 
-      // Find user
-      const user = mockUsers.find(u =>
-        u.email === currentFormData.email &&
-        u.password === currentFormData.password &&
-        u.type === activeTab
-      );
-
-      if (!user) {
-        setError('E-poçt və ya şifrə yanlışdır');
-        setLoading(false);
-        return;
+        if (result.success) {
+          navigate('/');
+        } else {
+          setError(result.message || 'Giriş zamanı xəta baş verdi');
+        }
+      } else {
+        // Company login - implement later
+        setError('Şirkət girişi hələ hazır deyil');
       }
-
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Save to localStorage for persistence
-      localStorage.setItem('grumble_user', JSON.stringify(user));
-
-      login(user);
-      navigate('/');
     } catch (err) {
       setError('Giriş zamanı xəta baş verdi');
     } finally {

@@ -63,11 +63,19 @@ const UserProfileDropdown = ({ user, onLogout }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
       >
-        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-          {user?.name?.charAt(0) || 'M'}
-        </div>
+        {user?.avatar ? (
+          <img
+            src={user.avatar}
+            alt={`${user?.firstName} ${user?.lastName}`}
+            className="w-8 h-8 rounded-full object-cover"
+          />
+        ) : (
+          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+            {user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'U'}
+          </div>
+        )}
         <span className="text-sm font-medium text-gray-700 hidden md:block">
-          {user?.name || 'Mryam Şkiliyeva'}
+          {user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'İstifadəçi'}
         </span>
         <svg 
           className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -84,15 +92,23 @@ const UserProfileDropdown = ({ user, onLogout }) => {
           {/* User Info Header */}
           <div className="px-4 py-3 border-b border-gray-100">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
-                {user?.name?.charAt(0) || 'M'}
-              </div>
+              {user?.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt={`${user?.firstName} ${user?.lastName}`}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                  {user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'U'}
+                </div>
+              )}
               <div>
                 <p className="text-sm font-medium text-gray-900">
-                  {user?.name || 'Mryam Şkiliyeva'}
+                  {user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'İstifadəçi'}
                 </p>
                 <p className="text-xs text-gray-500">
-                  {user?.email || 'mryam@example.com'}
+                  {user?.email || 'email@example.com'}
                 </p>
               </div>
             </div>

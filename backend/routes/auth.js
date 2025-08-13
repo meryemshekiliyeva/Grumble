@@ -5,8 +5,41 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const Company = require('../models/Company');
 const { auth } = require('../middleware/auth');
+const passport = require('../config/passport');
+const {
+  generateVerificationCode,
+  sendVerificationEmail,
+  sendPasswordResetEmail
+} = require('../services/emailService');
+const multer = require('multer');
+const path = require('path');
 
 const router = express.Router();
+
+// Configure multer for profile picture uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/avatars/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'avatar-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Yalnız şəkil faylları qəbul edilir'), false);
+    }
+  }
+});
 
 // Generate JWT token
 const generateToken = (id, type = 'user') => {
@@ -24,13 +57,17 @@ router.post('/register/user', [
   body('firstName').trim().isLength({ min: 2, max: 50 }).withMessage('Ad 2-50 simvol arasında olmalıdır'),
   body('lastName').trim().isLength({ min: 2, max: 50 }).withMessage('Soyad 2-50 simvol arasında olmalıdır'),
   body('email').isEmail().normalizeEmail().withMessage('Düzgün email daxil edin'),
-  body('password').isLength({ min: 6 }).withMessage('Şifrə ən azı 6 simvol olmalıdır'),
+  body('password')
+    .isLength({ min: 8 }).withMessage('Şifrə ən azı 8 simvol olmalıdır')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
+    .withMessage('Şifrə ən azı bir böyük hərf, bir kiçik hərf, bir rəqəm və bir xüsusi simvol olmalıdır'),
   body('confirmPassword').custom((value, { req }) => {
     if (value !== req.body.password) {
       throw new Error('Şifrələr uyğun gəlmir');
     }
     return true;
-  })
+  }),
+  body('phone').optional().matches(/^\+994[0-9]{9}$/).withMessage('Düzgün telefon nömrəsi daxil edin (+994XXXXXXXXX)')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -42,7 +79,7 @@ router.post('/register/user', [
       });
     }
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, phone } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -53,28 +90,267 @@ router.post('/register/user', [
       });
     }
 
+    // Generate verification code
+    const verificationCode = generateVerificationCode();
+
     // Create user
     const user = new User({
       firstName,
       lastName,
       email,
-      password
+      password,
+      phone,
+      emailVerificationToken: verificationCode
     });
 
+    await user.save();
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, firstName, verificationCode);
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      // Continue with registration even if email fails
+    }
+
+    res.status(201).json({
+      success: true,
+      message: 'Qeydiyyat uğurla tamamlandı. E-poçt ünvanınıza doğrulama kodu göndərildi.',
+      requiresVerification: true,
+      email: email
+    });
+
+  } catch (error) {
+    console.error('User registration error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
+// @route   POST /api/auth/verify-email
+// @desc    Verify user email with code
+// @access  Public
+router.post('/verify-email', [
+  body('email').isEmail().normalizeEmail().withMessage('Düzgün email daxil edin'),
+  body('code').isLength({ min: 6, max: 6 }).withMessage('Doğrulama kodu 6 rəqəm olmalıdır')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation errors',
+        errors: errors.array()
+      });
+    }
+
+    const { email, code } = req.body;
+
+    const user = await User.findOne({
+      email,
+      emailVerificationToken: code
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Yanlış doğrulama kodu və ya email'
+      });
+    }
+
+    user.isEmailVerified = true;
+    user.emailVerificationToken = undefined;
     await user.save();
 
     // Generate token
     const token = generateToken(user._id, 'user');
 
-    res.status(201).json({
+    res.json({
       success: true,
-      message: 'İstifadəçi uğurla qeydiyyatdan keçdi',
+      message: 'Email uğurla doğrulandı',
       token,
       user: user.toJSON()
     });
 
   } catch (error) {
-    console.error('User registration error:', error);
+    console.error('Email verification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
+// @route   POST /api/auth/resend-verification
+// @desc    Resend email verification code
+// @access  Public
+router.post('/resend-verification', [
+  body('email').isEmail().normalizeEmail().withMessage('Düzgün email daxil edin')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation errors',
+        errors: errors.array()
+      });
+    }
+
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Bu email ilə istifadəçi tapılmadı'
+      });
+    }
+
+    if (user.isEmailVerified) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email artıq doğrulanıb'
+      });
+    }
+
+    // Generate new verification code
+    const verificationCode = generateVerificationCode();
+    user.emailVerificationToken = verificationCode;
+    await user.save();
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, user.firstName, verificationCode);
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      return res.status(500).json({
+        success: false,
+        message: 'Email göndərilmədi. Yenidən cəhd edin.'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Yeni doğrulama kodu email ünvanınıza göndərildi'
+    });
+
+  } catch (error) {
+    console.error('Resend verification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
+// @route   POST /api/auth/forgot-password
+// @desc    Send password reset email
+// @access  Public
+router.post('/forgot-password', [
+  body('email').isEmail().normalizeEmail().withMessage('Düzgün email daxil edin')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation errors',
+        errors: errors.array()
+      });
+    }
+
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Bu email ilə istifadəçi tapılmadı'
+      });
+    }
+
+    // Generate reset code
+    const resetCode = generateVerificationCode();
+    user.passwordResetToken = resetCode;
+    user.passwordResetExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    // Send reset email
+    try {
+      await sendPasswordResetEmail(email, user.firstName, resetCode);
+    } catch (emailError) {
+      console.error('Password reset email error:', emailError);
+      return res.status(500).json({
+        success: false,
+        message: 'Email göndərilmədi. Yenidən cəhd edin.'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Şifrə yenileme kodu email ünvanınıza göndərildi'
+    });
+
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
+// @route   POST /api/auth/reset-password
+// @desc    Reset password with code
+// @access  Public
+router.post('/reset-password', [
+  body('email').isEmail().normalizeEmail().withMessage('Düzgün email daxil edin'),
+  body('code').isLength({ min: 6, max: 6 }).withMessage('Yenileme kodu 6 rəqəm olmalıdır'),
+  body('password')
+    .isLength({ min: 8 }).withMessage('Şifrə ən azı 8 simvol olmalıdır')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
+    .withMessage('Şifrə ən azı bir böyük hərf, bir kiçik hərf, bir rəqəm və bir xüsusi simvol olmalıdır')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation errors',
+        errors: errors.array()
+      });
+    }
+
+    const { email, code, password } = req.body;
+
+    const user = await User.findOne({
+      email,
+      passwordResetToken: code,
+      passwordResetExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Yanlış və ya vaxtı keçmiş yenileme kodu'
+      });
+    }
+
+    user.password = password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Şifrə uğurla yeniləndi'
+    });
+
+  } catch (error) {
+    console.error('Reset password error:', error);
     res.status(500).json({
       success: false,
       message: 'Server xətası'
@@ -310,6 +586,32 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
+// @route   GET /api/auth/me
+// @desc    Get current user
+// @access  Private
+router.get('/me', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'İstifadəçi tapılmadı'
+      });
+    }
+
+    res.json({
+      success: true,
+      user: user.toJSON()
+    });
+  } catch (error) {
+    console.error('Get user error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
 // @route   POST /api/auth/logout
 // @desc    Logout user
 // @access  Private
@@ -319,6 +621,135 @@ router.post('/logout', auth, (req, res) => {
     success: true,
     message: 'Uğurla çıxış etdiniz'
   });
+});
+
+// Google OAuth routes
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
+
+router.get('/google/callback',
+  passport.authenticate('google', { session: false }),
+  (req, res) => {
+    const token = generateToken(req.user._id, 'user');
+    res.redirect(`${process.env.CLIENT_URL}/auth/success?token=${token}`);
+  }
+);
+
+// Facebook OAuth routes
+router.get('/facebook', passport.authenticate('facebook', {
+  scope: ['email']
+}));
+
+router.get('/facebook/callback',
+  passport.authenticate('facebook', { session: false }),
+  (req, res) => {
+    const token = generateToken(req.user._id, 'user');
+    res.redirect(`${process.env.CLIENT_URL}/auth/success?token=${token}`);
+  }
+);
+
+// @route   PUT /api/auth/profile
+// @desc    Update user profile
+// @access  Private
+router.put('/profile', auth, upload.single('avatar'), [
+  body('firstName').optional().trim().isLength({ min: 2, max: 50 }).withMessage('Ad 2-50 simvol arasında olmalıdır'),
+  body('lastName').optional().trim().isLength({ min: 2, max: 50 }).withMessage('Soyad 2-50 simvol arasında olmalıdır'),
+  body('email').optional().isEmail().normalizeEmail().withMessage('Düzgün email daxil edin'),
+  body('phone').optional().custom((value) => {
+    if (value && !value.match(/^\+994[0-9]{9}$/)) {
+      throw new Error('Düzgün telefon nömrəsi daxil edin (+994XXXXXXXXX)');
+    }
+    return true;
+  })
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation errors',
+        errors: errors.array()
+      });
+    }
+
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'İstifadəçi tapılmadı'
+      });
+    }
+
+    const { firstName, lastName, email, phone } = req.body;
+
+    // Check if email is being changed and if it's already in use
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: 'Bu email artıq istifadə olunur'
+        });
+      }
+      user.email = email;
+      user.isEmailVerified = false; // Require re-verification for new email
+    }
+
+    // Update fields
+    if (firstName) user.firstName = firstName;
+    if (lastName) user.lastName = lastName;
+    if (phone !== undefined) user.phone = phone;
+
+    // Handle avatar upload
+    if (req.file) {
+      user.avatar = `/uploads/avatars/${req.file.filename}`;
+    }
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Profil uğurla yeniləndi',
+      user: user.toJSON()
+    });
+
+  } catch (error) {
+    console.error('Profile update error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
+// @route   DELETE /api/auth/profile
+// @desc    Delete user account
+// @access  Private
+router.delete('/profile', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'İstifadəçi tapılmadı'
+      });
+    }
+
+    await User.findByIdAndDelete(req.userId);
+
+    res.json({
+      success: true,
+      message: 'Hesab uğurla silindi'
+    });
+
+  } catch (error) {
+    console.error('Account deletion error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
 });
 
 module.exports = router;

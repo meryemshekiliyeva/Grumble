@@ -24,7 +24,12 @@
     "nodemailer": "^6.9.4",
     "helmet": "^7.0.0",
     "express-rate-limit": "^6.10.0",
-    "compression": "^1.7.4"
+    "compression": "^1.7.4",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-facebook": "^3.0.0",
+    "express-session": "^1.17.3",
+    "crypto": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",

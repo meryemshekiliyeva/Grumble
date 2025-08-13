@@ -23,12 +23,41 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Şifrə tələb olunur'],
-    minlength: [6, 'Şifrə ən azı 6 simvol olmalıdır']
+    required: function() {
+      return !this.googleId && !this.facebookId;
+    },
+    minlength: [8, 'Şifrə ən azı 8 simvol olmalıdır'],
+    validate: {
+      validator: function(password) {
+        if (!password && (this.googleId || this.facebookId)) return true;
+        // Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(password);
+      },
+      message: 'Şifrə ən azı bir böyük hərf, bir kiçik hərf, bir rəqəm və bir xüsusi simvol olmalıdır'
+    }
   },
   phone: {
     type: String,
-    match: [/^\+994[0-9]{9}$/, 'Düzgün telefon nömrəsi daxil edin (+994XXXXXXXXX)']
+    validate: {
+      validator: function(phone) {
+        if (!phone) return true; // Phone is optional
+        return /^\+994[0-9]{9}$/.test(phone);
+      },
+      message: 'Düzgün telefon nömrəsi daxil edin (+994XXXXXXXXX)'
+    }
+  },
+  googleId: {
+    type: String,
+    sparse: true
+  },
+  facebookId: {
+    type: String,
+    sparse: true
+  },
+  provider: {
+    type: String,
+    enum: ['local', 'google', 'facebook'],
+    default: 'local'
   },
   avatar: {
     type: String,

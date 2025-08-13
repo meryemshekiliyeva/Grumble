@@ -323,12 +323,30 @@ const Home = () => {
   };
   return (
     <div className="w-full">
-      <section className="w-full py-16 md:py-20 lg:py-24 bg-muted/20">
-        <div className="container mx-auto max-w-6xl px-6 text-center">
-          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+      <section className="w-full py-16 md:py-20 lg:py-24 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+        {/* Background illustration */}
+        <div className="absolute inset-0 opacity-10">
+          <svg className="w-full h-full" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+            <circle cx="200" cy="150" r="80" fill="currentColor" opacity="0.1"/>
+            <circle cx="800" cy="200" r="60" fill="currentColor" opacity="0.1"/>
+            <circle cx="1000" cy="400" r="100" fill="currentColor" opacity="0.1"/>
+            <circle cx="300" cy="600" r="70" fill="currentColor" opacity="0.1"/>
+            <path d="M100,300 Q300,200 500,300 T900,300" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.2"/>
+            <path d="M200,500 Q400,400 600,500 T1000,500" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.2"/>
+          </svg>
+        </div>
+
+        <div className="container mx-auto max-w-6xl px-6 text-center relative z-10">
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
             Şikayətinizi Bildirin
           </h1>
-          <p className="mx-auto max-w-2xl text-muted-foreground md:text-xl mt-4">
+          <p className="mx-auto max-w-2xl text-gray-600 md:text-xl mt-4 leading-relaxed">
             Grumble səsinizin eşidildiyi platformadır. Təcrübələrinizi paylaşın və başqalarının hekayələrini oxuyun.
           </p>
           <button

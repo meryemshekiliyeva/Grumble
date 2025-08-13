@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Complaints from './pages/Complaints';
@@ -13,6 +13,7 @@ import NewComplaint from './pages/NewComplaint';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
+import VerifyEmail from './pages/VerifyEmail';
 import AdminLayout from './admin/AdminLayout';
 import AdminDashboard from './admin/Dashboard';
 import ComplaintsList from './admin/ComplaintsList';
@@ -27,10 +28,26 @@ import ReviewPage from './pages/ReviewPage';
 import MyComplaints from './pages/MyComplaints';
 import Profile from './pages/Profile';
 
-function App() {
+// Loading component
+const LoadingScreen = () => (
+  <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <p className="text-gray-600">Yüklənir...</p>
+    </div>
+  </div>
+);
+
+// App content component
+const AppContent = () => {
+  const { isLoading } = useAuth();
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -45,6 +62,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="verify-email" element={<VerifyEmail />} />
           <Route path="category/:categoryId" element={<CategoryPage />} />
           <Route path="company/:companyId" element={<CompanyDetailPage />} />
           <Route path="companies/:companyId" element={<CompanyDetailPage />} />
@@ -62,9 +80,35 @@ function App() {
           <Route path="companies/:id" element={<CompanyView />} />
         </Route>
       </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    </BrowserRouter>
   );
+};
+
+// Main App component
+function App() {
+  try {
+    return (
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    );
+  } catch (error) {
+    console.error('App error:', error);
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Application Error</h1>
+          <p className="text-gray-600 mb-4">{error.message}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+          >
+            Reload Page
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;

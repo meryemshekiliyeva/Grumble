@@ -9,6 +9,7 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
   const [likeCount, setLikeCount] = useState(likes);
   const [showComments, setShowComments] = useState(false);
   const [replyText, setReplyText] = useState('');
+  const [commentText, setCommentText] = useState('');
   const [activeReplyId, setActiveReplyId] = useState(null);
   const [commentsList, setCommentsList] = useState([
     {
@@ -45,7 +46,7 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
     if (onLike) onLike();
   };
 
-  const handleComment = () => {
+  const handleCommentToggle = () => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
@@ -55,6 +56,27 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
     if (onComment) onComment();
   };
 
+  const handleAddComment = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    if (commentText.trim()) {
+      const newComment = {
+        id: `comment-${Date.now()}`,
+        author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
+        text: commentText,
+        time: 'İndi',
+        avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S',
+        replies: []
+      };
+
+      setCommentsList(prev => [...prev, newComment]);
+      setCommentText('');
+    }
+  };
+
   const handleReply = () => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -62,26 +84,32 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
     }
 
     if (replyText.trim() && activeReplyId) {
-      // Add reply to the specific comment
-      setCommentsList(prevComments =>
-        prevComments.map(comment =>
-          comment.id === activeReplyId
-            ? {
-                ...comment,
-                replies: [...comment.replies, {
-                  id: `reply-${Date.now()}`,
-                  author: user?.name || 'Siz',
-                  text: replyText,
-                  time: 'İndi'
-                }]
-              }
-            : comment
-        )
-      );
+      const addReplyToComment = (comments) => {
+        return comments.map(comment => {
+          if (comment.id === activeReplyId) {
+            return {
+              ...comment,
+              replies: [...comment.replies, {
+                id: `reply-${Date.now()}`,
+                author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
+                text: replyText,
+                time: 'İndi',
+                avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S'
+              }]
+            };
+          }
+          // Also check in replies for nested replies
+          if (comment.replies.length > 0) {
+            return {
+              ...comment,
+              replies: addReplyToComment(comment.replies)
+            };
+          }
+          return comment;
+        });
+      };
 
-      // Update total comment count
-      setCommentCount(prev => prev + 1);
-
+      setCommentsList(addReplyToComment);
       setReplyText('');
       setActiveReplyId(null);
     }
@@ -177,7 +205,7 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
               <span>{likeCount}</span>
             </button>
             <button
-              onClick={handleComment}
+              onClick={handleCommentToggle}
               className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg transition-all duration-200 text-sm font-medium ${
                 showComments
                   ? 'bg-blue-50 text-blue-600 border border-blue-200'
@@ -238,6 +266,18 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
                                 <p className="text-xs text-gray-700 mt-1">
                                   {reply.text}
                                 </p>
+                                <button
+                                  onClick={() => {
+                                    if (!isAuthenticated) {
+                                      navigate('/login');
+                                      return;
+                                    }
+                                    setActiveReplyId(activeReplyId === reply.id ? null : reply.id);
+                                  }}
+                                  className="text-xs text-blue-600 hover:text-blue-800 mt-1"
+                                >
+                                  Cavab ver
+                                </button>
                               </div>
                             </div>
                           ))}
@@ -249,6 +289,28 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
               ))}
             </div>
 
+            {/* Main comment input */}
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg border">
+              <textarea
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder={isAuthenticated ? "Şikayət haqqında rəyinizi yazın..." : "Şərh yazmaq üçün giriş edin"}
+                className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                rows="3"
+                disabled={!isAuthenticated}
+              />
+              <div className="flex justify-end space-x-2 mt-2">
+                <button
+                  onClick={handleAddComment}
+                  disabled={!isAuthenticated || !commentText.trim()}
+                  className="px-4 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Şərh Yaz
+                </button>
+              </div>
+            </div>
+
+            {/* Reply input */}
             {activeReplyId && (
               <div className="mt-4 p-3 bg-white rounded-lg border">
                 <textarea

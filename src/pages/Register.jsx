@@ -82,7 +82,7 @@ const Register = () => {
 
     try {
       if (activeTab === 'user') {
-        // Validate user form
+        // Basic validation
         if (!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
           setError('Bütün sahələri doldurun');
           setLoading(false);
@@ -95,29 +95,35 @@ const Register = () => {
           return;
         }
 
-        if (formData.password.length < 6) {
-          setError('Şifrə ən azı 6 simvol olmalıdır');
-          setLoading(false);
-          return;
-        }
-
         if (!formData.agreeToTerms) {
           setError('İstifadə şərtlərini qəbul etməlisiniz');
           setLoading(false);
           return;
         }
 
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Register user
+        const result = await register({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          phone: formData.phone
+        });
 
-        // Send welcome email
-        const emailTemplate = getRegistrationEmailTemplate(
-          `${formData.firstName} ${formData.lastName}`,
-          formData.email
-        );
-        await sendEmail(formData.email, emailTemplate);
-
-        setSuccess('Qeydiyyat uğurla tamamlandı! E-poçt ünvanınıza təsdiq linki göndərildi. Giriş səhifəsinə yönləndirilirsiniz...');
+        if (result.success) {
+          setSuccess('Qeydiyyat uğurla tamamlandı! E-poçt ünvanınıza doğrulama kodu göndərildi.');
+          // Redirect to email verification page
+          setTimeout(() => {
+            navigate(`/verify-email?email=${encodeURIComponent(formData.email)}`);
+          }, 2000);
+        } else {
+          if (result.errors && result.errors.length > 0) {
+            setError(result.errors.map(err => err.msg).join(', '));
+          } else {
+            setError(result.message || 'Qeydiyyat zamanı xəta baş verdi');
+          }
+        }
 
         // Redirect to login after 2 seconds
         setTimeout(() => {
