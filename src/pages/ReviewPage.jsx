@@ -31,9 +31,21 @@ const ReviewPage = () => {
       category: 'E-ticarət',
       categoryId: 'e-ticaret'
     },
-    'bolt-food': {
-      name: 'Bolt Food',
+    'bolt': {
+      name: 'Bolt',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Bolt_logo.svg/200px-Bolt_logo.svg.png',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi'
+    },
+    'yango': {
+      name: 'Yango',
+      logo: 'https://yango.com/images/logo.png',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi'
+    },
+    'fooderos': {
+      name: 'Fooderos',
+      logo: 'https://fooderos.az/images/logo.png',
       category: 'Yemək Çatdırılması',
       categoryId: 'yemek-catdirilmasi'
     }

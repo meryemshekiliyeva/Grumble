@@ -1,6 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const UserRegistrationForm = ({ formData, handleChange }) => {
+  const [passwordValidation, setPasswordValidation] = useState({
+    length: false,
+    uppercase: false,
+    number: false,
+    special: false
+  });
+
+  const validatePassword = (password) => {
+    const validation = {
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      number: /\d/.test(password),
+      special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+    };
+    setPasswordValidation(validation);
+    return validation;
+  };
+
+  const handlePasswordChange = (e) => {
+    const password = e.target.value;
+    validatePassword(password);
+    handleChange(e);
+  };
   return (
     <>
       {/* Name Fields */}
@@ -67,10 +90,31 @@ const UserRegistrationForm = ({ formData, handleChange }) => {
           autoComplete="new-password"
           required
           value={formData.password}
-          onChange={handleChange}
+          onChange={handlePasswordChange}
           className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm az-text"
           placeholder="••••••••"
         />
+        {formData.password && (
+          <div className="mt-2 space-y-1">
+            <div className="text-xs text-gray-600 mb-1">Şifrə tələbləri:</div>
+            <div className={`text-xs flex items-center ${passwordValidation.length ? 'text-green-600' : 'text-red-600'}`}>
+              <span className="mr-1">{passwordValidation.length ? '✓' : '✗'}</span>
+              Ən azı 8 simvol
+            </div>
+            <div className={`text-xs flex items-center ${passwordValidation.uppercase ? 'text-green-600' : 'text-red-600'}`}>
+              <span className="mr-1">{passwordValidation.uppercase ? '✓' : '✗'}</span>
+              Böyük hərf
+            </div>
+            <div className={`text-xs flex items-center ${passwordValidation.number ? 'text-green-600' : 'text-red-600'}`}>
+              <span className="mr-1">{passwordValidation.number ? '✓' : '✗'}</span>
+              Rəqəm
+            </div>
+            <div className={`text-xs flex items-center ${passwordValidation.special ? 'text-green-600' : 'text-red-600'}`}>
+              <span className="mr-1">{passwordValidation.special ? '✓' : '✗'}</span>
+              Xüsusi simvol (!@#$%^&*)
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Confirm Password */}

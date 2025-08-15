@@ -4,49 +4,87 @@ import ComplaintCard from '../components/ComplaintCard';
 
 const complaints = [
 	{
+		id: 'SKNET001',
 		title: 'İnternet Bağlantı Problemləri',
 		company: 'CityNet',
+		category: 'telekommunikasiya',
 		author: 'Orxan Məmmədov',
 		date: '9 İyul 2025',
 		summary:
 			'İnternetim 3 gündür işləmir. Müştəri xidmətləri zənglərimi cavablamır. Bu qəbuledilməzdir!',
+		status: 'pending'
 	},
 	{
+		id: 'SKWOLT002',
 		title: 'Səhv Yemək Çatdırılması',
 		company: 'Wolt',
+		category: 'yemək çatdırılması',
 		author: 'Aysel Əliyeva',
 		date: '8 İyul 2025',
 		summary:
 			'Pizza sifariş etdim, amma tamamilə fərqli sifariş gətirdilər. Restoran və Wolt bir-birini günahlandırır.',
+		status: 'resolved'
 	},
 	{
+		id: 'SKTREN003',
 		title: 'Məhsul Çatdırılmadı',
 		company: 'Trendyol',
+		category: 'e-ticarət',
 		author: 'Leyla Hüseynova',
 		date: '7 İyul 2025',
 		summary:
 			'2 həftə əvvəl paltar sifariş etdim, hələ də çatdırılmayıb. İzləmə nömrəsi işləmir.',
+		status: 'in_progress'
 	},
 	{
+		id: 'SKBANK004',
 		title: 'Bank Kartı Bloklandı',
 		company: 'Kapital Bank',
+		category: 'bank xidmətləri',
 		author: 'Murad Quliyev',
 		date: '6 İyul 2025',
 		summary: 'Kartım səbəbsiz bloklanıb və dəstək xidməti zəifdir.',
+		status: 'pending'
 	},
 	{
+		id: 'SKAZER005',
 		title: 'Mobil İnternet Yavaşlığı',
 		company: 'Azercell',
+		category: 'telekommunikasiya',
 		author: 'Nigar Məmmədova',
 		date: '5 İyul 2025',
 		summary: 'Mobil internet sürəti çox zəifdir, müqaviləyə uyğun deyil.',
+		status: 'in_progress'
 	},
 	{
+		id: 'SKBOLT006',
 		title: 'Sifariş Gecikməsi',
 		company: 'Bolt Food',
+		category: 'yemək çatdırılması',
 		author: 'Elvin Əliyev',
 		date: '4 İyul 2025',
 		summary: 'Sifarişim 1 saatdan çox gecikdi və heç bir məlumat verilmədi.',
+		status: 'resolved'
+	},
+	{
+		id: 'SKYANGO007',
+		title: 'Yanlış Ünvan',
+		company: 'Yango',
+		category: 'yemək çatdırılması',
+		author: 'Səbinə Qasımova',
+		date: '3 İyul 2025',
+		summary: 'Kuryer yanlış ünvana getdi və yemək soyudu. Pul geri qaytarılmadı.',
+		status: 'pending'
+	},
+	{
+		id: 'SKFOOD008',
+		title: 'Keyfiyyətsiz Yemək',
+		company: 'Fooderos',
+		category: 'yemək çatdırılması',
+		author: 'Tural Həsənov',
+		date: '2 İyul 2025',
+		summary: 'Sifariş etdiyim yemək tamamilə keyfiyyətsiz idi. Restoran cavab vermir.',
+		status: 'pending'
 	},
 ];
 
@@ -99,12 +137,13 @@ const Complaints = () => {
 			</div>
 			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{filteredComplaints.length > 0 ? (
-					filteredComplaints.map((complaint, idx) => (
+					filteredComplaints.map((complaint) => (
 						<ComplaintCard
-							key={idx}
+							key={complaint.id}
 							{...complaint}
-							onLike={() => handleLike(idx)}
-							onComment={() => handleComment(idx)}
+							complaintId={complaint.id}
+							onLike={() => handleLike(complaint.id)}
+							onComment={() => handleComment(complaint.id)}
 						/>
 					))
 				) : (

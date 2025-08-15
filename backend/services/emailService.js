@@ -49,7 +49,7 @@ const sendVerificationEmail = async (email, firstName, verificationCode) => {
     <body>
       <div class="container">
         <div class="header">
-          <div class="logo">✓ şikayətvar</div>
+          <div class="logo">✓ Grumble</div>
           <h1 style="color: white; margin: 0; font-size: 28px;">Hesab Doğrulama</h1>
         </div>
         
@@ -117,7 +117,7 @@ const sendPasswordResetEmail = async (email, firstName, resetCode) => {
     <body>
       <div class="container">
         <div class="header">
-          <div class="logo">✓ şikayətvar</div>
+          <div class="logo">✓ Grumble</div>
           <h1 style="color: white; margin: 0; font-size: 28px;">Şifrə Yenileme</h1>
         </div>
         

@@ -89,8 +89,24 @@ const Register = () => {
           return;
         }
 
+        // Password validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+        if (!passwordRegex.test(formData.password)) {
+          setError('Şifrə ən azı 8 simvol, böyük hərf, rəqəm və xüsusi simvol olmalıdır');
+          setLoading(false);
+          return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
           setError('Şifrələr uyğun gəlmir');
+          setLoading(false);
+          return;
+        }
+
+        // Check if email already exists
+        const existingUsers = JSON.parse(localStorage.getItem('grumble_users') || '[]');
+        if (existingUsers.some(user => user.email === formData.email)) {
+          setError('Bu email ünvanı ilə artıq qeydiyyat mövcuddur');
           setLoading(false);
           return;
         }

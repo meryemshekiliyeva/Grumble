@@ -8,25 +8,31 @@ import FAQItem from '../components/FAQItem';
 
 const mockComplaints = [
   {
+    id: 'SKNET001',
     title: 'İnternet Bağlantı Problemləri',
     company: 'CityNet',
     author: 'Orxan Məmmədov',
     date: '9 İyul 2025',
     summary: 'İnternetim 3 gündür işləmir. Müştəri xidmətləri zənglərimi cavablamır. Bu qəbuledilməzdir!',
+    status: 'pending'
   },
   {
+    id: 'SKWOLT002',
     title: 'Səhv Yemək Çatdırılması',
     company: 'Wolt',
     author: 'Aysel Əliyeva',
     date: '8 İyul 2025',
     summary: 'Pizza sifariş etdim, amma tamamilə fərqli sifariş gətirdilər. Restoran və Wolt bir-birini günahlandırır.',
+    status: 'resolved'
   },
     {
+    id: 'SKTREN003',
     title: 'Məhsul Çatdırılmadı',
     company: 'Trendyol',
     author: 'Leyla Hüseynova',
     date: '7 İyul 2025',
     summary: '2 həftə əvvəl paltar sifariş etdim, hələ də çatdırılmayıb. İzləmə nömrəsi işləmir.',
+    status: 'in_progress'
   },
 ];
 
@@ -147,7 +153,7 @@ const categories = [
     icon: '🍕',
     bgColor: '#00b894',
     categoryId: 'yemek-catdirilmasi',
-    brands: ['Bolt Food', 'Wolt', 'Yemeksepeti', 'Glovo', 'Sürücü', 'Foodpanda']
+    brands: ['Wolt', 'Bolt', 'Yango', 'Fooderos', 'Yemeksepeti', 'Glovo']
   },
   {
     name: 'Nəqliyyat',
@@ -613,10 +619,11 @@ const Home = () => {
           <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
             {mockComplaints.map((complaint, index) => (
               <ComplaintCard
-                key={index}
+                key={complaint.id}
                 {...complaint}
-                onLike={() => handleLike(index)}
-                onComment={() => handleComment(index)}
+                complaintId={complaint.id}
+                onLike={() => handleLike(complaint.id)}
+                onComment={() => handleComment(complaint.id)}
               />
             ))}
           </div>

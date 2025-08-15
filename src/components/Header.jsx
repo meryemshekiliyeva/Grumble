@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import UserProfileDropdown from './UserProfileDropdown';
+import NotificationDropdown from './NotificationDropdown';
 
 const Header = () => {
   const location = useLocation();
@@ -71,12 +72,15 @@ const Header = () => {
             Haqqımızda
           </NavLink>
         </nav>
-        <div className="flex items-center space-x-4">
-          <Link to="/new-complaint" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
+        <div className="flex items-center space-x-3">
+          <Link to="/yeni-sikayetler" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
             Yeni Şikayət
           </Link>
           {isAuthenticated ? (
-            <UserProfileDropdown user={user} onLogout={handleLogout} />
+            <div className="flex items-center space-x-2">
+              <NotificationDropdown />
+              <UserProfileDropdown user={user} onLogout={handleLogout} />
+            </div>
           ) : (
             <Link to="/login" className="hidden md:inline-flex px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md hover:bg-primary/20">
               Giriş

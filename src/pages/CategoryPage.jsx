@@ -68,6 +68,43 @@ const CategoryPage = () => {
           description: 'Onlayn alış-veriş platforması'
         }
       ]
+    },
+    'yemek-catdirilmasi': {
+      name: 'Yemək Çatdırılması',
+      companies: [
+        {
+          id: 'wolt',
+          name: 'Wolt',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wolt_logo.svg/200px-Wolt_logo.svg.png',
+          rating: 3.5,
+          complaints: 43,
+          description: 'Beynəlxalq yemək çatdırılması platforması'
+        },
+        {
+          id: 'bolt',
+          name: 'Bolt',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Bolt_logo.svg/200px-Bolt_logo.svg.png',
+          rating: 3.2,
+          complaints: 156,
+          description: 'Sürətli yemək çatdırılması xidməti'
+        },
+        {
+          id: 'yango',
+          name: 'Yango',
+          logo: 'https://yango.com/images/logo.png',
+          rating: 3.8,
+          complaints: 89,
+          description: 'Müasir yemək çatdırılması platforması'
+        },
+        {
+          id: 'fooderos',
+          name: 'Fooderos',
+          logo: 'https://fooderos.az/images/logo.png',
+          rating: 3.4,
+          complaints: 67,
+          description: 'Yerli yemək çatdırılması xidməti'
+        }
+      ]
     }
   };
 

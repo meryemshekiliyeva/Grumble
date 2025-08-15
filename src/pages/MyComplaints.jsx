@@ -23,7 +23,7 @@ const MyComplaints = () => {
     switch (status) {
       case 'resolved':
         return {
-          label: 'Həll edildi',
+          label: 'Cavablandırılıb',
           bg: 'bg-green-50',
           text: 'text-green-700',
           border: 'border-green-200',
@@ -31,7 +31,7 @@ const MyComplaints = () => {
         };
       case 'in-progress':
         return {
-          label: 'İncelənir',
+          label: 'Gözləyir',
           bg: 'bg-yellow-50',
           text: 'text-yellow-700',
           border: 'border-yellow-200',
@@ -39,19 +39,19 @@ const MyComplaints = () => {
         };
       case 'rejected':
         return {
-          label: 'Rədd edildi',
-          bg: 'bg-red-50',
-          text: 'text-red-700',
-          border: 'border-red-200',
-          icon: '✗'
+          label: 'Gözləyir',
+          bg: 'bg-yellow-50',
+          text: 'text-yellow-700',
+          border: 'border-yellow-200',
+          icon: '⏳'
         };
       default:
         return {
           label: 'Gözləyir',
-          bg: 'bg-gray-50',
-          text: 'text-gray-700',
-          border: 'border-gray-200',
-          icon: '⏸'
+          bg: 'bg-yellow-50',
+          text: 'text-yellow-700',
+          border: 'border-yellow-200',
+          icon: '⏳'
         };
     }
   };
@@ -122,7 +122,7 @@ const MyComplaints = () => {
                       <p className="text-sm text-gray-600 mb-2">
                         <span className="font-medium">{complaint.company}</span> • {complaint.category}
                       </p>
-                      <p className="text-gray-700 mb-3">{complaint.summary}</p>
+                      <p className="text-gray-700 mb-3 break-words">{complaint.summary}</p>
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
                         <span>Şikayət ID: {complaint.id}</span>
                         <span>Tarix: {complaint.date}</span>

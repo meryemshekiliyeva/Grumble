@@ -115,18 +115,32 @@ const Categories = () => {
     ],
     'Yemək Çatdırılması': [
       {
-        name: 'Bolt Food',
+        name: 'Wolt',
+        category: 'Yemək Çatdırılması',
+        complaintCount: 43,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wolt_logo.svg/200px-Wolt_logo.svg.png',
+        bgColor: '#009DE0'
+      },
+      {
+        name: 'Bolt',
         category: 'Yemək Çatdırılması',
         complaintCount: 156,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Bolt_logo.svg/200px-Bolt_logo.svg.png',
         bgColor: '#34D186'
       },
       {
-        name: 'Wolt',
+        name: 'Yango',
         category: 'Yemək Çatdırılması',
-        complaintCount: 43,
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wolt_logo.svg/200px-Wolt_logo.svg.png',
-        bgColor: '#009DE0'
+        complaintCount: 89,
+        icon: 'https://yango.com/images/logo.png',
+        bgColor: '#FFD700'
+      },
+      {
+        name: 'Fooderos',
+        category: 'Yemək Çatdırılması',
+        complaintCount: 67,
+        icon: 'https://fooderos.az/images/logo.png',
+        bgColor: '#FF6B35'
       }
     ],
     'Nəqliyyat': [

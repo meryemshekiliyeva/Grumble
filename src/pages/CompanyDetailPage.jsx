@@ -112,21 +112,69 @@ const CompanyDetailPage = () => {
       },
       views: 12400
     },
-    'bolt-food': {
-      name: 'Bolt Food',
+    'bolt': {
+      name: 'Bolt',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Bolt_logo.svg/200px-Bolt_logo.svg.png',
       rating: 3.2,
       totalReviews: 156,
       website: 'food.bolt.eu',
       category: 'Yemək Çatdırılması',
       categoryId: 'yemek-catdirilmasi',
-      description: 'Bolt Food sürətli yemək çatdırılması xidməti təklif edir.',
+      description: 'Bolt sürətli yemək çatdırılması xidməti təklif edir. Müştərilərə keyfiyyətli və vaxtında çatdırılma xidməti göstərir.',
       stats: {
         positive: 65,
         resolved: 25,
         negative: 10
       },
-      views: 9800
+      views: 9800,
+      socialLinks: {
+        website: 'https://food.bolt.eu',
+        facebook: 'https://facebook.com/bolt',
+        instagram: 'https://instagram.com/bolt',
+        twitter: 'https://twitter.com/bolt'
+      }
+    },
+    'yango': {
+      name: 'Yango',
+      logo: 'https://yango.com/images/logo.png',
+      rating: 3.8,
+      totalReviews: 89,
+      website: 'yango.com',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi',
+      description: 'Yango müasir texnologiyalardan istifadə edərək yemək çatdırılması xidməti göstərir. Geniş restoran seçimi və sürətli çatdırılma.',
+      stats: {
+        positive: 78,
+        resolved: 15,
+        negative: 7
+      },
+      views: 7200,
+      socialLinks: {
+        website: 'https://yango.com',
+        facebook: 'https://facebook.com/yango',
+        instagram: 'https://instagram.com/yango'
+      }
+    },
+    'fooderos': {
+      name: 'Fooderos',
+      logo: 'https://fooderos.az/images/logo.png',
+      rating: 3.4,
+      totalReviews: 67,
+      website: 'fooderos.az',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi',
+      description: 'Fooderos yerli yemək çatdırılması platformasıdır. Azərbaycan mətbəxindən tutmuş beynəlxalq yeməklərə qədər geniş seçim təklif edir.',
+      stats: {
+        positive: 72,
+        resolved: 18,
+        negative: 10
+      },
+      views: 5400,
+      socialLinks: {
+        website: 'https://fooderos.az',
+        facebook: 'https://facebook.com/fooderos',
+        instagram: 'https://instagram.com/fooderos'
+      }
     }
   };
 
@@ -293,6 +341,107 @@ const CompanyDetailPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
               Rəy bildir
+            </Link>
+          </div>
+        </div>
+
+        {/* User Comments Section */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-xl font-semibold text-gray-900 mb-6">İstifadəçi Şərhləri</h3>
+
+          {/* Sample Comments */}
+          <div className="space-y-6">
+            <div className="border-b border-gray-200 pb-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                  A
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="font-medium text-gray-900">Ali Məmmədov</span>
+                    <span className="text-sm text-gray-500">3 gün əvvəl</span>
+                    <div className="flex items-center">
+                      {[1, 2, 3, 4].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      <svg className="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-gray-700">
+                    {company.name} ilə təcrübəm ümumiyyətlə yaxşı olub. Xidmət keyfiyyəti qənaətbəxşdir, lakin bəzi hallarda gecikmələr olur.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-b border-gray-200 pb-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-medium">
+                  L
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="font-medium text-gray-900">Leyla Həsənova</span>
+                    <span className="text-sm text-gray-500">1 həftə əvvəl</span>
+                    <div className="flex items-center">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-gray-700">
+                    Çox məmnunam! Müştəri xidməti əla, problemlər tez həll olunur. Tövsiyə edirəm.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-medium">
+                  R
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="font-medium text-gray-900">Rəşad Quliyev</span>
+                    <span className="text-sm text-gray-500">2 həftə əvvəl</span>
+                    <div className="flex items-center">
+                      {[1, 2].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      {[3, 4, 5].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-gray-700">
+                    Təəssüf ki, xidmət keyfiyyəti gözlədiyim kimi deyil. Çox vaxt problemlər yaranır və həlli uzun çəkir.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Add Comment Button */}
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <Link
+              to={`/review/${companyId}`}
+              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Şərh əlavə et
             </Link>
           </div>
         </div>
