@@ -28,6 +28,7 @@ import CompanyDetailPage from './pages/CompanyDetailPage';
 import ReviewPage from './pages/ReviewPage';
 import MyComplaints from './pages/MyComplaints';
 import Profile from './pages/Profile';
+import AiChatAssistant from './components/AiChatAssistant'; // Import the assistant UI
 
 // Loading component
 const LoadingScreen = () => (
@@ -50,7 +51,12 @@ const AppContent = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={
+          <>
+            <Layout />
+            <AiChatAssistant themeColor="#6c5ce7" /> {/* Pass theme color */}
+          </>
+        }>
           <Route index element={<Home />} />
           <Route path="complaints" element={<Complaints />} />
           <Route path="companies" element={<Companies />} />
