@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qeydiyyatdan Keçmiş Şirkətlərin Rəyləri</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Şirkət Rəyləri Paneli</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section class="overview">
+                <h2>Ümumi Baxış</h2>
+                <p id="accepted-reviews">Qəbul edilmiş rəylər: <span>0</span></p>
+                <p id="overall-score">Ümumi bal: <span>0</span></p>
+            </section>
+            <section class="review-history">
+                <h2>Rəylər Tarixi</h2>
+                <div class="timeframe">
+                    <button id="daily-btn">Günlük</button>
+                    <button id="weekly-btn">Həftəlik</button>
+                    <button id="monthly-btn">Aylıq</button>
+                    <button id="yearly-btn">İllik</button>
+                </div>
+                <div id="history-chart">
+                    <!-- Qrafik burada göstəriləcək -->
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Qeydiyyatdan Keçmiş Şirkətlər</p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
