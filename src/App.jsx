@@ -28,6 +28,7 @@ import CompanyDetailPage from './pages/CompanyDetailPage';
 import ReviewPage from './pages/ReviewPage';
 import MyComplaints from './pages/MyComplaints';
 import Profile from './pages/Profile';
+import AuthSuccess from './pages/AuthSuccess';
 import AiChatAssistant from './components/AiChatAssistant'; // Import the assistant UI
 
 // Loading component
@@ -76,6 +77,7 @@ const AppContent = () => {
           <Route path="review/:companyId" element={<ReviewPage />} />
           <Route path="my-complaints" element={<MyComplaints />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="auth/success" element={<AuthSuccess />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />

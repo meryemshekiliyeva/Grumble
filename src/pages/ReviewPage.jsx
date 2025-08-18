@@ -1,9 +1,10 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReviewForm from '../components/ReviewForm';
 
 const ReviewPage = () => {
   const { companyId } = useParams();
+  const navigate = useNavigate();
 
   // Company data - in real app this would come from API
   const companies = {
@@ -69,6 +70,21 @@ const ReviewPage = () => {
   const handleReviewSubmit = (reviewData) => {
     console.log('Review submitted:', reviewData);
     // Handle review submission
+    // Store review in localStorage for now
+    const existingReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+    if (!existingReviews[companyId]) {
+      existingReviews[companyId] = [];
+    }
+    existingReviews[companyId].push({
+      ...reviewData,
+      id: Date.now(),
+      date: new Date().toISOString(),
+      author: 'Current User' // In real app, get from auth context
+    });
+    localStorage.setItem('companyReviews', JSON.stringify(existingReviews));
+
+    // Redirect to company page
+    navigate(`/company/${companyId}`);
   };
 
   return (

@@ -10,11 +10,13 @@ const Login = () => {
   const [activeTab, setActiveTab] = useState('user'); // 'user' or 'company'
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false
   });
   const [companyFormData, setCompanyFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,18 +39,31 @@ const Login = () => {
     if (type === 'company') {
       setActiveTab('company');
     }
+
+    // Load remembered email if exists
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    if (rememberedEmail) {
+      setFormData(prev => ({
+        ...prev,
+        email: rememberedEmail,
+        rememberMe: true
+      }));
+    }
   }, [searchParams]);
 
   const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === 'checkbox' ? checked : value;
+
     if (activeTab === 'user') {
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value
+        [name]: inputValue
       });
     } else {
       setCompanyFormData({
         ...companyFormData,
-        [e.target.name]: e.target.value
+        [name]: inputValue
       });
     }
   };
@@ -62,9 +77,15 @@ const Login = () => {
       const currentFormData = activeTab === 'user' ? formData : companyFormData;
 
       if (activeTab === 'user') {
-        const result = await login(currentFormData.email, currentFormData.password);
+        const result = await login(currentFormData.email, currentFormData.password, currentFormData.rememberMe);
 
         if (result.success) {
+          // Store remember me preference
+          if (currentFormData.rememberMe) {
+            localStorage.setItem('rememberedEmail', currentFormData.email);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+          }
           navigate('/');
         } else {
           setError(result.message || 'Giriş zamanı xəta baş verdi');
@@ -98,7 +119,7 @@ const Login = () => {
             </div>
           </div>
           <h2 className="text-3xl font-black text-gray-900 az-text">
-            Grumble-a Giriş
+            Grumble Giriş
           </h2>
           <p className="mt-2 text-sm text-gray-600 az-text">
             {activeTab === 'user'
@@ -153,7 +174,7 @@ const Login = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-                E-poçt Ünvanı
+                Email adresin
               </label>
               <input
                 id="email"
@@ -189,8 +210,10 @@ const Login = () => {
               <div className="flex items-center">
                 <input
                   id="remember-me"
-                  name="remember-me"
+                  name="rememberMe"
                   type="checkbox"
+                  checked={activeTab === 'user' ? formData.rememberMe : companyFormData.rememberMe}
+                  onChange={handleChange}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700 az-text">

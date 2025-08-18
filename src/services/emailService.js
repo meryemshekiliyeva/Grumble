@@ -2,13 +2,13 @@
 export const emailService = {
   // Send email verification for new user registration
   sendVerificationEmail: async (email, verificationCode) => {
-    const subject = "Şikayətvar - Üyelik Oluşturmak için Son Adım";
+    const subject = "Grumble - Üyelik Oluşturmak için Son Adım";
     const htmlContent = `
       <!DOCTYPE html>
       <html>
       <head>
         <meta charset="UTF-8">
-        <title>Şikayətvar E-Posta Doğrulama</title>
+        <title>Grumble E-Posta Doğrulama</title>
         <style>
           body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5; }
           .container { max-width: 600px; margin: 0 auto; background-color: white; }

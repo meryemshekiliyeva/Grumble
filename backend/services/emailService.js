@@ -73,7 +73,7 @@ const sendVerificationEmail = async (email, firstName, verificationCode) => {
         </div>
         
         <div class="footer">
-          <p style="margin: 0 0 10px 0;">Hörmətlə,<br><strong>Şikayətvar Komandası</strong></p>
+          <p style="margin: 0 0 10px 0;">Hörmətlə,<br><strong>Grumble Komandası</strong></p>
           <p style="margin: 10px 0 0 0; font-size: 12px;">
             Bu e-post avtomatik olaraq göndərilmişdir. Cavab verməyin.
           </p>
@@ -84,9 +84,9 @@ const sendVerificationEmail = async (email, firstName, verificationCode) => {
   `;
 
   const mailOptions = {
-    from: `"Şikayətvar" <${process.env.SMTP_USER}>`,
+    from: `"Grumble" <${process.env.SMTP_USER}>`,
     to: email,
-    subject: 'Şikayətvar - Hesab Doğrulama',
+    subject: 'Grumble - Hesab Doğrulama',
     html: htmlContent
   };
 
@@ -141,7 +141,7 @@ const sendPasswordResetEmail = async (email, firstName, resetCode) => {
         </div>
         
         <div class="footer">
-          <p style="margin: 0 0 10px 0;">Hörmətlə,<br><strong>Şikayətvar Komandası</strong></p>
+          <p style="margin: 0 0 10px 0;">Hörmətlə,<br><strong>Grumble Komandası</strong></p>
           <p style="margin: 10px 0 0 0; font-size: 12px;">
             Bu e-post avtomatik olaraq göndərilmişdir. Cavab verməyin.
           </p>
@@ -152,9 +152,9 @@ const sendPasswordResetEmail = async (email, firstName, resetCode) => {
   `;
 
   const mailOptions = {
-    from: `"Şikayətvar" <${process.env.SMTP_USER}>`,
+    from: `"Grumble" <${process.env.SMTP_USER}>`,
     to: email,
-    subject: 'Şikayətvar - Şifrə Yenileme',
+    subject: 'Grumble - Şifrə Yenileme',
     html: htmlContent
   };
 

@@ -2,39 +2,13 @@ import React from 'react';
 
 const SocialLogin = ({ onGoogleLogin, onFacebookLogin }) => {
   const handleGoogleLogin = () => {
-    // In a real application, this would integrate with Google OAuth
-    console.log('Google login initiated');
-    
-    // Simulate Google OAuth flow
-    const mockGoogleUser = {
-      id: 'google_123456789',
-      name: 'Mryam Şkiliyeva',
-      email: 'meryemshekiliyeva@gmail.com',
-      avatar: 'https://api.dicebear.com/8.x/initials/svg?seed=Mryam Şkiliyeva&backgroundColor=3b82f6',
-      provider: 'google'
-    };
-    
-    if (onGoogleLogin) {
-      onGoogleLogin(mockGoogleUser);
-    }
+    // Redirect to Google OAuth endpoint
+    window.location.href = '/api/auth/google';
   };
 
   const handleFacebookLogin = () => {
-    // In a real application, this would integrate with Facebook OAuth
-    console.log('Facebook login initiated');
-    
-    // Simulate Facebook OAuth flow
-    const mockFacebookUser = {
-      id: 'facebook_123456789',
-      name: 'Mryam Şkiliyeva',
-      email: 'meryemshekiliyeva@gmail.com',
-      avatar: 'https://api.dicebear.com/8.x/initials/svg?seed=Mryam Şkiliyeva&backgroundColor=1877f2',
-      provider: 'facebook'
-    };
-    
-    if (onFacebookLogin) {
-      onFacebookLogin(mockFacebookUser);
-    }
+    // Redirect to Facebook OAuth endpoint
+    window.location.href = '/api/auth/facebook';
   };
 
   return (

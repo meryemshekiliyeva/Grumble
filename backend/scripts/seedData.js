@@ -19,7 +19,8 @@ const seedData = async () => {
       User.deleteMany({}),
       Company.deleteMany({}),
       Category.deleteMany({}),
-      Complaint.deleteMany({})
+      Complaint.deleteMany({}),
+      Review.deleteMany({})
     ]);
     console.log('Cleared existing data');
 
@@ -106,11 +107,19 @@ const seedData = async () => {
     // Create sample users
     const users = await User.insertMany([
       {
+        firstName: 'Aysel',
+        lastName: 'Əliyeva',
+        email: 'aysel.aliyeva@example.com',
+        password: 'password123',
+        phone: '+994501234567',
+        isEmailVerified: true
+      },
+      {
         firstName: 'Əli',
         lastName: 'Məmmədov',
         email: 'ali@example.com',
         password: 'password123',
-        phone: '+994501234567',
+        phone: '+994501234568',
         isEmailVerified: true
       },
       {
@@ -455,12 +464,48 @@ const seedData = async () => {
     }
     console.log('Updated category statistics');
 
+    // Create sample reviews
+    const reviews = await Review.insertMany([
+      {
+        user: users[0]._id, // Aysel Əliyeva
+        company: companies[0]._id, // Azercell
+        rating: 4,
+        title: 'Yaxşı xidmət',
+        content: 'Ümumiyyətlə xidmətdən razıyam. İnternet sürəti yaxşıdır, amma bəzən kəsilmələr olur.',
+        isAnonymous: false,
+        isPublic: true,
+        moderationStatus: 'approved'
+      },
+      {
+        user: users[0]._id, // Aysel Əliyeva
+        company: companies[1]._id, // Kapital Bank
+        rating: 5,
+        title: 'Əla bank xidməti',
+        content: 'Çox peşəkar komanda. Müştəri xidmətləri həmişə kömək edir və problemlər tez həll olunur.',
+        isAnonymous: false,
+        isPublic: true,
+        moderationStatus: 'approved'
+      },
+      {
+        user: users[1]._id, // Əli Məmmədov
+        company: companies[2]._id, // Wolt
+        rating: 3,
+        title: 'Orta səviyyə',
+        content: 'Yemək keyfiyyəti yaxşıdır, amma çatdırılma vaxtı uzundur.',
+        isAnonymous: false,
+        isPublic: true,
+        moderationStatus: 'approved'
+      }
+    ]);
+    console.log('Created sample reviews');
+
     console.log('\n✅ Seed data created successfully!');
     console.log('\n📊 Summary:');
     console.log(`- Categories: ${categories.length}`);
     console.log(`- Users: ${users.length + 1} (including admin)`);
     console.log(`- Companies: ${companies.length}`);
     console.log(`- Complaints: ${complaints.length}`);
+    console.log(`- Reviews: ${reviews.length}`);
     console.log('\n🔐 Admin Login:');
     console.log('Email: admin@grumble.az');
     console.log('Password: admin123');

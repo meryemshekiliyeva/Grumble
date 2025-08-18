@@ -63,7 +63,7 @@ const UserRegistrationForm = ({ formData, handleChange }) => {
       {/* Email */}
       <div>
         <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-          E-poçt Ünvanı
+          Email adresin
         </label>
         <input
           id="email"
