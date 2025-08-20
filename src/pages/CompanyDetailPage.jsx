@@ -112,8 +112,8 @@ const CompanyDetailPage = () => {
       },
       views: 12400
     },
-    'bolt': {
-      name: 'Bolt',
+    'bolt-food': {
+      name: 'Bolt Food',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Bolt_logo.svg/200px-Bolt_logo.svg.png',
       rating: 3.2,
       totalReviews: 156,
@@ -175,7 +175,137 @@ const CompanyDetailPage = () => {
         facebook: 'https://facebook.com/fooderos',
         instagram: 'https://instagram.com/fooderos'
       }
-    }
+    },
+    'azal': {
+  name: 'AZAL',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Azerbaijan_Airlines_logo.png',
+  website: 'azal.az',
+  category: 'Havayolu',
+  categoryId: 'havayolu',
+  description: 'AZAL — Azərbaycan Hava Yolları, Azərbaycanın milli bayraq daşıyıcısı və ən böyük aviaşirkətidir, 1992-ci ildən fəaliyyət göstərir.',
+  rating: 4.3,
+  totalReviews: 200,
+  stats: {
+    positive: 150,
+    resolved: 120,
+    negative: 50
+  },
+  views: 14500,
+  socialLinks: {
+    website: 'https://azal.az/en/',
+    facebook: 'https://www.facebook.com/AzerbaijanAirlines',
+    instagram: 'https://www.instagram.com/azerbaijanairlines/',
+    twitter: 'https://twitter.com/AzalOfficial',
+    youtube: 'https://www.youtube.com/AzerbaijanAirlinesOfficial',
+    linkedin: 'https://www.linkedin.com/company/azerbaiCategoryCardjan-airlines/',
+    telegram: 'https://t.me/azerbaijanairlines'
+  }
+},
+
+'nar-mobile': {
+  name: 'Nar',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/2/27/Nar_logo.png',
+  website: 'nar.az',
+  category: 'Mobil operator',
+  categoryId: 'mobil_operator',
+  description: 'Azerfon MMC – Nar mobil rabitə operatoru 2007-ci ildən etibarən fəaliyyət göstərir və müştərilərə keyfiyyətli rabitə xidmətləri təqdim edir.',
+  rating: 4.2,
+  totalReviews: 120,
+  stats: {
+    positive: 90,
+    resolved: 70,
+    negative: 30
+  },
+  views: 9800,
+  socialLinks: {
+    website: 'https://www.nar.az',
+    facebook: 'https://www.facebook.com/Narofficial/',
+    instagram: 'https://www.instagram.com/nar_official/'
+  }
+},
+
+'azersu': {
+  name: 'Azərsu',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Azersu_logo.png',
+  website: 'azersu.az',
+  category: 'Su təchizatı',
+  categoryId: 'su_techizati',
+  description: 'Azərsu ASC — Azərbaycanın su təchizatı və kanalizasiya xidmətlərini təmin edən dövlət müəssisəsidir.',
+  rating: 3.1,
+  totalReviews: 80,
+  stats: {
+    positive: 40,
+    resolved: 25,
+    negative: 40
+  },
+  views: 5200,
+  socialLinks: {
+    website: 'http://www.azersu.az'
+  }
+},
+
+'azerishiq': {
+  name: 'Azerişıq',
+  logo: 'https://azerishiq.az/images/logo.png',
+  website: 'azerishiq.az',
+  category: 'Elektrik təchizatı',
+  categoryId: 'elektrik_techizati',
+  description: 'Azerişıq ASC — elektrik enerjisinin paylanması və abonentlərin dayanıqlı təchizatı ilə məşğul olan şirkətdir.',
+  rating: 2.9,
+  totalReviews: 150,
+  stats: {
+    positive: 60,
+    resolved: 45,
+    negative: 90
+  },
+  views: 11200,
+  socialLinks: {
+    website: 'http://www.azerishiq.az',
+    instagram: 'https://www.instagram.com/azerishiq.asc/'
+  }
+},
+
+'bip': {
+  name: 'BiP',
+  logo: 'https://bip.com/assets/img/logo.svg',
+  category: 'Messenger',
+  categoryId: 'messenger',
+  description: 'BiP — təhlükəsiz mesajlaşma, səsli və video zənglər, tərcümə funksiyası və itən mesajlar təqdim edən mobil tətbiqdir.',
+  rating: 4.5,
+  totalReviews: 95,
+  stats: {
+    positive: 80,
+    resolved: 60,
+    negative: 15
+  },
+  views: 8700,
+  socialLinks: {
+    website: 'https://bip.com'
+  }
+},
+
+'yelo-bank': {
+  name: 'Yelo Bank',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Yelo_Bank_logo.png',
+  website: 'yelo.az',
+  category: 'Bank',
+  categoryId: 'bank',
+  description: 'Yelo Bank — müasir və müştəri yönümlü bank xidmətləri təqdim edən parlaq bankdır.',
+  rating: 4.0,
+  totalReviews: 110,
+  stats: {
+    positive: 85,
+    resolved: 70,
+    negative: 25
+  },
+  views: 7600,
+  socialLinks: {
+    website: 'https://www.yelo.az',
+    facebook: 'https://www.facebook.com/yelobank/',
+    instagram: 'https://www.instagram.com/yelobank/'
+  }
+}
+
   };
 
   const company = companies[companyId];
