@@ -23,7 +23,7 @@ const MyComplaints = () => {
     switch (status) {
       case 'resolved':
         return {
-          label: 'Həll edildi',
+          label: 'Cavablandırılıb',
           bg: 'bg-green-50',
           text: 'text-green-700',
           border: 'border-green-200',
@@ -31,7 +31,7 @@ const MyComplaints = () => {
         };
       case 'in-progress':
         return {
-          label: 'İncelənir',
+          label: 'Gözləyir',
           bg: 'bg-yellow-50',
           text: 'text-yellow-700',
           border: 'border-yellow-200',
@@ -39,19 +39,19 @@ const MyComplaints = () => {
         };
       case 'rejected':
         return {
-          label: 'Rədd edildi',
-          bg: 'bg-red-50',
-          text: 'text-red-700',
-          border: 'border-red-200',
-          icon: '✗'
+          label: 'Gözləyir',
+          bg: 'bg-yellow-50',
+          text: 'text-yellow-700',
+          border: 'border-yellow-200',
+          icon: '⏳'
         };
       default:
         return {
           label: 'Gözləyir',
-          bg: 'bg-gray-50',
-          text: 'text-gray-700',
-          border: 'border-gray-200',
-          icon: '⏸'
+          bg: 'bg-yellow-50',
+          text: 'text-yellow-700',
+          border: 'border-yellow-200',
+          icon: '⏳'
         };
     }
   };
@@ -87,9 +87,9 @@ const MyComplaints = () => {
         {/* Complaints List */}
         {complaints.length === 0 ? (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Hələ şikayətiniz yoxdur</h3>
@@ -122,7 +122,7 @@ const MyComplaints = () => {
                       <p className="text-sm text-gray-600 mb-2">
                         <span className="font-medium">{complaint.company}</span> • {complaint.category}
                       </p>
-                      <p className="text-gray-700 mb-3">{complaint.summary}</p>
+                      <p className="text-gray-700 mb-3 break-words">{complaint.summary}</p>
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
                         <span>Şikayət ID: {complaint.id}</span>
                         <span>Tarix: {complaint.date}</span>

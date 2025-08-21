@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useNotifications } from '../contexts/NotificationContext';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { user, logout, updateProfile } = useAuth();
+  const {
+    notifications,
+    markAsRead,
+    markAllAsRead,
+    removeNotification,
+    getNotificationIcon,
+    getNotificationColor,
+    formatTimestamp
+  } = useNotifications();
   const [activeTab, setActiveTab] = useState('profile');
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -18,8 +30,17 @@ const Profile = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: ''
+    phone: '',
+    password: ''
   });
+
+  // Handle direct navigation from URL parameters
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && ['profile', 'complaints', 'comments', 'likes', 'notifications'].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
 
   // Initialize form data when user data is available
   useEffect(() => {
@@ -28,7 +49,8 @@ const Profile = () => {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         email: user.email || '',
-        phone: user.phone || ''
+        phone: user.phone || '',
+        password: ''
       });
       setImagePreview(user.avatar);
     }
@@ -44,6 +66,12 @@ const Profile = () => {
     if (!phone) return true; // Phone is optional
     const phoneRegex = /^\+994[0-9]{9}$/;
     return phoneRegex.test(phone);
+  };
+
+  const validatePassword = (password) => {
+    if (!password) return true; // Password is optional when editing profile
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
   };
 
   const validateForm = () => {
@@ -69,6 +97,10 @@ const Profile = () => {
 
     if (formData.phone && !validatePhone(formData.phone)) {
       newErrors.phone = 'Düzgün telefon nömrəsi daxil edin (+994XXXXXXXXX)';
+    }
+
+    if (formData.password && !validatePassword(formData.password)) {
+      newErrors.password = 'Şifrə ən azı 8 simvol, böyük hərf, rəqəm və xüsusi simvol olmalıdır';
     }
 
     setErrors(newErrors);
@@ -143,6 +175,10 @@ const Profile = () => {
       updateData.append('email', formData.email);
       updateData.append('phone', formData.phone);
 
+      if (formData.password) {
+        updateData.append('password', formData.password);
+      }
+
       if (profileImage) {
         updateData.append('avatar', profileImage);
       }
@@ -178,7 +214,8 @@ const Profile = () => {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         email: user.email || '',
-        phone: user.phone || ''
+        phone: user.phone || '',
+        password: ''
       });
     }
     setIsEditing(false);
@@ -255,6 +292,15 @@ const Profile = () => {
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      )
+    },
+    {
+      id: 'notifications',
+      label: 'Bildirişlərim',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6a2 2 0 01-2-2V7a2 2 0 012-2h5m5 0v6m0 0l3-3m-3 3l-3-3" />
         </svg>
       )
     },
@@ -471,23 +517,16 @@ const Profile = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email <span className="text-red-500">*</span>
                   </label>
-                  <div className="relative">
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      disabled={!isEditing}
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                        isEditing ? 'border-gray-300' : 'border-gray-200 bg-gray-50'
-                      } ${errors.email ? 'border-red-500' : ''}`}
-                      placeholder="email@example.com"
-                    />
-                    {user?.isEmailVerified && (
-                      <div className="absolute right-3 top-2.5">
-                        <span className="text-green-500 text-sm">✓</span>
-                      </div>
-                    )}
-                  </div>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    disabled={!isEditing}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      isEditing ? 'border-gray-300' : 'border-gray-200 bg-gray-50'
+                    } ${errors.email ? 'border-red-500' : ''}`}
+                    placeholder="email@example.com"
+                  />
                   {errors.email && (
                     <p className="mt-1 text-sm text-red-600">{errors.email}</p>
                   )}
@@ -515,6 +554,31 @@ const Profile = () => {
                     Telefon nömrəsi məcburi deyil
                   </p>
                 </div>
+
+                {/* Password */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Şifrə
+                  </label>
+                  <input
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    disabled={!isEditing}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      isEditing ? 'border-gray-300' : 'border-gray-200 bg-gray-50'
+                    } ${errors.password ? 'border-red-500' : ''}`}
+                    placeholder={isEditing ? "Yeni şifrə daxil edin" : "••••••••"}
+                  />
+                  {errors.password && (
+                    <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                  )}
+                  {isEditing && (
+                    <p className="mt-1 text-sm text-gray-500">
+                      Şifrə ən azı 8 simvol, böyük hərf, rəqəm və xüsusi simvol olmalıdır
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Image Upload Error */}
@@ -525,11 +589,11 @@ const Profile = () => {
               )}
             </div>
 
-            {/* Danger Zone */}
+            {/* Account Management */}
             <div className="bg-white rounded-lg shadow-sm border border-red-200 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-red-900">Təhlükəli Zona</h3>
+                  <h3 className="text-lg font-semibold text-red-900">Hesab İdarəetməsi</h3>
                   <p className="text-sm text-red-600 mt-1">Bu əməliyyat geri alına bilməz</p>
                 </div>
                 <button
@@ -549,17 +613,46 @@ const Profile = () => {
       case 'complaints':
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Şikayətlərim</h3>
-            <div className="text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">📝</div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir şikayətiniz yoxdur</h3>
-              <p className="text-gray-500 mb-4">İlk şikayətinizi yazmaq üçün aşağıdakı düyməni basın.</p>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Şikayətlərim</h3>
               <Link
-                to="/new-complaint"
-                className="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
+                to="/yeni-sikayetler"
+                className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
               >
-                Yeni Şikayət Yaz
+                <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Yeni Şikayət
               </Link>
+            </div>
+
+            {/* Table Header */}
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-3 px-4 font-medium text-gray-700">Şikayət</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-700">Şirkət</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-700">Status</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-700">Tarix</th>
+                    <th className="text-left py-3 px-4 font-medium text-gray-700">Əməliyyatlar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Empty state */}
+                  <tr>
+                    <td colSpan="5" className="text-center py-12">
+                      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+                        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir şikayətiniz yoxdur</h3>
+                      <p className="text-gray-500">Şikayətlərinizi burada izləyə bilərsiniz.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         );
@@ -567,11 +660,15 @@ const Profile = () => {
       case 'comments':
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Yorumlarım</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Rəylərim</h3>
             <div className="text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">💬</div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir yorumunuz yoxdur</h3>
-              <p className="text-gray-500">Şikayətlərə yorum yazmağa başlayın.</p>
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir rəyiniz yoxdur</h3>
+              <p className="text-gray-500">Şikayətlərə rəy yazmağa başlayın.</p>
             </div>
           </div>
         );
@@ -579,9 +676,13 @@ const Profile = () => {
       case 'likes':
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Bəyəndiklərim</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Bəyəndiklərim</h3>
             <div className="text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">❤️</div>
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-pink-100 to-red-100 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-pink-600" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
               <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bəyəndiyiniz yoxdur</h3>
               <p className="text-gray-500">Şikayətləri bəyənməyə başlayın.</p>
             </div>
@@ -591,12 +692,84 @@ const Profile = () => {
       case 'notifications':
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Bildirişlərim</h3>
-            <div className="text-center py-12">
-              <div className="text-gray-400 text-6xl mb-4">🔔</div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bildirişiniz yoxdur</h3>
-              <p className="text-gray-500">Yeni bildirişlər burada görünəcək.</p>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Bildirişlərim</h3>
+              {notifications.filter(n => !n.isRead).length > 0 && (
+                <button
+                  onClick={markAllAsRead}
+                  className="text-sm text-blue-600 hover:text-blue-800"
+                >
+                  Hamısını oxunmuş et
+                </button>
+              )}
             </div>
+
+            {notifications.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6a2 2 0 01-2-2V7a2 2 0 012-2h5m5 0v6m0 0l3-3m-3 3l-3-3" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bildirişiniz yoxdur</h3>
+                <p className="text-gray-500">Yeni bildirişlər burada görünəcək.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {notifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className={`p-4 rounded-lg border-l-4 ${
+                      !notification.isRead
+                        ? 'bg-blue-50 border-l-blue-500'
+                        : 'bg-gray-50 border-l-gray-300'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start space-x-3 flex-1">
+                        <div className="text-2xl">
+                          {getNotificationIcon(notification.type)}
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2">
+                            <h4 className={`text-sm font-medium ${
+                              !notification.isRead ? 'text-gray-900' : 'text-gray-700'
+                            }`}>
+                              {notification.title}
+                            </h4>
+                            {!notification.isRead && (
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            )}
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1">
+                            {notification.message}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-2">
+                            {formatTimestamp(notification.timestamp)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {!notification.isRead && (
+                          <button
+                            onClick={() => markAsRead(notification.id)}
+                            className="text-xs text-blue-600 hover:text-blue-800"
+                          >
+                            Oxunmuş et
+                          </button>
+                        )}
+                        <button
+                          onClick={() => removeNotification(notification.id)}
+                          className="text-xs text-red-600 hover:text-red-800"
+                        >
+                          Sil
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         );
 
@@ -619,8 +792,13 @@ const Profile = () => {
                     onClick={() => {
                       if (item.isLogout) {
                         handleLogout();
+                      } else if (item.id === 'complaints') {
+                        // Navigate to dedicated complaints page
+                        navigate('/my-complaints');
                       } else {
                         setActiveTab(item.id);
+                        // Update URL to reflect the current tab
+                        navigate(`/profile?tab=${item.id}`, { replace: true });
                       }
                     }}
                     className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${

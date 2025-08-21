@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getPasswordResetEmailTemplate, sendEmail } from '../utils/emailTemplates';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1); // 1: Email input, 2: Code verification, 3: New password
   const [formData, setFormData] = useState({
     email: '',
@@ -12,6 +12,7 @@ const ForgotPassword = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -23,72 +24,112 @@ const ForgotPassword = () => {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
+    setMessage('');
 
     try {
-      // Generate reset code
-      const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: formData.email })
+      });
 
-      // Send password reset email
-      const emailTemplate = getPasswordResetEmailTemplate('İstifadəçi', resetCode);
-      await sendEmail(formData.email, emailTemplate);
+      const data = await response.json();
 
-      setIsLoading(false);
-      setMessage('Təsdiq kodu e-poçt ünvanınıza göndərildi.');
-      setStep(2);
+      if (response.ok) {
+        setMessage('Şifrə yenileme kodu e-poçt ünvanınıza göndərildi.');
+        setStep(2);
+      } else {
+        setError(data.message || 'E-poçt göndərilmədi. Yenidən cəhd edin.');
+      }
     } catch (error) {
+      setError('Şəbəkə xətası. Yenidən cəhd edin.');
+    } finally {
       setIsLoading(false);
-      setMessage('E-poçt göndərilmədi. Yenidən cəhd edin.');
     }
   };
 
   const handleCodeVerification = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      if (formData.verificationCode === '123456') {
-        setMessage('Kod təsdiqləndi. Yeni şifrənizi daxil edin.');
-        setStep(3);
-      } else {
-        setMessage('Yanlış kod. Yenidən cəhd edin.');
-      }
-    }, 1500);
+    setMessage('Kod təsdiqləndi. Yeni şifrənizi daxil edin.');
+    setStep(3);
   };
 
   const handlePasswordReset = async (e) => {
     e.preventDefault();
-    
+    setError('');
+    setMessage('');
+
     if (formData.newPassword !== formData.confirmPassword) {
-      setMessage('Şifrələr uyğun gəlmir.');
+      setError('Şifrələr uyğun gəlmir.');
       return;
     }
-    
+
     if (formData.newPassword.length < 8) {
-      setMessage('Şifrə ən azı 8 simvol olmalıdır.');
+      setError('Şifrə ən azı 8 simvol olmalıdır.');
       return;
     }
-    
+
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      const response = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          code: formData.verificationCode,
+          password: formData.newPassword
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Şifrəniz uğurla dəyişdirildi!');
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+      } else {
+        setError(data.message || 'Şifrə dəyişdirilmədi. Yenidən cəhd edin.');
+      }
+    } catch (error) {
+      setError('Şəbəkə xətası. Yenidən cəhd edin.');
+    } finally {
       setIsLoading(false);
-      setMessage('Şifrəniz uğurla dəyişdirildi!');
-      // Redirect to login after 2 seconds
-      setTimeout(() => {
-        window.location.href = '/login';
-      }, 2000);
-    }, 2000);
+    }
   };
 
-  const resendCode = () => {
+  const resendCode = async () => {
     setIsLoading(true);
-    setTimeout(() => {
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: formData.email })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('Yeni şifrə yenileme kodu göndərildi.');
+      } else {
+        setError(data.message || 'Kod göndərilmədi. Yenidən cəhd edin.');
+      }
+    } catch (error) {
+      setError('Şəbəkə xətası. Yenidən cəhd edin.');
+    } finally {
       setIsLoading(false);
-      setMessage('Yeni təsdiq kodu göndərildi.');
-    }, 1500);
+    }
   };
 
   return (

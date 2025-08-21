@@ -161,11 +161,12 @@ const ReviewForm = ({ companyName, onSubmit }) => {
           <input
             type="text"
             name="title"
-            value={formData.title}
+            value={companyName || formData.title}
             onChange={handleInputChange}
             placeholder={companyName || "CityNet"}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             required
+            readOnly={!!companyName}
           />
         </div>
 

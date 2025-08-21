@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Complaints from './pages/Complaints';
@@ -27,6 +28,8 @@ import CompanyDetailPage from './pages/CompanyDetailPage';
 import ReviewPage from './pages/ReviewPage';
 import MyComplaints from './pages/MyComplaints';
 import Profile from './pages/Profile';
+import AuthSuccess from './pages/AuthSuccess';
+import AiChatAssistant from './components/AiChatAssistant'; // Import the assistant UI
 
 // Loading component
 const LoadingScreen = () => (
@@ -49,7 +52,12 @@ const AppContent = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={
+          <>
+            <Layout />
+            <AiChatAssistant themeColor="#6c5ce7" /> {/* Pass theme color */}
+          </>
+        }>
           <Route index element={<Home />} />
           <Route path="complaints" element={<Complaints />} />
           <Route path="companies" element={<Companies />} />
@@ -69,6 +77,7 @@ const AppContent = () => {
           <Route path="review/:companyId" element={<ReviewPage />} />
           <Route path="my-complaints" element={<MyComplaints />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="auth/success" element={<AuthSuccess />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
@@ -89,7 +98,9 @@ function App() {
   try {
     return (
       <AuthProvider>
-        <AppContent />
+        <NotificationProvider>
+          <AppContent />
+        </NotificationProvider>
       </AuthProvider>
     );
   } catch (error) {

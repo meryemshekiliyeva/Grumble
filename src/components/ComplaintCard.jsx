@@ -2,33 +2,113 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-const ComplaintCard = ({ title, company, author, date, summary, status = 'pending', likes = 0, comments = 0, onLike, onComment }) => {
+const ComplaintCard = ({ title, company, author, date, summary, status = 'pending', likes = 0, comments = 0, onLike, onComment, complaintId }) => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
   const [showComments, setShowComments] = useState(false);
-  const [replyText, setReplyText] = useState('');
-  const [commentText, setCommentText] = useState('');
+  const [messageText, setMessageText] = useState('');
   const [activeReplyId, setActiveReplyId] = useState(null);
-  const [commentsList, setCommentsList] = useState([
-    {
-      id: 'comment1',
-      author: 'Ali Məmmədov',
-      text: 'Mənim də eyni problem var. Çox pis xidmət.',
-      time: '2 saat əvvəl',
-      avatar: 'A',
-      replies: []
-    },
-    {
-      id: 'comment2',
-      author: 'Leyla Həsənova',
-      text: 'Siz müştəri xidmətlərinə müraciət etmisiniz?',
-      time: '5 saat əvvəl',
-      avatar: 'L',
-      replies: []
-    }
-  ]);
+
+  // Generate unique comments for each complaint based on complaintId
+  const generateUniqueComments = (id) => {
+    const commentSets = [
+      // For internet/telecom complaints
+      [
+        {
+          id: `${id}-comment1`,
+          author: 'Ali Məmmədov',
+          text: 'Mənim də eyni problem var. Çox pis xidmət.',
+          time: '2 saat əvvəl',
+          avatar: 'A',
+          replies: []
+        },
+        {
+          id: `${id}-comment2`,
+          author: 'Leyla Həsənova',
+          text: 'Siz müştəri xidmətlərinə müraciət etmisiniz?',
+          time: '5 saat əvvəl',
+          avatar: 'L',
+          replies: []
+        }
+      ],
+      // For food delivery complaints
+      [
+        {
+          id: `${id}-comment1`,
+          author: 'Rəşad Əliyev',
+          text: 'Mən də bu restoranla problem yaşamışam. Sifarişim gecikdi.',
+          time: '3 saat əvvəl',
+          avatar: 'R',
+          replies: []
+        },
+        {
+          id: `${id}-comment2`,
+          author: 'Səbinə Qasımova',
+          text: 'Bu çatdırılma xidməti həqiqətən yaxşılaşmalıdır.',
+          time: '6 saat əvvəl',
+          avatar: 'S',
+          replies: []
+        }
+      ],
+      // For shopping complaints
+      [
+        {
+          id: `${id}-comment1`,
+          author: 'Kamran Əliyev',
+          text: 'Bu problem həll edilməlidir. Çox ciddi məsələdir.',
+          time: '1 saat əvvəl',
+          avatar: 'K',
+          replies: []
+        },
+        {
+          id: `${id}-comment2`,
+          author: 'Nigar Həsənova',
+          text: 'Mən də oxşar təcrübə yaşamışam. Pul geri qaytarılmadı.',
+          time: '4 saat əvvəl',
+          avatar: 'N',
+          replies: []
+        }
+      ],
+      // For banking complaints
+      [
+        {
+          id: `${id}-comment1`,
+          author: 'Elvin Məmmədov',
+          text: 'Bank xidmətləri həqiqətən yaxşılaşmalıdır.',
+          time: '2 saat əvvəl',
+          avatar: 'E',
+          replies: []
+        }
+      ],
+      // For mobile operator complaints
+      [
+        {
+          id: `${id}-comment1`,
+          author: 'Aynur Əliyeva',
+          text: 'İnternet sürəti həqiqətən çox zəifdir.',
+          time: '1 saat əvvəl',
+          avatar: 'A',
+          replies: []
+        },
+        {
+          id: `${id}-comment2`,
+          author: 'Tural Quliyev',
+          text: 'Müqavilədə yazılan sürət verilmir.',
+          time: '3 saat əvvəl',
+          avatar: 'T',
+          replies: []
+        }
+      ]
+    ];
+
+    // Use complaintId to determine which comment set to use
+    const hash = complaintId ? complaintId.split('').reduce((a, b) => a + b.charCodeAt(0), 0) : 0;
+    return commentSets[hash % commentSets.length];
+  };
+
+  const [commentsList, setCommentsList] = useState(() => generateUniqueComments(complaintId));
   const [commentCount, setCommentCount] = useState(commentsList.length);
 
   const handleLike = () => {
@@ -56,62 +136,49 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
     if (onComment) onComment();
   };
 
-  const handleAddComment = () => {
+  const handleAddMessage = () => {
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
 
-    if (commentText.trim()) {
-      const newComment = {
-        id: `comment-${Date.now()}`,
-        author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
-        text: commentText,
-        time: 'İndi',
-        avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S',
-        replies: []
-      };
+    if (messageText.trim()) {
+      if (activeReplyId) {
+        // Adding a reply
+        setCommentsList(prevComments =>
+          prevComments.map(comment => {
+            if (comment.id === activeReplyId) {
+              return {
+                ...comment,
+                replies: [...comment.replies, {
+                  id: `reply-${Date.now()}-${complaintId}`,
+                  author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
+                  text: messageText,
+                  time: 'İndi',
+                  avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S'
+                }]
+              };
+            }
+            return comment;
+          })
+        );
+        setActiveReplyId(null);
+      } else {
+        // Adding a new comment
+        const newComment = {
+          id: `comment-${Date.now()}-${complaintId}`,
+          author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
+          text: messageText,
+          time: 'İndi',
+          avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S',
+          replies: []
+        };
 
-      setCommentsList(prev => [...prev, newComment]);
-      setCommentText('');
-    }
-  };
+        setCommentsList(prev => [...prev, newComment]);
+        setCommentCount(prev => prev + 1);
+      }
 
-  const handleReply = () => {
-    if (!isAuthenticated) {
-      navigate('/login');
-      return;
-    }
-
-    if (replyText.trim() && activeReplyId) {
-      const addReplyToComment = (comments) => {
-        return comments.map(comment => {
-          if (comment.id === activeReplyId) {
-            return {
-              ...comment,
-              replies: [...comment.replies, {
-                id: `reply-${Date.now()}`,
-                author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
-                text: replyText,
-                time: 'İndi',
-                avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S'
-              }]
-            };
-          }
-          // Also check in replies for nested replies
-          if (comment.replies.length > 0) {
-            return {
-              ...comment,
-              replies: addReplyToComment(comment.replies)
-            };
-          }
-          return comment;
-        });
-      };
-
-      setCommentsList(addReplyToComment);
-      setReplyText('');
-      setActiveReplyId(null);
+      setMessageText('');
     }
   };
 
@@ -119,29 +186,35 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
     switch (status) {
       case 'resolved':
         return {
-          bg: 'bg-emerald-50',
-          text: 'text-emerald-700',
-          border: 'border-emerald-200',
-          label: 'Həll edilib',
+          bg: 'bg-green-50',
+          text: 'text-green-700',
+          border: 'border-green-200',
+          label: 'Cavablandırılıb',
           icon: '✓'
         };
       case 'pending':
-        return null; // Don't show status for pending
+        return {
+          bg: 'bg-yellow-50',
+          text: 'text-yellow-700',
+          border: 'border-yellow-200',
+          label: 'Gözləyir',
+          icon: '⏳'
+        };
       case 'in_progress':
         return {
-          bg: 'bg-blue-50',
-          text: 'text-blue-700',
-          border: 'border-blue-200',
-          label: 'İcrada',
-          icon: '🔄'
+          bg: 'bg-yellow-50',
+          text: 'text-yellow-700',
+          border: 'border-yellow-200',
+          label: 'Gözləyir',
+          icon: '⏳'
         };
       default:
         return {
-          bg: 'bg-gray-50',
-          text: 'text-gray-700',
-          border: 'border-gray-200',
-          label: 'Yeni',
-          icon: '📝'
+          bg: 'bg-yellow-50',
+          text: 'text-yellow-700',
+          border: 'border-yellow-200',
+          label: 'Gözləyir',
+          icon: '⏳'
         };
     }
   };
@@ -161,12 +234,10 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
               <span className="font-semibold text-gray-700">{company}</span> üçün
             </p>
           </div>
-          {statusConfig && (
-            <div className={`flex items-center px-3 py-1.5 rounded-full text-xs font-semibold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border} whitespace-nowrap`}>
-              {statusConfig.icon && <span className="mr-1">{statusConfig.icon}</span>}
-              {statusConfig.label}
-            </div>
-          )}
+          <div className={`flex items-center px-3 py-1.5 rounded-full text-xs font-semibold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border} whitespace-nowrap`}>
+            {statusConfig.icon && <span className="mr-1">{statusConfig.icon}</span>}
+            {statusConfig.label}
+          </div>
         </div>
 
         <p className="text-gray-600 text-base line-clamp-3 leading-relaxed mb-4">
@@ -222,19 +293,19 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
 
         {showComments && (
           <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-            <div className="space-y-3">
+            <div className="space-y-4">
               {commentsList.map((comment) => (
-                <div key={comment.id}>
+                <div key={comment.id} className="bg-white p-3 rounded-lg border">
                   <div className="flex items-start space-x-3">
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium flex-shrink-0">
                       {comment.avatar}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium text-sm">{comment.author}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span className="font-medium text-sm text-gray-900">{comment.author}</span>
                         <span className="text-xs text-gray-500">{comment.time}</span>
                       </div>
-                      <p className="text-sm text-gray-700 mt-1">
+                      <p className="text-sm text-gray-700 break-words">
                         {comment.text}
                       </p>
                       <button
@@ -245,39 +316,27 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
                           }
                           setActiveReplyId(activeReplyId === comment.id ? null : comment.id);
                         }}
-                        className="text-xs text-blue-600 hover:text-blue-800 mt-1"
+                        className="text-xs text-blue-600 hover:text-blue-800 mt-2 font-medium"
                       >
                         Cavab ver
                       </button>
 
                       {/* Show replies */}
                       {comment.replies.length > 0 && (
-                        <div className="ml-4 mt-2 space-y-2">
+                        <div className="ml-4 mt-3 space-y-2 border-l-2 border-gray-200 pl-3">
                           {comment.replies.map((reply) => (
                             <div key={reply.id} className="flex items-start space-x-2">
-                              <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center text-white text-xs font-medium">
-                                {reply.author.charAt(0)}
+                              <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                                {reply.avatar}
                               </div>
-                              <div className="flex-1">
-                                <div className="flex items-center space-x-2">
-                                  <span className="font-medium text-xs">{reply.author}</span>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center space-x-2 mb-1">
+                                  <span className="font-medium text-xs text-gray-900">{reply.author}</span>
                                   <span className="text-xs text-gray-500">{reply.time}</span>
                                 </div>
-                                <p className="text-xs text-gray-700 mt-1">
+                                <p className="text-xs text-gray-700 break-words">
                                   {reply.text}
                                 </p>
-                                <button
-                                  onClick={() => {
-                                    if (!isAuthenticated) {
-                                      navigate('/login');
-                                      return;
-                                    }
-                                    setActiveReplyId(activeReplyId === reply.id ? null : reply.id);
-                                  }}
-                                  className="text-xs text-blue-600 hover:text-blue-800 mt-1"
-                                >
-                                  Cavab ver
-                                </button>
                               </div>
                             </div>
                           ))}
@@ -289,53 +348,49 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
               ))}
             </div>
 
-            {/* Main comment input */}
-            <div className="mt-4 p-3 bg-gray-50 rounded-lg border">
+            {/* Single message input for both comments and replies */}
+            <div className="mt-4 p-3 bg-white rounded-lg border">
               <textarea
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder={isAuthenticated ? "Şikayət haqqında rəyinizi yazın..." : "Şərh yazmaq üçün giriş edin"}
-                className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+                placeholder={
+                  !isAuthenticated
+                    ? "Şərh yazmaq üçün giriş edin"
+                    : activeReplyId
+                      ? "Cavabınızı yazın..."
+                      : "Şikayət haqqında rəyinizi yazın..."
+                }
+                className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 rows="3"
                 disabled={!isAuthenticated}
               />
-              <div className="flex justify-end space-x-2 mt-2">
-                <button
-                  onClick={handleAddComment}
-                  disabled={!isAuthenticated || !commentText.trim()}
-                  className="px-4 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Şərh Yaz
-                </button>
-              </div>
-            </div>
-
-            {/* Reply input */}
-            {activeReplyId && (
-              <div className="mt-4 p-3 bg-white rounded-lg border">
-                <textarea
-                  value={replyText}
-                  onChange={(e) => setReplyText(e.target.value)}
-                  placeholder="Cavabınızı yazın..."
-                  className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows="3"
-                />
-                <div className="flex justify-end space-x-2 mt-2">
+              <div className="flex justify-between items-center mt-3">
+                <div>
+                  {activeReplyId && (
+                    <span className="text-xs text-blue-600 font-medium">
+                      Cavab yazırsınız...
+                    </span>
+                  )}
+                </div>
+                <div className="flex space-x-2">
+                  {activeReplyId && (
+                    <button
+                      onClick={() => setActiveReplyId(null)}
+                      className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50"
+                    >
+                      Ləğv et
+                    </button>
+                  )}
                   <button
-                    onClick={() => setActiveReplyId(null)}
-                    className="px-3 py-1 text-sm text-gray-600 hover:text-gray-800"
+                    onClick={handleAddMessage}
+                    disabled={!isAuthenticated || !messageText.trim()}
+                    className="px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
                   >
-                    Ləğv et
-                  </button>
-                  <button
-                    onClick={handleReply}
-                    className="px-4 py-1 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700"
-                  >
-                    Göndər
+                    {activeReplyId ? 'Cavab Ver' : 'Şərh Yaz'}
                   </button>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )}
       </div>

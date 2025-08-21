@@ -120,14 +120,192 @@ const CompanyDetailPage = () => {
       website: 'food.bolt.eu',
       category: 'Yemək Çatdırılması',
       categoryId: 'yemek-catdirilmasi',
-      description: 'Bolt Food sürətli yemək çatdırılması xidməti təklif edir.',
+      description: 'Bolt sürətli yemək çatdırılması xidməti təklif edir. Müştərilərə keyfiyyətli və vaxtında çatdırılma xidməti göstərir.',
       stats: {
         positive: 65,
         resolved: 25,
         negative: 10
       },
-      views: 9800
-    }
+      views: 9800,
+      socialLinks: {
+        website: 'https://food.bolt.eu',
+        facebook: 'https://facebook.com/bolt',
+        instagram: 'https://instagram.com/bolt',
+        twitter: 'https://twitter.com/bolt'
+      }
+    },
+    'yango': {
+      name: 'Yango',
+      logo: 'https://yango.com/images/logo.png',
+      rating: 3.8,
+      totalReviews: 89,
+      website: 'yango.com',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi',
+      description: 'Yango müasir texnologiyalardan istifadə edərək yemək çatdırılması xidməti göstərir. Geniş restoran seçimi və sürətli çatdırılma.',
+      stats: {
+        positive: 78,
+        resolved: 15,
+        negative: 7
+      },
+      views: 7200,
+      socialLinks: {
+        website: 'https://yango.com',
+        facebook: 'https://facebook.com/yango',
+        instagram: 'https://instagram.com/yango'
+      }
+    },
+    'fooderos': {
+      name: 'Fooderos',
+      logo: 'https://fooderos.az/images/logo.png',
+      rating: 3.4,
+      totalReviews: 67,
+      website: 'fooderos.az',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi',
+      description: 'Fooderos yerli yemək çatdırılması platformasıdır. Azərbaycan mətbəxindən tutmuş beynəlxalq yeməklərə qədər geniş seçim təklif edir.',
+      stats: {
+        positive: 72,
+        resolved: 18,
+        negative: 10
+      },
+      views: 5400,
+      socialLinks: {
+        website: 'https://fooderos.az',
+        facebook: 'https://facebook.com/fooderos',
+        instagram: 'https://instagram.com/fooderos'
+      }
+    },
+    'azal': {
+  name: 'AZAL',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/6/68/Azerbaijan_Airlines_logo.png',
+  website: 'azal.az',
+  category: 'Havayolu',
+  categoryId: 'havayolu',
+  description: 'AZAL — Azərbaycan Hava Yolları, Azərbaycanın milli bayraq daşıyıcısı və ən böyük aviaşirkətidir, 1992-ci ildən fəaliyyət göstərir.',
+  rating: 4.3,
+  totalReviews: 200,
+  stats: {
+    positive: 150,
+    resolved: 120,
+    negative: 50
+  },
+  views: 14500,
+  socialLinks: {
+    website: 'https://azal.az/en/',
+    facebook: 'https://www.facebook.com/AzerbaijanAirlines',
+    instagram: 'https://www.instagram.com/azerbaijanairlines/',
+    twitter: 'https://twitter.com/AzalOfficial',
+    youtube: 'https://www.youtube.com/AzerbaijanAirlinesOfficial',
+    linkedin: 'https://www.linkedin.com/company/azerbaiCategoryCardjan-airlines/',
+    telegram: 'https://t.me/azerbaijanairlines'
+  }
+},
+
+'nar-mobile': {
+  name: 'Nar',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/2/27/Nar_logo.png',
+  website: 'nar.az',
+  category: 'Mobil operator',
+  categoryId: 'mobil_operator',
+  description: 'Azerfon MMC – Nar mobil rabitə operatoru 2007-ci ildən etibarən fəaliyyət göstərir və müştərilərə keyfiyyətli rabitə xidmətləri təqdim edir.',
+  rating: 4.2,
+  totalReviews: 120,
+  stats: {
+    positive: 90,
+    resolved: 70,
+    negative: 30
+  },
+  views: 9800,
+  socialLinks: {
+    website: 'https://www.nar.az',
+    facebook: 'https://www.facebook.com/Narofficial/',
+    instagram: 'https://www.instagram.com/nar_official/'
+  }
+},
+
+'azersu': {
+  name: 'Azərsu',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Azersu_logo.png',
+  website: 'azersu.az',
+  category: 'Su təchizatı',
+  categoryId: 'su_techizati',
+  description: 'Azərsu ASC — Azərbaycanın su təchizatı və kanalizasiya xidmətlərini təmin edən dövlət müəssisəsidir.',
+  rating: 3.1,
+  totalReviews: 80,
+  stats: {
+    positive: 40,
+    resolved: 25,
+    negative: 40
+  },
+  views: 5200,
+  socialLinks: {
+    website: 'http://www.azersu.az'
+  }
+},
+
+'azerishiq': {
+  name: 'Azerişıq',
+  logo: 'https://azerishiq.az/images/logo.png',
+  website: 'azerishiq.az',
+  category: 'Elektrik təchizatı',
+  categoryId: 'elektrik_techizati',
+  description: 'Azerişıq ASC — elektrik enerjisinin paylanması və abonentlərin dayanıqlı təchizatı ilə məşğul olan şirkətdir.',
+  rating: 2.9,
+  totalReviews: 150,
+  stats: {
+    positive: 60,
+    resolved: 45,
+    negative: 90
+  },
+  views: 11200,
+  socialLinks: {
+    website: 'http://www.azerishiq.az',
+    instagram: 'https://www.instagram.com/azerishiq.asc/'
+  }
+},
+
+'bip': {
+  name: 'BiP',
+  logo: 'https://bip.com/assets/img/logo.svg',
+  category: 'Messenger',
+  categoryId: 'messenger',
+  description: 'BiP — təhlükəsiz mesajlaşma, səsli və video zənglər, tərcümə funksiyası və itən mesajlar təqdim edən mobil tətbiqdir.',
+  rating: 4.5,
+  totalReviews: 95,
+  stats: {
+    positive: 80,
+    resolved: 60,
+    negative: 15
+  },
+  views: 8700,
+  socialLinks: {
+    website: 'https://bip.com'
+  }
+},
+
+'yelo-bank': {
+  name: 'Yelo Bank',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Yelo_Bank_logo.png',
+  website: 'yelo.az',
+  category: 'Bank',
+  categoryId: 'bank',
+  description: 'Yelo Bank — müasir və müştəri yönümlü bank xidmətləri təqdim edən parlaq bankdır.',
+  rating: 4.0,
+  totalReviews: 110,
+  stats: {
+    positive: 85,
+    resolved: 70,
+    negative: 25
+  },
+  views: 7600,
+  socialLinks: {
+    website: 'https://www.yelo.az',
+    facebook: 'https://www.facebook.com/yelobank/',
+    instagram: 'https://www.instagram.com/yelobank/'
+  }
+}
+
   };
 
   const company = companies[companyId];
@@ -264,7 +442,7 @@ const CompanyDetailPage = () => {
                 {company.socialLinks.instagram && (
                   <a href={company.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:text-pink-800">
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.897-.875-1.387-2.026-1.387-3.323s.49-2.448 1.297-3.323c.875-.897 2.026-1.387 3.323-1.387s2.448.49 3.323 1.297c.897.875 1.387 2.026 1.387 3.323s-.49 2.448-1.297 3.323c-.875.897-2.026 1.387-3.323 1.387z"/>
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                   </a>
                 )}
@@ -295,6 +473,96 @@ const CompanyDetailPage = () => {
               Rəy bildir
             </Link>
           </div>
+        </div>
+
+        {/* User Comments Section */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-xl font-semibold text-gray-900 mb-6">İstifadəçi Şərhləri</h3>
+
+          {/* Sample Comments */}
+          <div className="space-y-6">
+            <div className="border-b border-gray-200 pb-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                  A
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="font-medium text-gray-900">Ali Məmmədov</span>
+                    <span className="text-sm text-gray-500">3 gün əvvəl</span>
+                    <div className="flex items-center">
+                      {[1, 2, 3, 4].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      <svg className="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <p className="text-gray-700">
+                    {company.name} ilə təcrübəm ümumiyyətlə yaxşı olub. Xidmət keyfiyyəti qənaətbəxşdir, lakin bəzi hallarda gecikmələr olur.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-b border-gray-200 pb-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-medium">
+                  L
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="font-medium text-gray-900">Leyla Həsənova</span>
+                    <span className="text-sm text-gray-500">1 həftə əvvəl</span>
+                    <div className="flex items-center">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-gray-700">
+                    Çox məmnunam! Müştəri xidməti əla, problemlər tez həll olunur. Tövsiyə edirəm.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-medium">
+                  R
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className="font-medium text-gray-900">Rəşad Quliyev</span>
+                    <span className="text-sm text-gray-500">2 həftə əvvəl</span>
+                    <div className="flex items-center">
+                      {[1, 2].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      {[3, 4, 5].map((star) => (
+                        <svg key={star} className="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-gray-700">
+                    Təəssüf ki, xidmət keyfiyyəti gözlədiyim kimi deyil. Çox vaxt problemlər yaranır və həlli uzun çəkir.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>
