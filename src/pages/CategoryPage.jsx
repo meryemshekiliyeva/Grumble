@@ -12,7 +12,7 @@ const CategoryPage = () => {
         {
           id: 'kapital-bank',
           name: 'Kapital Bank',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Kapital_Bank_logo.svg/300px-Kapital_Bank_logo.svg.png',
+          logo: 'https://www.kapitalbank.az/files/about/main/png.png',
           rating: 3.0,
           complaints: 139,
           description: 'Azərbaycanın ən böyük istehlaklı banklarından biri'
