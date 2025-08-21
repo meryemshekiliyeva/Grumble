@@ -73,21 +73,24 @@ const Categories = () => {
         category: 'Telekom',
         complaintCount: 247,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Azercell_logo.svg/200px-Azercell_logo.svg.png',
-        bgColor: '#0066CC'
+        bgColor: '#0066CC',
+        companyId: 'azercell'
       },
       {
         name: 'Bakcell',
         category: 'Telekom',
         complaintCount: 128,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Bakcell_logo.svg/200px-Bakcell_logo.svg.png',
-        bgColor: '#FF6600'
+        bgColor: '#FF6600',
+        companyId: 'bakcell'
       },
       {
         name: 'Nar Mobile',
         category: 'Telekom',
         complaintCount: 112,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nar_logo.svg/200px-Nar_logo.svg.png',
-        bgColor: '#8B0000'
+        bgColor: '#8B0000',
+        companyId: 'nar-mobile'
       }
     ],
     'Bank və Maliyyə': [
@@ -96,21 +99,24 @@ const Categories = () => {
         category: 'Bank',
         complaintCount: 189,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
-        bgColor: '#E31E24'
+        bgColor: '#E31E24',
+        companyId: 'kapital-bank'
       },
       {
         name: 'Pasha Bank',
         category: 'Bank',
         complaintCount: 65,
         icon: 'https://pashabank.az/images/logo.png',
-        bgColor: '#1E3A8A'
+        bgColor: '#1E3A8A',
+        companyId: 'pasha-bank'
       },
       {
         name: 'Yelo Bank',
         category: 'Bank',
         complaintCount: 54,
         icon: 'https://yelobank.az/images/logo.png',
-        bgColor: '#FFFF00'
+        bgColor: '#FFFF00',
+        companyId: 'yelo-bank'
       }
     ],
     'Yemək Çatdırılması': [
@@ -119,28 +125,32 @@ const Categories = () => {
         category: 'Yemək Çatdırılması',
         complaintCount: 43,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wolt_logo.svg/200px-Wolt_logo.svg.png',
-        bgColor: '#009DE0'
+        bgColor: '#009DE0',
+        companyId: 'wolt'
       },
       {
         name: 'Bolt',
         category: 'Yemək Çatdırılması',
         complaintCount: 156,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Bolt_logo.svg/200px-Bolt_logo.svg.png',
-        bgColor: '#34D186'
+        bgColor: '#34D186',
+        companyId: 'bolt'
       },
       {
         name: 'Yango',
         category: 'Yemək Çatdırılması',
         complaintCount: 89,
         icon: 'https://yango.com/images/logo.png',
-        bgColor: '#FFD700'
+        bgColor: '#FFD700',
+        companyId: 'yango'
       },
       {
         name: 'Fooderos',
         category: 'Yemək Çatdırılması',
         complaintCount: 67,
         icon: 'https://fooderos.az/images/logo.png',
-        bgColor: '#FF6B35'
+        bgColor: '#FF6B35',
+        companyId: 'fooderos'
       },
     ],
     'Nəqliyyat': [
@@ -149,7 +159,8 @@ const Categories = () => {
         category: 'Nəqliyyat',
         complaintCount: 76,
         icon: 'https://bip.az/assets/images/logo.png',
-        bgColor: '#FF4500'
+        bgColor: '#FF4500',
+        companyId: 'bip'
       },
     ],
     'Kommunal Xidmətlər': [
@@ -158,14 +169,16 @@ const Categories = () => {
         category: 'Kommunal',
         complaintCount: 98,
         icon: 'https://azersu.az/assets/images/logo.png',
-        bgColor: '#0066CC'
+        bgColor: '#0066CC',
+        companyId: 'azersu'
       },
       {
         name: 'Azərişıq',
         category: 'Kommunal',
         complaintCount: 87,
         icon: 'https://azerishiq.az/images/logo.png',
-        bgColor: '#FFD700'
+        bgColor: '#FFD700',
+        companyId: 'azerishiq'
       },
     ],
     'Havayolu': [
@@ -174,7 +187,8 @@ const Categories = () => {
         category: 'Havayolu',
         complaintCount: 134,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Azerbaijan_Airlines_logo.svg/200px-Azerbaijan_Airlines_logo.svg.png',
-        bgColor: '#003366'
+        bgColor: '#003366',
+        companyId: 'azal'
       },
       {
         name: 'Buta Airways',
@@ -182,6 +196,7 @@ const Categories = () => {
         complaintCount: 32,
         icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAA0lBMVEXIMT7rMkToMkTsM0TsMkbnNErqM0PrMkLGMUDrMkPtMkPjLT/lJj7rL0HjVF3he3/um53ogYTWOErjeH3uvcL8/Pz8//777OnvkZDgMDrhHDXijJHx4OLXKz/la3jgRVjuLD7RNkL74t//7PDpc4HeWGrWMUTz1trig4z5///dUGD/8/f/6uXsoqfqr7T6ztHTEiPyy8T+9vfnWWnmSFHlVF73xsXccoL5+ffqp6b///bTe4vXX2jSHi/s2Nvoyc/OanbhucTxydHnipLfo6/Sj56ExliIAAABxElEQVR4AV3ShaLiMBAFUCbtS2rBk+IONTSwb4P7///STp8ge/E53EHaTAaIYZgGBsgHIZSCaQKYwHCSsXCaku24nslpGvhCm1JEDDOAZ3P5QtGjOGQp2ilmnK8i5aWykH6l6jmMAcbGIOJ2wLe5tbpoNFvldsdOCWN8I8UQ3u31yUD4Q06eiA9ots1GQb8YRlgnBOCJX+nEyXg0kUKWOAAw9oa1aTSbL4SQhRol7wg8VtEkqyIRLVd/+OtaAlD9FOLvVGgZzNdTlz0R19TqGy22Smi9i5Pe3oEHEsKXvhaHQAudG/aF3juPJpikOotk4yhl/1TviyioOezRhE64kf2j0MpXkVDJjjmU/iJrziJ1xs/TSsvksjOp/cTOMlFHpVO8bON908XiE3O6cdBfwaWNRrkKYD/wqrGohJDIG70p115xl5yVOp6Pt7Kftq/85ajwURBczti8jEa5he4VOWMPZLW6PGNHqKDlNnclz2DPP54ydyE3iP497K5WHbAfTYxDuuWNFFqqoPE5+ho9EMNr9Z6WUvqTDxP+R0o9N1so7JoeSU/xByJ8rXZ4h3NOCHwhDlM0KE1fAyFOhxFCmYHBofEPQb86HvXyLY8AAAAASUVORK5CYII=',
         bgColor: '#66001dff',
+        companyId: 'buta-airways'
       },
     ]
   };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import StarRating from '../components/StarRating';
 import ReviewForm from '../components/ReviewForm';
@@ -7,6 +7,7 @@ const CompanyDetailPage = () => {
   const { companyId } = useParams();
   const [userRating, setUserRating] = useState(0);
   const [showRatingForm, setShowRatingForm] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
   // Company data
   const companies = {
@@ -310,6 +311,14 @@ const CompanyDetailPage = () => {
 
   const company = companies[companyId];
 
+  // Load reviews from localStorage
+  useEffect(() => {
+    const existingReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+    if (existingReviews[companyId]) {
+      setReviews(existingReviews[companyId]);
+    }
+  }, [companyId]);
+
   if (!company) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -479,87 +488,51 @@ const CompanyDetailPage = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h3 className="text-xl font-semibold text-gray-900 mb-6">İstifadəçi Şərhləri</h3>
 
-          {/* Sample Comments */}
+          {/* Dynamic Reviews */}
           <div className="space-y-6">
-            <div className="border-b border-gray-200 pb-6">
-              <div className="flex items-start space-x-4">
-                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
-                  A
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-gray-900">Ali Məmmədov</span>
-                    <span className="text-sm text-gray-500">3 gün əvvəl</span>
-                    <div className="flex items-center">
-                      {[1, 2, 3, 4].map((star) => (
-                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                      <svg className="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <div key={review.id || index} className={`${index < reviews.length - 1 ? 'border-b border-gray-200 pb-6' : ''}`}>
+                  <div className="flex items-start space-x-4">
+                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                      {review.author?.charAt(0) || 'U'}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <span className="font-medium text-gray-900">{review.author || 'İstifadəçi'}</span>
+                        <span className="text-sm text-gray-500">
+                          {new Date(review.date).toLocaleDateString('az-AZ')}
+                        </span>
+                        <div className="flex items-center">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg
+                              key={star}
+                              className={`w-4 h-4 ${star <= review.rating ? 'text-yellow-400' : 'text-gray-300'} fill-current`}
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-gray-700">
+                        {review.review}
+                      </p>
                     </div>
                   </div>
-                  <p className="text-gray-700">
-                    {company.name} ilə təcrübəm ümumiyyətlə yaxşı olub. Xidmət keyfiyyəti qənaətbəxşdir, lakin bəzi hallarda gecikmələr olur.
-                  </p>
                 </div>
+              ))
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </div>
+                <p className="text-gray-500">Hələ heç bir rəy yazılmayıb</p>
+                <p className="text-gray-400 text-sm">İlk rəyi siz yazın!</p>
               </div>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <div className="flex items-start space-x-4">
-                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-medium">
-                  L
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-gray-900">Leyla Həsənova</span>
-                    <span className="text-sm text-gray-500">1 həftə əvvəl</span>
-                    <div className="flex items-center">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-gray-700">
-                    Çox məmnunam! Müştəri xidməti əla, problemlər tez həll olunur. Tövsiyə edirəm.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-start space-x-4">
-                <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-medium">
-                  R
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="font-medium text-gray-900">Rəşad Quliyev</span>
-                    <span className="text-sm text-gray-500">2 həftə əvvəl</span>
-                    <div className="flex items-center">
-                      {[1, 2].map((star) => (
-                        <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                      {[3, 4, 5].map((star) => (
-                        <svg key={star} className="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-gray-700">
-                    Təəssüf ki, xidmət keyfiyyəti gözlədiyim kimi deyil. Çox vaxt problemlər yaranır və həlli uzun çəkir.
-                  </p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
 
 

@@ -11,8 +11,38 @@ const ReviewPage = () => {
     'kapital-bank': {
       name: 'Kapital Bank',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
-      category: 'Banklər',
+      category: 'Banklar',
       categoryId: 'banklar'
+    },
+    'pasha-bank': {
+      name: 'PAŞA Bank',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/PASHA_Bank_logo.svg/200px-PASHA_Bank_logo.svg.png',
+      category: 'Banklar',
+      categoryId: 'banklar'
+    },
+    'yelo-bank': {
+      name: 'Yelo Bank',
+      logo: 'https://yelobank.az/images/logo.png',
+      category: 'Banklar',
+      categoryId: 'banklar'
+    },
+    'azercell': {
+      name: 'Azercell',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Azercell_logo.svg/200px-Azercell_logo.svg.png',
+      category: 'Telekommunikasiya',
+      categoryId: 'telekommunikasiya'
+    },
+    'bakcell': {
+      name: 'Bakcell',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bakcell_logo.svg/200px-Bakcell_logo.svg.png',
+      category: 'Telekommunikasiya',
+      categoryId: 'telekommunikasiya'
+    },
+    'nar-mobile': {
+      name: 'Nar Mobile',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nar_logo.svg/200px-Nar_logo.svg.png',
+      category: 'Telekommunikasiya',
+      categoryId: 'telekommunikasiya'
     },
     'citynet': {
       name: 'CityNet',
@@ -49,6 +79,36 @@ const ReviewPage = () => {
       logo: 'https://fooderos.az/images/logo.png',
       category: 'Yemək Çatdırılması',
       categoryId: 'yemek-catdirilmasi'
+    },
+    'azal': {
+      name: 'AZAL',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Azerbaijan_Airlines_logo.svg/200px-Azerbaijan_Airlines_logo.svg.png',
+      category: 'Havayolu',
+      categoryId: 'havayolu'
+    },
+    'buta-airways': {
+      name: 'Buta Airways',
+      logo: 'https://butaairways.az/images/logo.png',
+      category: 'Havayolu',
+      categoryId: 'havayolu'
+    },
+    'azersu': {
+      name: 'Azərsu',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Azersu_logo.svg/200px-Azersu_logo.svg.png',
+      category: 'Kommunal Xidmətlər',
+      categoryId: 'kommunal'
+    },
+    'azerishiq': {
+      name: 'Azərişıq',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Azerishiq_logo.svg/200px-Azerishiq_logo.svg.png',
+      category: 'Kommunal Xidmətlər',
+      categoryId: 'kommunal'
+    },
+    'bip': {
+      name: 'BiP',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/BiP_logo.svg/200px-BiP_logo.svg.png',
+      category: 'Nəqliyyat',
+      categoryId: 'neqliyyat'
     }
   };
 

@@ -73,18 +73,23 @@ const Header = () => {
           </NavLink>
         </nav>
         <div className="flex items-center space-x-3">
-          <Link to="/yeni-sikayetler" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
-            Yeni Şikayət
-          </Link>
           {isAuthenticated ? (
             <div className="flex items-center space-x-2">
               <NotificationDropdown />
+              <Link to="/yeni-sikayetler" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
+                Yeni Şikayət
+              </Link>
               <UserProfileDropdown user={user} onLogout={handleLogout} />
             </div>
           ) : (
-            <Link to="/login" className="hidden md:inline-flex px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md hover:bg-primary/20">
-              Giriş
-            </Link>
+            <>
+              <Link to="/yeni-sikayetler" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
+                Yeni Şikayət
+              </Link>
+              <Link to="/login" className="hidden md:inline-flex px-4 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md hover:bg-primary/20">
+                Giriş
+              </Link>
+            </>
           )}
         </div>
       </div>

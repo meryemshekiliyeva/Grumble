@@ -117,12 +117,29 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
       return;
     }
 
-    if (isLiked) {
-      setLikeCount(prev => prev - 1);
-    } else {
+    const newLikedState = !isLiked;
+    if (newLikedState) {
       setLikeCount(prev => prev + 1);
+      // Track user like
+      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+      const likeData = {
+        id: `like-${Date.now()}`,
+        complaintId: complaintId,
+        complaintTitle: title,
+        company: company,
+        timestamp: new Date().toISOString(),
+        type: 'complaint'
+      };
+      userLikes.push(likeData);
+      localStorage.setItem('userLikes', JSON.stringify(userLikes));
+    } else {
+      setLikeCount(prev => prev - 1);
+      // Remove from user likes
+      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+      const filteredLikes = userLikes.filter(like => like.complaintId !== complaintId);
+      localStorage.setItem('userLikes', JSON.stringify(filteredLikes));
     }
-    setIsLiked(!isLiked);
+    setIsLiked(newLikedState);
     if (onLike) onLike();
   };
 
@@ -145,24 +162,41 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
     if (messageText.trim()) {
       if (activeReplyId) {
         // Adding a reply
+        const replyData = {
+          id: `reply-${Date.now()}-${complaintId}`,
+          author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
+          text: messageText,
+          time: 'İndi',
+          avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S'
+        };
+
         setCommentsList(prevComments =>
           prevComments.map(comment => {
             if (comment.id === activeReplyId) {
               return {
                 ...comment,
-                replies: [...comment.replies, {
-                  id: `reply-${Date.now()}-${complaintId}`,
-                  author: user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.name || 'Siz',
-                  text: messageText,
-                  time: 'İndi',
-                  avatar: user?.firstName?.charAt(0) || user?.name?.charAt(0) || 'S'
-                }]
+                replies: [...comment.replies, replyData]
               };
             }
             return comment;
           })
         );
         setActiveReplyId(null);
+
+        // Track user reply
+        const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
+        const commentData = {
+          id: replyData.id,
+          complaintId: complaintId,
+          complaintTitle: title,
+          company: company,
+          text: messageText,
+          timestamp: new Date().toISOString(),
+          type: 'reply',
+          parentCommentId: activeReplyId
+        };
+        userComments.push(commentData);
+        localStorage.setItem('userComments', JSON.stringify(userComments));
       } else {
         // Adding a new comment
         const newComment = {
@@ -176,6 +210,20 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
 
         setCommentsList(prev => [...prev, newComment]);
         setCommentCount(prev => prev + 1);
+
+        // Track user comment
+        const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
+        const commentData = {
+          id: newComment.id,
+          complaintId: complaintId,
+          complaintTitle: title,
+          company: company,
+          text: messageText,
+          timestamp: new Date().toISOString(),
+          type: 'comment'
+        };
+        userComments.push(commentData);
+        localStorage.setItem('userComments', JSON.stringify(userComments));
       }
 
       setMessageText('');
@@ -350,6 +398,28 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
 
             {/* Single message input for both comments and replies */}
             <div className="mt-4 p-3 bg-white rounded-lg border">
+              {activeReplyId && (
+                <div className="mb-3 p-2 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                      </svg>
+                      <span className="text-sm text-blue-700 font-medium">
+                        {commentsList.find(c => c.id === activeReplyId)?.author} şərhinə cavab yazırsınız
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setActiveReplyId(null)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
               <textarea
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
@@ -364,31 +434,14 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
                 rows="3"
                 disabled={!isAuthenticated}
               />
-              <div className="flex justify-between items-center mt-3">
-                <div>
-                  {activeReplyId && (
-                    <span className="text-xs text-blue-600 font-medium">
-                      Cavab yazırsınız...
-                    </span>
-                  )}
-                </div>
-                <div className="flex space-x-2">
-                  {activeReplyId && (
-                    <button
-                      onClick={() => setActiveReplyId(null)}
-                      className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50"
-                    >
-                      Ləğv et
-                    </button>
-                  )}
-                  <button
-                    onClick={handleAddMessage}
-                    disabled={!isAuthenticated || !messageText.trim()}
-                    className="px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
-                  >
-                    {activeReplyId ? 'Cavab Ver' : 'Şərh Yaz'}
-                  </button>
-                </div>
+              <div className="flex justify-end items-center mt-3">
+                <button
+                  onClick={handleAddMessage}
+                  disabled={!isAuthenticated || !messageText.trim()}
+                  className="px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                >
+                  {activeReplyId ? 'Cavab Ver' : 'Şərh Yaz'}
+                </button>
               </div>
             </div>
           </div>

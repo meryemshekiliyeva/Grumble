@@ -37,7 +37,7 @@ const Profile = () => {
   // Handle direct navigation from URL parameters
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['profile', 'complaints', 'comments', 'likes', 'notifications'].includes(tab)) {
+    if (tab && ['profile', 'complaints', 'my-complaints', 'comments', 'likes', 'notifications'].includes(tab)) {
       setActiveTab(tab);
     }
   }, [searchParams]);
@@ -611,6 +611,7 @@ const Profile = () => {
         );
 
       case 'complaints':
+      case 'my-complaints':
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
@@ -658,34 +659,86 @@ const Profile = () => {
         );
 
       case 'comments':
+        const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Rəylərim</h3>
-            <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
+            {userComments.length > 0 ? (
+              <div className="space-y-4">
+                {userComments.map((comment) => (
+                  <div key={comment.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900">{comment.complaintTitle}</h4>
+                        <p className="text-sm text-gray-600">{comment.company}</p>
+                      </div>
+                      <span className="text-xs text-gray-500">
+                        {new Date(comment.timestamp).toLocaleDateString('az-AZ')}
+                      </span>
+                    </div>
+                    <p className="text-gray-700 text-sm">{comment.text}</p>
+                    <div className="mt-2">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                        comment.type === 'reply' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                      }`}>
+                        {comment.type === 'reply' ? 'Cavab' : 'Şərh'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir rəyiniz yoxdur</h3>
-              <p className="text-gray-500">Şikayətlərə rəy yazmağa başlayın.</p>
-            </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir rəyiniz yoxdur</h3>
+                <p className="text-gray-500">Şikayətlərə rəy yazmağa başlayın.</p>
+              </div>
+            )}
           </div>
         );
 
       case 'likes':
+        const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Bəyəndiklərim</h3>
-            <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-pink-100 to-red-100 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-pink-600" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+            {userLikes.length > 0 ? (
+              <div className="space-y-4">
+                {userLikes.map((like) => (
+                  <div key={like.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900">{like.complaintTitle}</h4>
+                        <p className="text-sm text-gray-600">{like.company}</p>
+                      </div>
+                      <span className="text-xs text-gray-500">
+                        {new Date(like.timestamp).toLocaleDateString('az-AZ')}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                      <span className="text-sm text-gray-600">Şikayəti bəyəndiniz</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bəyəndiyiniz yoxdur</h3>
-              <p className="text-gray-500">Şikayətləri bəyənməyə başlayın.</p>
-            </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-pink-100 to-red-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-pink-600" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bəyəndiyiniz yoxdur</h3>
+                <p className="text-gray-500">Şikayətləri bəyənməyə başlayın.</p>
+              </div>
+            )}
           </div>
         );
 
@@ -792,9 +845,6 @@ const Profile = () => {
                     onClick={() => {
                       if (item.isLogout) {
                         handleLogout();
-                      } else if (item.id === 'complaints') {
-                        // Navigate to dedicated complaints page
-                        navigate('/my-complaints');
                       } else {
                         setActiveTab(item.id);
                         // Update URL to reflect the current tab

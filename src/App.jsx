@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import Layout from './components/Layout';
@@ -26,7 +26,7 @@ import CompanyView from './admin/CompanyView';
 import CategoryPage from './pages/CategoryPage';
 import CompanyDetailPage from './pages/CompanyDetailPage';
 import ReviewPage from './pages/ReviewPage';
-import MyComplaints from './pages/MyComplaints';
+
 import Profile from './pages/Profile';
 import AuthSuccess from './pages/AuthSuccess';
 import AiChatAssistant from './components/AiChatAssistant'; // Import the assistant UI
@@ -75,7 +75,7 @@ const AppContent = () => {
           <Route path="company/:companyId" element={<CompanyDetailPage />} />
           <Route path="companies/:companyId" element={<CompanyDetailPage />} />
           <Route path="review/:companyId" element={<ReviewPage />} />
-          <Route path="my-complaints" element={<MyComplaints />} />
+          <Route path="my-complaints" element={<Navigate to="/profile?tab=my-complaints" replace />} />
           <Route path="profile" element={<Profile />} />
           <Route path="auth/success" element={<AuthSuccess />} />
         </Route>

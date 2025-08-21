@@ -68,10 +68,10 @@ const SocialLogin = ({ onGoogleLogin, onFacebookLogin }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div className="text-sm text-blue-800">
-            <p className="font-medium mb-1">Şikayətvar şunlara erişim istəyir:</p>
+            <p className="font-medium mb-1">Grumble bunlara giriş icazəsi istəyir:</p>
             <ul className="list-disc list-inside space-y-1 text-xs">
               <li>Adın və profil rəsmin</li>
-              <li>E-posta adrəsin</li>
+              <li>Email adresin</li>
             </ul>
             <p className="mt-2 text-xs">
               Bu məlumatları hesabınızı yaratmaq və giriş etmək üçün istifadə edirik.

@@ -67,7 +67,7 @@ const mostComplainedCompanies = [
   },
   {
     name: 'Kapital Bank',
-    category: 'Banklər',
+    category: 'Banklar',
     icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
     bgColor: '#E31E24',
     companyId: 'kapital-bank'
@@ -123,7 +123,7 @@ const mostComplainedCompanies = [
   },
   {
     name: 'PAŞA Bank',
-    category: 'Banklər',
+    category: 'Banklar',
     icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/PASHA_Bank_logo.svg/200px-PASHA_Bank_logo.svg.png',
     bgColor: '#a29bfe',
     companyId: 'pasha-bank'
@@ -172,7 +172,7 @@ const categories = [
     brands: ['Azersu', 'Azerishiq', 'Azerigas', 'Socar Gas', 'Bakı Su Şirkəti', 'Sumqayıt Su']
   },
   {
-    name: 'Banklər',
+    name: 'Banklar',
     description: 'Kredit və əmanət',
     icon: '🏦',
     bgColor: '#0984e3',

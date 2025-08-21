@@ -55,7 +55,7 @@ const ReviewForm = ({ companyName, onSubmit }) => {
       return;
     }
 
-    if (!formData.title.trim()) {
+    if (!formData.title.trim() && !companyName) {
       alert('Şirkətin adını daxil edin');
       return;
     }
