@@ -7,12 +7,12 @@ const CategoryPage = () => {
   // Category data with companies
   const categories = {
     'banklar': {
-      name: 'Banklər',
+      name: 'Banklar',
       companies: [
         {
           id: 'kapital-bank',
           name: 'Kapital Bank',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Kapital_Bank_logo.svg/300px-Kapital_Bank_logo.svg.png',
           rating: 3.0,
           complaints: 139,
           description: 'Azərbaycanın ən böyük istehlaklı banklarından biri'
