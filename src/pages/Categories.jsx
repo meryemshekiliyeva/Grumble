@@ -154,14 +154,14 @@ const Categories = () => {
     ],
     'Kommunal Xidmətlər': [
       {
-        name: 'Azersu',
+        name: 'Azərsu',
         category: 'Kommunal',
         complaintCount: 98,
         icon: 'https://azersu.az/assets/images/logo.png',
         bgColor: '#0066CC'
       },
       {
-        name: 'Azerishiq',
+        name: 'Azərişıq',
         category: 'Kommunal',
         complaintCount: 87,
         icon: 'https://azerishiq.az/images/logo.png',

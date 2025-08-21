@@ -244,8 +244,8 @@ const CompanyDetailPage = () => {
   }
 },
 
-'azerishiq': {
-  name: 'Azerişıq',
+'azərişıq': {
+  name: 'Azərişıq',
   logo: 'https://azerishiq.az/images/logo.png',
   website: 'azerishiq.az',
   category: 'Elektrik təchizatı',

@@ -58,21 +58,21 @@ const Companies = () => {
       bgColor: '#8B0000'
     },
     {
-      name: 'Azersu',
+      name: 'Azərsu',
       category: 'Kommunal',
       complaintCount: 98,
       icon: 'https://azersu.az/assets/images/logo.png',
       bgColor: '#0066CC'
     },
     {
-      name: 'Azerishiq',
+      name: 'Azərişıq',
       category: 'Kommunal',
       complaintCount: 87,
       icon: 'https://azerishiq.az/images/logo.png',
       bgColor: '#FFD700'
     },
     {
-      name: 'BiP',
+      name: 'BP',
       category: 'Nəqliyyat',
       complaintCount: 76,
       icon: 'https://bip.az/assets/images/logo.png',
