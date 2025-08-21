@@ -62,7 +62,7 @@ const CategoryPage = () => {
         {
   id: 'azal',
   name: 'AZAL',
-  logo: 'https://www.azal.az/assets/images/logo.svg',
+  logo: 'https://tpc.googlesyndication.com/simgad/3133408318918545969?sqp=-oaymwEKCCAQICABUAFYAQ&rs=AOga4qmZcz0cCteCxiB4I9ESdfMVfeauTw',
   rating: 3.5,
   complaints: 45,
   description: 'Azərbaycanın milli aviadaşıyıcısı, beynəlxalq və daxili uçuş xidmətləri təqdim edən şirkət'
