@@ -16,7 +16,7 @@ const CompanyDetailPage = () => {
       rating: 3.0,
       totalReviews: 139,
       website: 'www.kapitalbank.az',
-      category: 'Banklər',
+      category: 'Banklar',
       categoryId: 'banklar',
       description: 'Kapital Bank Azərbaycanın ən böyük istehlaklı banklarından biridir. Hazırda Kapital Bank ölkədə ən böyük xidmət şəbəkəsinə malik maliyyə qurumudur. Kapital Bankın təqdim etdiyi xidmətlər, kredit, əlaqə, komissiya, filiallər, qaynar xətt, iş saatları, müştəri təcrübəsi haqqında burada!',
       stats: {
@@ -38,7 +38,7 @@ const CompanyDetailPage = () => {
       rating: 2.8,
       totalReviews: 8,
       website: 'www.pashabank.az',
-      category: 'Banklər',
+      category: 'Banklar',
       categoryId: 'banklar',
       description: 'PAŞA Bank müasir bankçılıq xidmətləri təqdim edən aparıcı maliyyə institutudur.',
       stats: {
@@ -54,7 +54,7 @@ const CompanyDetailPage = () => {
       rating: 1.0,
       totalReviews: 1,
       website: 'www.birbank.az',
-      category: 'Banklər',
+      category: 'Banklar',
       categoryId: 'banklar',
       description: 'Birbank rəqəmsal bankçılıq həlləri təklif edən innovativ bankdır.',
       stats: {

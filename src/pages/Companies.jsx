@@ -44,6 +44,13 @@ const Companies = () => {
       bgColor: '#FF6600'
     },
     {
+  name: 'Buta Airways',
+  category: 'Havayolu',
+  complaintCount: 32, // Hypothetical number, as no specific data provided
+  icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Buta_Airways_Logo.svg/200px-Buta_Airways_Logo.svg.png',
+  bgColor: '#0055A4' // Blue color to match Buta Airways' branding
+},
+    {
       name: 'Nar Mobile',
       category: 'Telekom',
       complaintCount: 112,

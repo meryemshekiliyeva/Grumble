@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="az-az" class="fa-events-icons-ready">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Grumble">
+    <meta name="msapplication-TileColor" content="#515bc3">
+    <meta name="theme-color" content="#515bc3">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/solid/building.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/solid/building.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/solid/building.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/solid/building.svg">
+    <link rel="manifest" href="#">
+    <link rel="mask-icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/solid/building.svg" color="#515bc3">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6VKHr8BLZ9g1l6lZ9g5lZ9g5lZ9g5lZ9g5lZ9g5lZ9g5" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="canonical" href="#">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/css/header-new.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/css/footer-new.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/css/custom.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/css/for-companies.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/css/errorlist.css">
+    <title>Grumble - Müştəri rəyləri platforması</title>
+    <meta name="description" content="Müştəri məmnuniyyətinin dəyərli olduğu bu məkanda öz təcrübənizi paylaşaraq rəyinizi bildirin, şikayətinizin həllini tapın!">
+    <meta property="og:title" content="Grumble - Müştəri rəyləri platforması">
+    <meta property="og:description" content="Müştəri məmnuniyyətinin dəyərli olduğu bu məkanda öz təcrübənizi paylaşaraq rəyinizi bildirin, şikayətinizin həllini tapın!">
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/logoSVG.png">
+    <meta property="og:url" content="#">
+    <meta property="og:site_name" content="Grumble">
+    <link rel="alternate" href="#" hreflang="x-default">
+    <link rel="alternate" href="#" hreflang="az-az">
+    <link rel="alternate" href="#" hreflang="ru-ru">
+    <style>
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background: #fafbfc; 
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Header Styles */
+        #header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header_wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+        
+        .menu_wrapper {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #515bc3;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .menu_links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 24px;
+        }
+        
+        .menu_links .link a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .menu_links .link a:hover {
+            color: #515bc3;
+        }
+        
+        .search_form_wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .search_form {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search_form input {
+            width: 300px;
+            padding: 8px 40px 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .btn_search {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn_search img {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .write-review-btn {
+            background: #515bc3;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .write-review-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        
+        .login_wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user_wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .user-profile .btn_toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        
+        .user-profile .btn_toggle:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .user-profile .dp img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+        
+        .language_selection {
+            position: relative;
+        }
+        
+        .language_selection .title {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .lang_body {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: none;
+            min-width: 60px;
+        }
+        
+        .language_selection:hover .lang_body {
+            display: block;
+        }
+        
+        .lang_body a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .lang_body a:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .ham-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* Main Content Styles */
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 16px;
+        }
+        
+        .breadcrumb { 
+            margin: 24px 0; 
+        }
+        
+        .breadcrumb ul { 
+            list-style: none; 
+            padding: 0; 
+            display: flex; 
+            gap: 8px; 
+            align-items: center;
+        }
+        
+        .breadcrumb a { 
+            color: #515bc3; 
+            text-decoration: none; 
+        }
+        
+        .breadcrumb .current-page {
+            color: #666;
+        }
+        
+        /* Login/Registration Forms */
+        .platform-info-for-companies {
+            display: block;
+        }
+        
+        .platform-info-for-companies.hidden {
+            display: none;
+        }
+        
+        .sign-in-about-platform {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .form-container {
+            background: #fff;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+        
+        .form-container h4 {
+            color: #333;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+        
+        .email-field, .password-field, .firstname-field, .lastname-field, .company-name-field, .phone-field {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .email-field label, .password-field label, .firstname-field label, .lastname-field label, .company-name-field label, .phone-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .email-field input, .password-field input, .firstname-field input, .lastname-field input, .company-name-field input, .phone-field input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        
+        .email-field input:focus, .password-field input:focus, .firstname-field input:focus, .lastname-field input:focus, .company-name-field input:focus, .phone-field input:focus {
+            outline: none;
+            border-color: #515bc3;
+            box-shadow: 0 0 0 3px rgba(81, 91, 195, 0.1);
+        }
+        
+        .hide-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .password-field {
+            position: relative;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .forgot-password a {
+            color: #515bc3;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .form-container button[type="submit"] {
+            width: 100%;
+            background: #515bc3;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .form-container button[type="submit"]:hover {
+            background: #4147a3;
+        }
+        
+        .about-platform {
+            flex: 1;
+            padding: 32px;
+        }
+        
+        .about-platform h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .about-platform h3 span {
+            color: #515bc3;
+        }
+        
+        .about-platform p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        .inputs-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .inputs-wrapper input:first-child {
+            width: 80px;
+            background: #f8f9fa;
+        }
+        
+        .inputs-wrapper input:last-child {
+            flex: 1;
+        }
+        /* Company Dashboard Styles */
+        .company-dashboard {
+            display: none;
+        }
+
+        .company-dashboard.active {
+            display: block;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #515bc3, #6366f1);
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .welcome-section h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .company-list a.company-wrapper {
+            display: block;
+            margin-bottom: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s;
+        }
+
+        .company-list a.company-wrapper:hover {
+            transform: translateY(-2px);
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #f0f0f0;
+        }
+
+        .company-logo {
+            margin-right: 16px;
+        }
+
+        .company-logo img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f8f9fa;
+            padding: 8px;
+        }
+
+        .company-info {
+            flex: 1;
+        }
+
+        .company-name h5 {
+            margin: 0 0 8px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stars {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 8px;
+        }
+
+        .stars .star {
+            width: 16px;
+            height: 16px;
+            color: #ffc107;
+        }
+
+        .stars .star.empty {
+            color: #e9ecef;
+        }
+
+        .star-rating__result {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .star-rating__result span {
+            font-weight: bold;
+            color: #515bc3;
+            font-size: 1.1rem;
+        }
+
+        .company-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .company-stats {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .categories {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #f0f0f0;
+        }
+
+        .categories h5 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .categories ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .categories .result {
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            color: #555;
+        }
+
+        .categories .result:hover {
+            background-color: #f8f9fa;
+            color: #515bc3;
+        }
+
+        .categories .result.active {
+            background-color: #515bc3;
+            color: white;
+        }
+
+        .filter-sort {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-sort h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .sort {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sort span {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-select {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header_wrapper {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .search_form input {
+                width: 200px;
+            }
+
+            .menu_links {
+                display: none;
+            }
+
+            .ham-menu {
+                display: block;
+            }
+
+            .company {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .company-logo {
+                margin-right: 0;
+                margin-bottom: 16px;
+            }
+
+            .filter-sort {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .sign-in-about-platform {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 12px;
+            }
+
+            .welcome-section {
+                padding: 24px 16px;
+            }
+
+            .welcome-section h1 {
+                font-size: 1.5rem;
+            }
+
+            .categories {
+                padding: 16px;
+            }
+
+            .company {
+                padding: 16px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header id="header">
+    <div class="mob-overlay"></div>
+    <div class="container">
+        <div class="header_wrapper">
+            <div class="menu_wrapper">
+                <a href="#" class="logo">
+                    <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/grumble-logo.svg" alt="Grumble logo">
+                </a>
+                <ul class="menu_links">
+                    <li class="link"><a href="#">Rəylər</a></li>
+                    <li class="link"><a href="#">Şirkətlər</a></li>
+                </ul>
+            </div>
+            <div class="search_form_wrapper">
+                <form action="#" id="search_form" class="search_form">
+                    <input id="search-input" type="text" autocomplete="off" name="q" value="" placeholder="Kateqoriya və ya şirkət axtar">
+                    <button type="submit" class="btn_search">
+                        <img class="v-desktop" src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/loupe.svg" alt="loupe.svg">
+                        <img class="v-mob" src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/loupe-purple.svg" alt="loupe-purple.svg">
+                    </button>
+                    <div class="search-dropdown">
+                        <ul></ul>
+                    </div>
+                </form>
+                <button id="write-review-btn" class="write-review-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152L0 424c0 48.6 39.4 88 88 88l272 0c48.6 0 88-39.4 88-88l0-112c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 112c0 22.1-17.9 40-40 40L88 464c-22.1 0-40-17.9-40-40l0-272c0-22.1 17.9-40 40-40l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 64z"></path>
+                    </svg>
+                </button>
+                <div class="search-button">
+                    <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/loupe.svg" alt="loupe.svg" class="active">
+                    <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/loupe-purple.svg" alt="loupe-purple.svg">
+                </div>
+            </div>
+            <div class="login_wrapper" id="loginWrapper">
+                <a href="#" class="btn_login">Rəy Bildir</a>
+                <a href="#" class="link">Şirkətlər üçün</a>
+                <div class="language_selection">
+                    <button class="title">AZ</button>
+                    <div class="lang_body">
+                        <a href="#">AZ</a>
+                        <a href="#">RU</a>
+                    </div>
+                </div>
+            </div>
+            <ul class="user_wrapper" id="userWrapper" style="display: none;">
+                <li class="user-profile">
+                    <button class="btn_toggle user" id="userProfileBtn">
+                        <div class="dp">
+                            <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/user-profile-img-placeholder-light.svg" alt="user-profile-img-placeholder-light">
+                        </div>
+                        <p id="companyNameDisplay"></p>
+                    </button>
+                    <div class="dropdown" id="userDropdown" style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 180px; z-index: 1000;">
+                        <a href="#" style="display: block; padding: 12px 16px; text-decoration: none; color: #333; border-bottom: 1px solid #f0f0f0;">Profil</a>
+                        <a href="#" style="display: block; padding: 12px 16px; text-decoration: none; color: #333; border-bottom: 1px solid #f0f0f0;">Parametrlər</a>
+                        <a href="#" id="logoutBtn" style="display: block; padding: 12px 16px; text-decoration: none; color: #dc3545;">Çıxış</a>
+                    </div>
+                </li>
+                <li class="write_review">
+                    <a href="#" class="btn_write_review" style="background: #515bc3; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none;">Rəy Bildir</a>
+                </li>
+            </ul>
+            <button class="ham-menu">
+                <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/open-menu.svg" alt="open-menu.svg">
+            </button>
+            <div class="mobile-menu-wrapper">
+                <ul class="mobile-menu">
+                    <button class="btn_close">
+                        <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/close-icon-blue.svg" alt="close-icon-blue.svg">
+                    </button>
+                    <li class="login-links" id="mobileLoginLinks">
+                        <a href="#">Daxil ol</a>
+                        <a href="#">Şirkətlər üçün</a>
+                    </li>
+                    <li class="user-links" id="mobileUserLinks" style="display: none;">
+                        <button class="btn_toggle user">
+                            <div class="dp">
+                                <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/user-profile-img-placeholder-light.svg" alt="user-profile-img-placeholder-light.svg">
+                            </div>
+                            <p id="mobileCompanyName"></p>
+                        </button>
+                        <div class="dropdown"></div>
+                    </li>
+                    <li>
+                        <a href="#">Rəy bildir</a>
+                    </li>
+                    <li>
+                        <a href="#">Şirkətlər</a>
+                        <a href="#">Rəylər</a>
+                        <a href="#">Bloqlar</a>
+                    </li>
+                    <li>
+                        <div class="language_selection">
+                            <button class="title">AZ</button>
+                            <div class="lang_body">
+                                <a href="#">AZ</a>
+                                <a href="#">RU</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="container">
+        <section class="breadcrumb">
+            <ul>
+                <li><a href="#">Ana Səhifə</a></li>
+                <li class="current-page"><div class="truncate" id="breadcrumbTitle">Şirkətlər üçün</div></li>
+            </ul>
+        </section>
+
+        <!-- Login/Registration Section -->
+        <section class="platform-info-for-companies" id="loginSection">
+            <article class="sign-in-about-platform">
+                <section class="form-container">
+                    <h4>Şirkət olaraq daxil ol</h4>
+                    <form action="#" id="company-sign-in" method="post">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="">
+                        <section class="email-field">
+                            <input type="email" name="username" id="company-sign-in-email" placeholder="Email*" maxlength="255" required="">
+                            <label for="company-sign-in-email">Email*</label>
+                            <div id="company-sign-in-email-constraints"></div>
+                        </section>
+                        <section class="password-field">
+                            <input type="password" name="password" id="signin-password" placeholder="Şifrə*" autocomplete="on" aria-describedby="password-constraints" required="">
+                            <label for="signin-password">Şifrə*</label>
+                            <div id="password-constraints"></div>
+                            <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/hide-icon.svg" alt="hide icon" class="hide-icon" onclick="togglePassword('signin-password')">
+                        </section>
+                        <section class="forgot-password">
+                            <a href="#">Şifrəmi unutmuşam</a>
+                        </section>
+                        <button type="submit" name="company-login" formnovalidate="">Daxil ol</button>
+                    </form>
+                </section>
+                <section class="about-platform">
+                    <h3>
+                        Şirkətinizi <span>Grumble</span>-a əlavə
+                        etməklə, yeni rəylər barədə bildirişlər alaraq
+                        müştərilərlə ünsiyyət qurun.
+                    </h3>
+                    <p>Bu platforma Sizinlə və Müştərilər arasında körpü yaradaraq, cari istehlakçı rəylərini dinləyib verəcəyiniz çevik reaksiya əsasında potensial müştərilər qazanmağa kömək edir.</p>
+                    <p>İnkişaf edən biznes dünyasında artan rəqabət müştərinin qorunub saxlanılmasını şərtləndirməklə müştəri loyalığına müsbət təsir edir.</p>
+                </section>
+            </article>
+            <article class="platform-advantages-sign-up">
+                <section class="platform-advantages">
+                    <h3>Platformanın imkanları</h3>
+                    <div class="advantages-container">
+                        <div class="advantage">
+                            <h6>Şirkətin rəsmi səhifəsinin yaradılması</h6>
+                            <p>Öz brend səhifənizi yaradaraq, şirkətiniz haqqında ətraflı məlumat daxil edib profilinizi idarə edə və Sizə aid rəyləri görə bilərsiniz</p>
+                        </div>
+                        <div class="advantage">
+                            <h6>Şirkət adından rəsmi cavablama</h6>
+                            <p>Brendiniz adından müştəri şikayətlərinə zamanında cavab verərək rəğbət qazanıb gündəmdə qala bilərsiniz</p>
+                        </div>
+                        <div class="advantage">
+                            <h6>Rəqəmsal marketing alətləri</h6>
+                            <p>Müxtəlif marketing həllərdən istifadə edərək brendinizi inkişaf edə bilərsiniz</p>
+                        </div>
+                        <div class="advantage">
+                            <h6>Rəylər haqqında bildiriş sistemi</h6>
+                            <p>Müxtəlif  kanallarla bildirişlər alaraq, şikayət və rəylərə dərhal reaksiya göstərə bilərsiniz</p>
+                        </div>
+                        <div class="advantage">
+                            <h6>Sosial müştəri xidməti imkanları</h6>
+                            <p>Grumble sizin yeni sosial müştəri xidməti platformanızdır</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="form-container">
+                    <h4>Şirkəti əlavə etmək üçün formu doldurun</h4>
+                    <form action="#" id="company-sign-up" method="post">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="">
+                        <section class="firstname-field">
+                            <label for="firstname">Ad*</label>
+                            <input type="text" name="name" id="firstname" placeholder="Ad" class="company_sign_up_pop_up_input" maxlength="50" required="">
+                            <div id="firstname-constraints"></div>
+                        </section>
+                        <section class="lastname-field">
+                            <label for="lastname">Soyad*</label>
+                            <input type="text" name="surname" id="lastname" placeholder="Soyad" class="company_sign_up_pop_up_input" maxlength="50" required="">
+                            <div id="lastname-constraints"></div>
+                        </section>
+                        <section class="company-name-field">
+                            <label for="company-name">Şirkətin adı*</label>
+                            <input type="text" name="company_name" id="company-name" placeholder="Şirkətin | Brendin adı" class="company_sign_up_pop_up_input" maxlength="255" required="">
+                            <div id="company-name-constraints"></div>
+                        </section>
+                        <section class="phone-field">
+                            <label for="phone">Əlaqə nömrəsi*</label>
+                            <div class="inputs-wrapper">
+                                <input type="text" name="country-code" id="country-code" placeholder="+994" disabled="">
+                                <input type="text" name="contact_number" id="phone" placeholder="123456789" pattern="^(\+|\d)[0-9]{,9}$" aria-errormessage="phone-constraints" aria-invalid="false" required="">
+                            </div>
+                            <div id="phone-constraints"></div>
+                        </section>
+                        <section class="email-field">
+                            <label for="signup-email">Email*</label>
+                            <input type="email" name="email" id="signup-email" placeholder="info@shirket.az" class="company_sign_up_pop_up_input" maxlength="255" required="">
+                            <div id="company-sign-up-email-constraints"></div>
+                        </section>
+                        <!-- NEW PASSWORD FIELDS -->
+                        <section class="password-field">
+                            <label for="signup-password">Şifrə*</label>
+                            <input type="password" name="password" id="signup-password" placeholder="Şifrə*" autocomplete="new-password" required="">
+                            <div id="signup-password-constraints"></div>
+                            <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/hide-icon.svg" alt="hide icon" class="hide-icon" onclick="togglePassword('signup-password')">
+                        </section>
+                        <section class="password-field">
+                            <label for="confirm-password">Şifrəni təsdiq edin*</label>
+                            <input type="password" name="confirm_password" id="confirm-password" placeholder="Şifrəni təsdiq edin*" autocomplete="new-password" required="">
+                            <div id="confirm-password-constraints" class="error-message"></div>
+                            <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/hide-icon.svg" alt="hide icon" class="hide-icon" onclick="togglePassword('confirm-password')">
+                        </section>
+                        <button type="submit" name="company-request" formnovalidate="">Göndər</button>
+                    </form>
+                </section>
+            </article>
+        </section>
+
+        <!-- Company Dashboard Section -->
+        <section class="company-dashboard" id="companyDashboard">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <h1>Xoş gəlmisiniz, <span id="welcomeCompanyName"></span>!</h1>
+                <p>Şirkət panelinizə xoş gəlmisiniz. Burada müştəri rəylərini idarə edə və şirkətinizin reputasiyasını yaxşılaşdıra bilərsiniz.</p>
+                <a href="#" class="logout-btn" id="logoutBtnMain">Çıxış</a>
+            </section>
+
+            <section class="filter-sort">
+                <h1>Şirkətlər</h1>
+                <article class="sort">
+                    <span>Sıralama</span>
+                    <select class="form-select form-select-sm" id="sortBy">
+                        <option value="lastReviewed">Son rəylənən</option>
+                        <option value="mostReviewed">Ən çox rəylənən</option>
+                        <option value="mostViewed">Ən çox baxılan</option>
+                        <option value="companyRating">Ən yüksək reytinq</option>
+                    </select>
+                </article>
+            </section>
+
+            <div class="row">
+                <aside class="col-md-3">
+                    <article class="categories">
+                        <h5>Kateqoriyalar</h5>
+                        <ul>
+                            <li class="result active" data-category="all">Hamısı</li>
+                            <li class="result" data-category="bank">Banklar</li>
+                            <li class="result" data-category="telekom">Telekom</li>
+                            <li class="result" data-category="yemek">Yemək Çatdırılması</li>
+                            <li class="result" data-category="nəqliyyat">Nəqliyyat</li>
+                            <li class="result" data-category="kommunal">Kommunal</li>
+                            <li class="result" data-category="avtomobil">Avtomobil</li>
+                            <li class="result" data-category="ticarət">Ticarət</li>
+                            <li class="result" data-category="təhsil">Təhsil</li>
+                            <li class="result" data-category="it">IT Xidmətləri</li>
+                        </ul>
+                    </article>
+                </aside>
+
+                <section class="col-md-9">
+                    <article class="company-list" id="companyList">
+                        <!-- Kapital Bank -->
+                        <a href="#" class="company-wrapper" data-category="bank">
+                            <section class="company">
+                                <div class="company-logo">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg" alt="Kapital Bank">
+                                </div>
+                                <div class="company-info">
+                                    <div class="company-name"><h5>Kapital Bank</h5></div>
+                                    <div class="star-rating__result">
+                                        <div class="stars" data-rating="4.2">
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="far fa-star star empty"></i>
+                                        </div>
+                                        <span>4.2</span>
+                                    </div>
+                                    <p class="company-title">Bank</p>
+                                    <p class="company-stats">Şikayətlər: 189 | Cavablar: 156</p>
+                                </div>
+                            </section>
+                        </a>
+
+                        <!-- Pasha Bank -->
+                        <a href="#" class="company-wrapper" data-category="bank">
+                            <section class="company">
+                                <div class="company-logo">
+                                    <img src="https://www.pashabank.az/assets/images/logo.svg" alt="Pasha Bank">
+                                </div>
+                                <div class="company-info">
+                                    <div class="company-name"><h5>Pasha Bank</h5></div>
+                                    <div class="star-rating__result">
+                                        <div class="stars" data-rating="3.8">
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="far fa-star star empty"></i>
+                                        </div>
+                                        <span>3.8</span>
+                                    </div>
+                                    <p class="company-title">Bank</p>
+                                    <p class="company-stats">Şikayətlər: 65 | Cavablar: 52</p>
+                                </div>
+                            </section>
+                        </a>
+
+                        <!-- BirBank -->
+                        <a href="#" class="company-wrapper" data-category="bank">
+                            <section class="company">
+                                <div class="company-logo">
+                                    <img src="https://www.kapitalbank.az/assets/images/birbank-logo.svg" alt="BirBank">
+                                </div>
+                                <div class="company-info">
+                                    <div class="company-name"><h5>BirBank</h5></div>
+                                    <div class="star-rating__result">
+                                        <div class="stars" data-rating="4.5">
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                        </div>
+                                        <span>4.5</span>
+                                    </div>
+                                    <p class="company-title">Bank</p>
+                                    <p class="company-stats">Şikayətlər: 32 | Cavablar: 30</p>
+                                </div>
+                            </section>
+                        </a>
+
+                        <!-- Azercell -->
+                        <a href="#" class="company-wrapper" data-category="telekom">
+                            <section class="company">
+                                <div class="company-logo">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Azercell_logo.svg/200px-Azercell_logo.svg.png" alt="Azercell">
+                                </div>
+                                <div class="company-info">
+                                    <div class="company-name"><h5>Azercell</h5></div>
+                                    <div class="star-rating__result">
+                                        <div class="stars" data-rating="3.2">
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="far fa-star star empty"></i>
+                                            <i class="far fa-star star empty"></i>
+                                        </div>
+                                        <span>3.2</span>
+                                    </div>
+                                    <p class="company-title">Telekom</p>
+                                    <p class="company-stats">Şikayətlər: 247 | Cavablar: 198</p>
+                                </div>
+                            </section>
+                        </a>
+
+                        <!-- Bolt Food -->
+                        <a href="#" class="company-wrapper" data-category="yemek">
+                            <section class="company">
+                                <div class="company-logo">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Bolt_logo.svg/200px-Bolt_logo.svg.png" alt="Bolt Food">
+                                </div>
+                                <div class="company-info">
+                                    <div class="company-name"><h5>Bolt Food</h5></div>
+                                    <div class="star-rating__result">
+                                        <div class="stars" data-rating="4.1">
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="far fa-star star empty"></i>
+                                        </div>
+                                        <span>4.1</span>
+                                    </div>
+                                    <p class="company-title">Yemək Çatdırılması</p>
+                                    <p class="company-stats">Şikayətlər: 156 | Cavablar: 134</p>
+                                </div>
+                            </section>
+                        </a>
+
+                        <!-- Wolt -->
+                        <a href="#" class="company-wrapper" data-category="yemek">
+                            <section class="company">
+                                <div class="company-logo">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wolt_logo.svg/200px-Wolt_logo.svg.png" alt="Wolt">
+                                </div>
+                                <div class="company-info">
+                                    <div class="company-name"><h5>Wolt</h5></div>
+                                    <div class="star-rating__result">
+                                        <div class="stars" data-rating="4.3">
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i>
+                                            <i class="far fa-star star empty"></i>
+                                        </div>
+                                        <span>4.3</span>
+                                    </div>
+                                    <p class="company-title">Yemək Çatdırılması</p>
+                                    <p class="company-stats">Şikayətlər: 43 | Cavablar: 41</p>
+                                </div>
+                            </section>
+                        </a>
+                    </article>
+                </section>
+            </div>
+        </section>
+    </div>
+</main>
+<footer id="footer">
+    <div class="container">
+        <div class="footer_menu_wrapper">
+            <div class="footer_menu">
+                <div class="ft_links">
+                    <a href="#" class="ft_link">Şirkətlər</a>
+                    <a href="#" class="ft_link">Rəylər</a>
+                    <a href="#" class="ft_link">Şikayətlər</a>
+                    <a href="#" class="ft_link">Daxil ol</a>
+                    <a href="#" class="ft_link">Şirkətlər üçün</a>
+                </div>
+                <div class="ft_links">
+                    <a href="#" class="ft_link">Haqqımızda</a>
+                    <a href="#" class="ft_link">Bloqlar</a>
+                    <a href="#" class="ft_link">Tez-tez verilən suallar</a>
+                    <a href="#" class="ft_link">Qaydalar</a>
+                    <a href="#" class="ft_link">Məxfilik siyasəti</a>
+                </div>
+                <div class="ft_links">
+                    <a href="tel:MRP LLC VOEN: 1308583041" class="ft_link">MRP LLC VOEN: 1308583041</a>
+                    <a href="mailto:info@grumble.az" class="ft_link">info@grumble.az</a>
+                </div>
+            </div>
+            <div class="social_links">
+                <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
+                <a target="_blank" href="#"><i class="fa fa-instagram"></i></a>
+                <a target="_blank" href="#"><i class="fa fa-linkedin"></i></a>
+                <a target="_blank" href="#"><svg height="15" width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path fill="#fff" d="m470.4354553 45.4225006-453.6081524 175.8265381c-18.253809 8.1874695-24.4278889 24.5854034-4.4127407 33.4840851l116.3710175 37.1726685 281.3674316-174.789505c15.3625488-10.9733887 31.0910339-8.0470886 17.5573425 4.023468l-241.6571311 219.9348907-7.5913849 93.0762329c7.0313721 14.3716125 19.9055786 14.4378967 28.1172485 7.2952881l66.8582916-63.5891418 114.5050659 86.1867065c26.5942688 15.8265076 41.0652466 5.6130371 46.7870789-23.3935242l75.1055603-357.4697647c7.7979126-35.7059288-5.5005798-51.437891-39.3996277-37.7579422z"></path></g></svg></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer_bottom">
+        <div class="container">
+            <div class="f_wrapper">
+                <div class="f_logo">
+                    <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/grumble-logo.svg" alt="grumble.az">
+                </div>
+                <p class="f_copyright"><script>document.write(new Date().getFullYear());</script> © grumble.az</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" integrity="sha256-3gJwYp4gk1bZQzQ0jrISFRCGDpa2BkLomPvKg3r+7E0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-qQ2oNcamzatoorktrENcGukdxbYlR5c+3F4iAfDdc/K1Ji/7luWGINuD/R7/UZ5E" crossorigin="anonymous"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/js/app.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/js/fetch-companies-categories.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/js/for-companies.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/js/alerts.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Global variables
+    let isLoggedIn = false;
+    let currentCompany = null;
+
+    // DOM Elements
+    const loginSection = document.getElementById('loginSection');
+    const companyDashboard = document.getElementById('companyDashboard');
+    const loginWrapper = document.getElementById('loginWrapper');
+    const userWrapper = document.getElementById('userWrapper');
+    const mobileLoginLinks = document.getElementById('mobileLoginLinks');
+    const mobileUserLinks = document.getElementById('mobileUserLinks');
+    const breadcrumbTitle = document.getElementById('breadcrumbTitle');
+
+    // Forms
+    const signInForm = document.getElementById('company-sign-in');
+    const signUpForm = document.getElementById('company-sign-up');
+
+    // Password toggle functionality
+    window.togglePassword = function(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = input.nextElementSibling.nextElementSibling;
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.src = 'https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/show-icon.svg';
+        } else {
+            input.type = 'password';
+            icon.src = 'https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/hide-icon.svg';
+        }
+    };
+
+    // Password validation for sign-up form
+    function validatePasswords() {
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        const errorDiv = document.getElementById('confirm-password-constraints');
+
+        if (password !== confirmPassword) {
+            errorDiv.textContent = 'Şifrələr uyğun gəlmir';
+            errorDiv.style.display = 'block';
+            return false;
+        } else {
+            errorDiv.style.display = 'none';
+            return true;
+        }
+    }
+
+    // Real-time password validation
+    document.getElementById('confirm-password').addEventListener('input', validatePasswords);
+    document.getElementById('signup-password').addEventListener('input', validatePasswords);
+
+    // Sign-in form submission
+    if (signInForm) {
+        signInForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('company-sign-in-email').value;
+            const password = document.getElementById('signin-password').value;
+
+            if (!email || !password) {
+                alert('Zəhmət olmasa bütün sahələri doldurun.');
+                return;
+            }
+
+            // Simulate login
+            console.log('Sign-in attempt:', { email, password });
+
+            // Mock successful login
+            currentCompany = {
+                name: 'Kapital Bank',
+                email: email,
+                category: 'Bank'
+            };
+
+            showDashboard();
+            alert('Uğurla daxil oldunuz!');
+        });
+    }
+
+    // Sign-up form submission
+    if (signUpForm) {
+        signUpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                firstName: document.getElementById('firstname').value,
+                lastName: document.getElementById('lastname').value,
+                companyName: document.getElementById('company-name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('signup-email').value,
+                password: document.getElementById('signup-password').value,
+                confirmPassword: document.getElementById('confirm-password').value
+            };
+
+            // Validate form
+            if (!formData.firstName || !formData.lastName || !formData.companyName ||
+                !formData.phone || !formData.email || !formData.password || !formData.confirmPassword) {
+                alert('Zəhmət olmasa bütün sahələri doldurun.');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                alert('Zəhmət olmasa düzgün email daxil edin.');
+                return;
+            }
+
+            // Phone validation
+            const phoneRegex = /^\d{9}$/;
+            if (!phoneRegex.test(formData.phone)) {
+                alert('Zəhmət olmasa düzgün telefon nömrəsi daxil edin (9 rəqəm).');
+                return;
+            }
+
+            // Password validation
+            if (!validatePasswords()) {
+                return;
+            }
+
+            // Password strength validation
+            if (formData.password.length < 6) {
+                alert('Şifrə ən azı 6 simvoldan ibarət olmalıdır.');
+                return;
+            }
+
+            // Simulate registration
+            console.log('Registration data:', formData);
+
+            // Mock successful registration
+            currentCompany = {
+                name: formData.companyName,
+                email: formData.email,
+                category: 'Bank'
+            };
+
+            showDashboard();
+            alert(`Təşəkkür edirik, ${formData.firstName}! ${formData.companyName} şirkəti üçün qeydiyyat tamamlandı.`);
+        });
+    }
+
+    // Show dashboard after login/registration
+    function showDashboard() {
+        isLoggedIn = true;
+
+        // Hide login section, show dashboard
+        loginSection.style.display = 'none';
+        companyDashboard.classList.add('active');
+
+        // Update header
+        loginWrapper.style.display = 'none';
+        userWrapper.style.display = 'flex';
+
+        // Update mobile menu
+        mobileLoginLinks.style.display = 'none';
+        mobileUserLinks.style.display = 'block';
+
+        // Update breadcrumb
+        breadcrumbTitle.textContent = 'Şirkət Paneli';
+
+        // Update company name displays
+        document.getElementById('companyNameDisplay').textContent = currentCompany.name;
+        document.getElementById('welcomeCompanyName').textContent = currentCompany.name;
+        document.getElementById('mobileCompanyName').textContent = currentCompany.name;
+    }
+
+    // Logout functionality
+    function logout() {
+        if (confirm('Çıxış etmək istədiyinizə əminsiniz?')) {
+            isLoggedIn = false;
+            currentCompany = null;
+
+            // Show login section, hide dashboard
+            loginSection.style.display = 'block';
+            companyDashboard.classList.remove('active');
+
+            // Update header
+            loginWrapper.style.display = 'flex';
+            userWrapper.style.display = 'none';
+
+            // Update mobile menu
+            mobileLoginLinks.style.display = 'block';
+            mobileUserLinks.style.display = 'none';
+
+            // Update breadcrumb
+            breadcrumbTitle.textContent = 'Şirkətlər üçün';
+
+            // Reset forms
+            if (signInForm) signInForm.reset();
+            if (signUpForm) signUpForm.reset();
+
+            alert('Çıxış edildi.');
+        }
+    }
+
+    // Logout button events
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+    });
+
+    document.getElementById('logoutBtnMain').addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
+    });
+
+    // User profile dropdown toggle
+    const userProfileBtn = document.getElementById('userProfileBtn');
+    const userDropdown = document.getElementById('userDropdown');
+
+    if (userProfileBtn && userDropdown) {
+        userProfileBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.style.display = userDropdown.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            userDropdown.style.display = 'none';
+        });
+    }
+
+    // Category filtering
+    const categoryItems = document.querySelectorAll('.categories .result');
+    const companyWrappers = document.querySelectorAll('.company-wrapper');
+
+    categoryItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove active class from all categories
+            categoryItems.forEach(cat => cat.classList.remove('active'));
+            // Add active class to clicked category
+            this.classList.add('active');
+
+            const selectedCategory = this.getAttribute('data-category');
+
+            // Filter companies
+            companyWrappers.forEach(wrapper => {
+                if (selectedCategory === 'all' || wrapper.getAttribute('data-category') === selectedCategory) {
+                    wrapper.style.display = 'block';
+                } else {
+                    wrapper.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Sorting functionality
+    const sortSelect = document.getElementById('sortBy');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            const sortBy = this.value;
+            const companyList = document.getElementById('companyList');
+            const companies = Array.from(companyList.children);
+
+            companies.sort((a, b) => {
+                switch(sortBy) {
+                    case 'companyRating':
+                        const ratingA = parseFloat(a.querySelector('.star-rating__result span').textContent);
+                        const ratingB = parseFloat(b.querySelector('.star-rating__result span').textContent);
+                        return ratingB - ratingA;
+                    case 'mostReviewed':
+                        const reviewsA = parseInt(a.querySelector('.company-stats').textContent.match(/\d+/)[0]);
+                        const reviewsB = parseInt(b.querySelector('.company-stats').textContent.match(/\d+/)[0]);
+                        return reviewsB - reviewsA;
+                    case 'lastReviewed':
+                    case 'mostViewed':
+                    default:
+                        // For demo purposes, sort alphabetically
+                        const nameA = a.querySelector('.company-name h5').textContent;
+                        const nameB = b.querySelector('.company-name h5').textContent;
+                        return nameA.localeCompare(nameB);
+                }
+            });
+
+            // Re-append sorted companies
+            companies.forEach(company => companyList.appendChild(company));
+        });
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('search-input');
+    const searchForm = document.getElementById('search_form');
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            performSearch();
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            performSearch();
+        });
+    }
+
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        companyWrappers.forEach(wrapper => {
+            const companyName = wrapper.querySelector('.company-name h5').textContent.toLowerCase();
+            const companyCategory = wrapper.querySelector('.company-title').textContent.toLowerCase();
+
+            if (searchTerm === '' || companyName.includes(searchTerm) || companyCategory.includes(searchTerm)) {
+                wrapper.style.display = 'block';
+            } else {
+                wrapper.style.display = 'none';
+            }
+        });
+    }
+
+    // Dynamic star rating display
+    function updateStarRating(starsContainer, rating) {
+        const stars = starsContainer.querySelectorAll('.star');
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+
+        stars.forEach((star, index) => {
+            if (index < fullStars) {
+                star.className = 'fas fa-star star';
+            } else if (index === fullStars && hasHalfStar) {
+                star.className = 'fas fa-star-half-alt star';
+            } else {
+                star.className = 'far fa-star star empty';
+            }
+        });
+    }
+
+    // Initialize star ratings
+    document.querySelectorAll('.stars[data-rating]').forEach(starsContainer => {
+        const rating = parseFloat(starsContainer.getAttribute('data-rating'));
+        updateStarRating(starsContainer, rating);
+    });
+
+    // Write review button functionality
+    const writeReviewBtn = document.getElementById('write-review-btn');
+    if (writeReviewBtn) {
+        writeReviewBtn.addEventListener('click', function() {
+            alert('Rəy yazma səhifəsinə yönləndirilirsiniz...');
+            console.log('Navigate to write review page');
+        });
+    }
+
+    // Mobile menu toggle (basic implementation)
+    const hamMenu = document.querySelector('.ham-menu');
+    const mobileMenu = document.querySelector('.mobile-menu-wrapper');
+
+    if (hamMenu && mobileMenu) {
+        hamMenu.addEventListener('click', function() {
+            mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+        });
+    }
+
+    // Language selection
+    const langSelection = document.querySelector('.language_selection');
+    if (langSelection) {
+        const langTitle = langSelection.querySelector('.title');
+        const langBody = langSelection.querySelector('.lang_body');
+        const langLinks = langBody.querySelectorAll('a');
+
+        langLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const selectedLang = this.textContent;
+                langTitle.textContent = selectedLang;
+                console.log('Language changed to:', selectedLang);
+            });
+        });
+    }
+
+    // Utility functions
+    function getCsrfToken() {
+        const token = document.querySelector('[name=csrfmiddlewaretoken]');
+        return token ? token.value : '';
+    }
+
+    // Initialize page
+    console.log('Grumble Company Portal initialized');
+});
+
+// Handle credential response for Google One Tap (if implemented)
+function handleCredentialResponse(response) {
+    fetch('/user/google/one-tap/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+            'credential': response.credential
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = data.redirect_url;
+        } else {
+            console.error('Login failed:', data.error);
+        }
+    });
+}
+
+function getCsrfToken() {
+    const token = document.querySelector('[name=csrfmiddlewaretoken]');
+    return token ? token.value : '';
+}
+</script>
+
+</body>
+</html>

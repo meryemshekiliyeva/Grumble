@@ -56,6 +56,29 @@ const CategoryPage = () => {
         }
       ]
     },
+    'Havayolu': {
+      name: 'Havayolu',
+      companies: [
+        {
+          {
+  id: 'azal',
+  name: 'AZAL',
+  logo: 'https://www.azal.az/assets/images/logo.svg',
+  rating: 3.5,
+  complaints: 45,
+  description: 'Azərbaycanın milli aviadaşıyıcısı, beynəlxalq və daxili uçuş xidmətləri təqdim edən şirkət'
+}
+        },
+        {
+          id: 'buta-airways',
+          name: 'Buta Airways',
+          logo: 'https://www.butaairways.az/assets/images/logo.svg',
+          rating: 3.2,
+          complaints: 32,
+          description: 'Azərbaycanın ən böyük havayolu şirkəti'
+        }
+      ]
+    },
     'e-ticarət': {
       name: 'E-ticarət',
       companies: [
