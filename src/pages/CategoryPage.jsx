@@ -32,7 +32,7 @@ const CategoryPage = () => {
           rating: 1.0,
           complaints: 1,
           description: 'Rəqəmsal bankçılıq həlləri təklif edən bank'
-        }
+        },
       ]
     },
     'telekommunikasiya': {
@@ -53,30 +53,29 @@ const CategoryPage = () => {
           rating: 3.2,
           complaints: 32,
           description: 'Müasir telekommunikasiya xidmətləri təqdim edən şirkət'
-        }
+        },
       ]
     },
     'Havayolu': {
       name: 'Havayolu',
       companies: [
         {
-          {
   id: 'azal',
   name: 'AZAL',
   logo: 'https://www.azal.az/assets/images/logo.svg',
   rating: 3.5,
   complaints: 45,
   description: 'Azərbaycanın milli aviadaşıyıcısı, beynəlxalq və daxili uçuş xidmətləri təqdim edən şirkət'
-}
-        },
-        {
-          id: 'buta-airways',
-          name: 'Buta Airways',
-          logo: 'https://www.butaairways.az/assets/images/logo.svg',
-          rating: 3.2,
-          complaints: 32,
-          description: 'Azərbaycanın ən böyük havayolu şirkəti'
-        }
+},
+       {
+  id: 'buta-airways',
+  name: 'Buta Airways',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Buta_Airways_Logo.svg/200px-Buta_Airways_Logo.svg.png',
+  rating: 3.2,
+  complaints: 32,
+  description: 'Azərbaycanın aşağı büdcəli aviadaşıyıcısı, beynəlxalq uçuşlar təqdim edir'
+},
+    
       ]
     },
     'e-ticarət': {
