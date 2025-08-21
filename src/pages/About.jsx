@@ -8,7 +8,7 @@ const About = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Haqqımızda</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Grumble - Azərbaycanın ən böyük və etibarlı şikayət platforması
+            Grumble - Azərbaycanın ən böyük və etibarlı şikayət 
           </p>
         </div>
 
