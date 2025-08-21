@@ -41,7 +41,7 @@ const CategoryPage = () => {
         {
           id: 'azercell',
           name: 'Azercell',
-          logo: 'https://www.azercell.com/theme/images/common/b-2-c-logo.svg',
+          logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcBAMAAACAI8KnAAAAMFBMVEVHcExcJINcJINcI4NWFX9PAntpOox8V5pIAHeUeKzn4ez////Qxtq9rsuumcD08fY/OFb6AAAAA3RSTlMAlfE8+ngLAAAAzElEQVR4AWNgEDKGA0UGBiZjJKDAIIzMNWRQRuYaMRijABjXBIXrmu6CxLWYtXunM5xr4rOr5LaxsTOU67Z7hnPXFIurEK5J9jZnY78nPUD1IK7bfqC5nk9XQ7nxQElj8/e7S8CKLU4DaePO3YshRrnvCQaK3d7bDLGoa4uxsWnW7htQe6uBFvTtXvkEwjV5XWzcvnpfH5Rrerq17fSu1BgY9/bd1ftnGPsVQ/Xa7941wxnsQ4i95a7OyN43QQsNBEALOrSARQt2tEgBAM2AbrbhuFpxAAAAAElFTkSuQmCC',
           rating: 3.5,
           complaints: 45,
           description: 'Azərbaycanın aparıcı mobil operator şirkəti'
