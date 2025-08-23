@@ -185,13 +185,6 @@ const Companies = () => {
     }
   ];
     {
-      name: 'AT&T',
-      category: 'Telekom',
-      complaintCount: 247,
-      icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AT%26T_logo_2016.svg/200px-AT%26T_logo_2016.svg.png',
-      bgColor: '#0066CC'
-    },
-    {
       name: 'JPMorgan Chase',
       category: 'Bank',
       complaintCount: 189,
