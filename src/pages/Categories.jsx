@@ -95,108 +95,158 @@ const Categories = () => {
     ],
     'Bank və Maliyyə': [
       {
-        name: 'Kapital Bank',
+        name: 'JPMorgan Chase',
         category: 'Bank',
         complaintCount: 189,
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
-        bgColor: '#E31E24',
-        companyId: 'kapital-bank'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png',
+        bgColor: '#0066CC',
+        companyId: 'jpmorgan-chase'
       },
       {
-        name: 'Pasha Bank',
+        name: 'HSBC',
         category: 'Bank',
         complaintCount: 65,
-        icon: 'https://pashabank.az/images/logo.png',
-        bgColor: '#1E3A8A',
-        companyId: 'pasha-bank'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/200px-HSBC_logo_%282018%29.svg.png',
+        bgColor: '#DB0011',
+        companyId: 'hsbc'
       },
       {
-        name: 'Yelo Bank',
+        name: 'Goldman Sachs',
         category: 'Bank',
         complaintCount: 54,
-        icon: 'https://yelobank.az/images/logo.png',
-        bgColor: '#FFFF00',
-        companyId: 'yelo-bank'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/200px-Goldman_Sachs.svg.png',
+        bgColor: '#1E3A8A',
+        companyId: 'goldman-sachs'
       }
     ],
     'Yemək Çatdırılması': [
       {
-        name: 'Wolt',
+        name: 'Uber Eats',
         category: 'Yemək Çatdırılması',
         complaintCount: 43,
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wolt_logo.svg/200px-Wolt_logo.svg.png',
-        bgColor: '#009DE0',
-        companyId: 'wolt'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Uber_logo_2018.png/200px-Uber_logo_2018.png',
+        bgColor: '#000000',
+        companyId: 'uber-eats'
       },
       {
-        name: 'Bolt',
+        name: 'DoorDash',
         category: 'Yemək Çatdırılması',
         complaintCount: 156,
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Bolt_logo.svg/200px-Bolt_logo.svg.png',
-        bgColor: '#34D186',
-        companyId: 'bolt'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/DoorDash_logo.svg/200px-DoorDash_logo.svg.png',
+        bgColor: '#FF3008',
+        companyId: 'doordash'
       },
       {
-        name: 'Yango',
+        name: 'Deliveroo',
         category: 'Yemək Çatdırılması',
         complaintCount: 89,
-        icon: 'https://yango.com/images/logo.png',
-        bgColor: '#FFD700',
-        companyId: 'yango'
-      },
-      {
-        name: 'Fooderos',
-        category: 'Yemək Çatdırılması',
-        complaintCount: 67,
-        icon: 'https://fooderos.az/images/logo.png',
-        bgColor: '#FF6B35',
-        companyId: 'fooderos'
-      },
-    ],
-    'Nəqliyyat': [
-      {
-        name: 'BiP',
-        category: 'Nəqliyyat',
-        complaintCount: 76,
-        icon: 'https://bip.az/assets/images/logo.png',
-        bgColor: '#FF4500',
-        companyId: 'bip'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Deliveroo_logo.svg/200px-Deliveroo_logo.svg.png',
+        bgColor: '#00CCBC',
+        companyId: 'deliveroo'
       },
     ],
     'Kommunal Xidmətlər': [
       {
-        name: 'Azərsu',
+        name: 'EDF Energy',
         category: 'Kommunal',
         complaintCount: 98,
-        icon: 'https://azersu.az/assets/images/logo.png',
-        bgColor: '#0066CC',
-        companyId: 'azersu'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/EDF_logo.svg/200px-EDF_logo.svg.png',
+        bgColor: '#FF6600',
+        companyId: 'edf-energy'
       },
       {
-        name: 'Azərişıq',
+        name: 'National Grid',
         category: 'Kommunal',
         complaintCount: 87,
-        icon: 'https://azerishiq.az/images/logo.png',
-        bgColor: '#FFD700',
-        companyId: 'azerishiq'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/National_Grid_logo.svg/200px-National_Grid_logo.svg.png',
+        bgColor: '#0066CC',
+        companyId: 'national-grid'
+      },
+      {
+        name: 'Veolia',
+        category: 'Kommunal',
+        complaintCount: 65,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Veolia_logo.svg/200px-Veolia_logo.svg.png',
+        bgColor: '#00A651',
+        companyId: 'veolia'
       },
     ],
     'Havayolu': [
       {
-        name: 'AZAL',
+        name: 'Emirates',
         category: 'Havayolu',
         complaintCount: 134,
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Azerbaijan_Airlines_logo.svg/200px-Azerbaijan_Airlines_logo.svg.png',
-        bgColor: '#003366',
-        companyId: 'azal'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Emirates_logo.svg/200px-Emirates_logo.svg.png',
+        bgColor: '#FF0000',
+        companyId: 'emirates'
       },
       {
-        name: 'Buta Airways',
+        name: 'Lufthansa',
+        category: 'Havayolu',
+        complaintCount: 89,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Lufthansa_Logo_2018.svg/200px-Lufthansa_Logo_2018.svg.png',
+        bgColor: '#F9BA00',
+        companyId: 'lufthansa'
+      },
+      {
+        name: 'Delta Air Lines',
         category: 'Havayolu',
         complaintCount: 32,
-        icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAA0lBMVEXIMT7rMkToMkTsM0TsMkbnNErqM0PrMkLGMUDrMkPtMkPjLT/lJj7rL0HjVF3he3/um53ogYTWOErjeH3uvcL8/Pz8//777OnvkZDgMDrhHDXijJHx4OLXKz/la3jgRVjuLD7RNkL74t//7PDpc4HeWGrWMUTz1trig4z5///dUGD/8/f/6uXsoqfqr7T6ztHTEiPyy8T+9vfnWWnmSFHlVF73xsXccoL5+ffqp6b///bTe4vXX2jSHi/s2Nvoyc/OanbhucTxydHnipLfo6/Sj56ExliIAAABxElEQVR4AV3ShaLiMBAFUCbtS2rBk+IONTSwb4P7///STp8ge/E53EHaTAaIYZgGBsgHIZSCaQKYwHCSsXCaku24nslpGvhCm1JEDDOAZ3P5QtGjOGQp2ilmnK8i5aWykH6l6jmMAcbGIOJ2wLe5tbpoNFvldsdOCWN8I8UQ3u31yUD4Q06eiA9ots1GQb8YRlgnBOCJX+nEyXg0kUKWOAAw9oa1aTSbL4SQhRol7wg8VtEkqyIRLVd/+OtaAlD9FOLvVGgZzNdTlz0R19TqGy22Smi9i5Pe3oEHEsKXvhaHQAudG/aF3juPJpikOotk4yhl/1TviyioOezRhE64kf2j0MpXkVDJjjmU/iJrziJ1xs/TSsvksjOp/cTOMlFHpVO8bON908XiE3O6cdBfwaWNRrkKYD/wqrGohJDIG70p115xl5yVOp6Pt7Kftq/85ajwURBczti8jEa5he4VOWMPZLW6PGNHqKDlNnclz2DPP54ydyE3iP497K5WHbAfTYxDuuWNFFqqoPE5+ho9EMNr9Z6WUvqTDxP+R0o9N1so7JoeSU/xByJ8rXZ4h3NOCHwhDlM0KE1fAyFOhxFCmYHBofEPQb86HvXyLY8AAAAASUVORK5CYII=',
-        bgColor: '#66001dff',
-        companyId: 'buta-airways'
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Delta_logo.svg/200px-Delta_logo.svg.png',
+        bgColor: '#003366',
+        companyId: 'delta-air-lines'
+      },
+    ],
+    'Sığorta': [
+      {
+        name: 'Allianz',
+        category: 'Sığorta',
+        complaintCount: 87,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Allianz_logo.svg/200px-Allianz_logo.svg.png',
+        bgColor: '#0066CC',
+        companyId: 'allianz'
+      },
+      {
+        name: 'AXA',
+        category: 'Sığorta',
+        complaintCount: 65,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/AXA_Logo.svg/200px-AXA_Logo.svg.png',
+        bgColor: '#00008F',
+        companyId: 'axa'
+      },
+      {
+        name: 'Prudential',
+        category: 'Sığorta',
+        complaintCount: 54,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Prudential_plc_logo.svg/200px-Prudential_plc_logo.svg.png',
+        bgColor: '#ED1C24',
+        companyId: 'prudential'
+      },
+    ],
+    'E-ticarət': [
+      {
+        name: 'Amazon',
+        category: 'E-ticarət',
+        complaintCount: 156,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/200px-Amazon_logo.svg.png',
+        bgColor: '#FF9900',
+        companyId: 'amazon'
+      },
+      {
+        name: 'Alibaba',
+        category: 'E-ticarət',
+        complaintCount: 98,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Alibaba_Group_Holding_Limited_Logo.svg/200px-Alibaba_Group_Holding_Limited_Logo.svg.png',
+        bgColor: '#FF6A00',
+        companyId: 'alibaba'
+      },
+      {
+        name: 'eBay',
+        category: 'E-ticarət',
+        complaintCount: 76,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/200px-EBay_logo.svg.png',
+        bgColor: '#E53238',
+        companyId: 'ebay'
       },
     ]
   };

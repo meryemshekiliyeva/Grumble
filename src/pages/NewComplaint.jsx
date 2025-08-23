@@ -74,45 +74,39 @@ const NewComplaint = () => {
 
   const companiesByCategory = {
     'Telekommunikasiya': [
-      { name: 'Azercell', id: 'azercell' },
-      { name: 'Bakcell', id: 'bakcell' },
-      { name: 'Nar Mobile', id: 'nar-mobile' },
-      { name: 'CityNet', id: 'citynet' },
-      { name: 'AzerTelecom', id: 'azertelecom' }
+      { name: 'AT&T', id: 'att' },
+      { name: 'Vodafone', id: 'vodafone' },
+      { name: 'T-Mobile', id: 't-mobile' }
     ],
     'Bank və Maliyyə': [
-      { name: 'Kapital Bank', id: 'kapital-bank' },
-      { name: 'PAŞA Bank', id: 'pasha-bank' },
-      { name: 'Birbank', id: 'birbank' },
-      { name: 'Unibank', id: 'unibank' },
-      { name: 'Bank of Baku', id: 'bank-of-baku' }
+      { name: 'JPMorgan Chase', id: 'jpmorgan-chase' },
+      { name: 'HSBC', id: 'hsbc' },
+      { name: 'Goldman Sachs', id: 'goldman-sachs' }
     ],
     'Yemək Çatdırılması': [
-      { name: 'Wolt', id: 'wolt' },
-      { name: 'Bolt Food', id: 'bolt-food' },
-      { name: 'Fooderos', id: 'fooderos' },
-      { name: 'Yemeksepeti', id: 'yemeksepeti' }
-    ],
-    'Nəqliyyat': [
-      { name: 'BiP', id: 'bip' },
-      { name: 'Bolt', id: 'bolt' },
-      { name: 'Uber', id: 'uber' },
-      { name: 'BakuBus', id: 'bakubus' }
+      { name: 'Uber Eats', id: 'uber-eats' },
+      { name: 'DoorDash', id: 'doordash' },
+      { name: 'Deliveroo', id: 'deliveroo' }
     ],
     'Kommunal Xidmətlər': [
-      { name: 'Azərsu', id: 'azersu' },
-      { name: 'Azərişıq', id: 'azerishiq' },
-      { name: 'Azəriqaz', id: 'azeriqaz' }
+      { name: 'EDF Energy', id: 'edf-energy' },
+      { name: 'National Grid', id: 'national-grid' },
+      { name: 'Veolia', id: 'veolia' }
     ],
     'E-ticarət': [
-      { name: 'Trendyol', id: 'trendyol' },
       { name: 'Amazon', id: 'amazon' },
-      { name: 'Aliexpress', id: 'aliexpress' }
+      { name: 'Alibaba', id: 'alibaba' },
+      { name: 'eBay', id: 'ebay' }
     ],
     'Havayolu': [
-      { name: 'AZAL', id: 'azal' },
-      { name: 'Buta Airways', id: 'buta-airways' },
-      { name: 'Turkish Airlines', id: 'turkish-airlines' }
+      { name: 'Emirates', id: 'emirates' },
+      { name: 'Lufthansa', id: 'lufthansa' },
+      { name: 'Delta Air Lines', id: 'delta-air-lines' }
+    ],
+    'Sığorta': [
+      { name: 'Allianz', id: 'allianz' },
+      { name: 'AXA', id: 'axa' },
+      { name: 'Prudential', id: 'prudential' }
     ]
   };
 
