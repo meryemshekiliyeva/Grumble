@@ -9,10 +9,10 @@ const Companies = () => {
 
   const companies = [
     {
-      name: 'Azercell',
+      name: 'AT&T',
       category: 'Telekom',
       complaintCount: 247,
-      icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcBAMAAACAI8KnAAAAMFBMVEVHcExcJINcJINcI4NWFX9PAntpOox8V5pIAHeUeKzn4ez////Qxtq9rsuumcD08fY/OFb6AAAAA3RSTlMAlfE8+ngLAAAAzElEQVR4AWNgEDKGA0UGBiZjJKDAIIzMNWRQRuYaMRijABjXBIXrmu6CxLWYtXunM5xr4rOr5LaxsTOU67Z7hnPXFIurEK5J9jZnY78nPUD1IK7bfqC5nk9XQ7nxQElj8/e7S8CKLU4DaePO3YshRrnvCQaK3d7bDLGoa4uxsWnW7htQe6uBFvTtXvkEwjV5XWzcvnpfH5Rrerq17fSu1BgY9/bd1ftnGPsVQ/Xa7941wxnsQ4i95a7OyN43QQsNBEALOrSARQt2tEgBAM2AbrbhuFpxAAAAAElFTkSuQmCC',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AT%26T_logo_2016.svg/200px-AT%26T_logo_2016.svg.png',
       bgColor: '#0066CC'
     },
     {
