@@ -68,21 +68,29 @@ const CategoryPage = () => {
       name: 'Havayolu',
       companies: [
         {
-  id: 'azal',
-  name: 'AZAL',
-  logo: 'https://tpc.googlesyndication.com/simgad/3133408318918545969?sqp=-oaymwEKCCAQICABUAFYAQ&rs=AOga4qmZcz0cCteCxiB4I9ESdfMVfeauTw',
-  rating: 3.5,
-  complaints: 45,
-  description: 'Azərbaycanın milli aviadaşıyıcısı, beynəlxalq və daxili uçuş xidmətləri təqdim edən şirkət'
-},
-       {
-  id: 'buta-airways',
-  name: 'Buta Airways',
-  logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAA0lBMVEXIMT7rMkToMkTsM0TsMkbnNErqM0PrMkLGMUDrMkPtMkPjLT/lJj7rL0HjVF3he3/um53ogYTWOErjeH3uvcL8/Pz8//777OnvkZDgMDrhHDXijJHx4OLXKz/la3jgRVjuLD7RNkL74t//7PDpc4HeWGrWMUTz1trig4z5///dUGD/8/f/6uXsoqfqr7T6ztHTEiPyy8T+9vfnWWnmSFHlVF73xsXccoL5+ffqp6b///bTe4vXX2jSHi/s2Nvoyc/OanbhucTxydHnipLfo6/Sj56ExliIAAABxElEQVR4AV3ShaLiMBAFUCbtS2rBk+IONTSwb4P7///STp8ge/E53EHaTAaIYZgGBsgHIZSCaQKYwHCSsXCaku24nslpGvhCm1JEDDOAZ3P5QtGjOGQp2ilmnK8i5aWykH6l6jmMAcbGIOJ2wLe5tbpoNFvldsdOCWN8I8UQ3u31yUD4Q06eiA9ots1GQb8YRlgnBOCJX+nEyXg0kUKWOAAw9oa1aTSbL4SQhRol7wg8VtEkqyIRLVd/+OtaAlD9FOLvVGgZzNdTlz0R19TqGy22Smi9i5Pe3oEHEsKXvhaHQAudG/aF3juPJpikOotk4yhl/1TviyioOezRhE64kf2j0MpXkVDJjjmU/iJrziJ1xs/TSsvksjOp/cTOMlFHpVO8bON908XiE3O6cdBfwaWNRrkKYD/wqrGohJDIG70p115xl5yVOp6Pt7Kftq/85ajwURBczti8jEa5he4VOWMPZLW6PGNHqKDlNnclz2DPP54ydyE3iP497K5WHbAfTYxDuuWNFFqqoPE5+ho9EMNr9Z6WUvqTDxP+R0o9N1so7JoeSU/xByJ8rXZ4h3NOCHwhDlM0KE1fAyFOhxFCmYHBofEPQb86HvXyLY8AAAAASUVORK5CYII=',
-  rating: 3.2,
-  complaints: 32,
-  description: 'Azərbaycanın aşağı büdcəli aviadaşıyıcısı, beynəlxalq uçuşlar təqdim edir'
-},
+          id: 'emirates',
+          name: 'Emirates',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Emirates_logo.svg/200px-Emirates_logo.svg.png',
+          rating: 4.1,
+          complaints: 134,
+          description: 'Dünyada aparıcı havayolu şirkətlərindən biri, yüksək keyfiyyətli xidmət təqdim edir'
+        },
+        {
+          id: 'lufthansa',
+          name: 'Lufthansa',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Lufthansa_Logo_2018.svg/200px-Lufthansa_Logo_2018.svg.png',
+          rating: 3.8,
+          complaints: 89,
+          description: 'Almaniyanın milli havayolu şirkəti, beynəlxalq uçuşlar təqdim edir'
+        },
+        {
+          id: 'delta-air-lines',
+          name: 'Delta Air Lines',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Delta_logo.svg/200px-Delta_logo.svg.png',
+          rating: 3.6,
+          complaints: 32,
+          description: 'Amerika Birləşmiş Ştatlarının aparıcı havayolu şirkəti'
+        },
     
       ]
     },
@@ -90,12 +98,28 @@ const CategoryPage = () => {
       name: 'E-ticarət',
       companies: [
         {
-          id: 'trendyol',
-          name: 'Trendyol',
-          logo: 'https://cdn.dsmcdn.com/web/logo/ty-web.svg',
-          rating: 4.1,
-          complaints: 23,
-          description: 'Onlayn alış-veriş platforması'
+          id: 'amazon',
+          name: 'Amazon',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/200px-Amazon_logo.svg.png',
+          rating: 3.9,
+          complaints: 156,
+          description: 'Dünyada ən böyük e-ticarət platforması'
+        },
+        {
+          id: 'alibaba',
+          name: 'Alibaba',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Alibaba_Group_Holding_Limited_Logo.svg/200px-Alibaba_Group_Holding_Limited_Logo.svg.png',
+          rating: 3.6,
+          complaints: 98,
+          description: 'Çinin ən böyük e-ticarət şirkəti'
+        },
+        {
+          id: 'ebay',
+          name: 'eBay',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/200px-EBay_logo.svg.png',
+          rating: 3.3,
+          complaints: 76,
+          description: 'Aparıcı onlayn hərrac və e-ticarət platforması'
         }
       ]
     },
@@ -103,36 +127,28 @@ const CategoryPage = () => {
       name: 'Yemək Çatdırılması',
       companies: [
         {
-          id: 'wolt',
-          name: 'Wolt',
-          logo: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIACAAIAMBEQACEQEDEQH/xAAZAAEBAAMBAAAAAAAAAAAAAAAGAwACBwH/xAAtEAACAgAEBAQFBQAAAAAAAAABAgMEAAURIQYxQWESUXHwEyMykbEUFSKBof/EABoBAAIDAQEAAAAAAAAAAAAAAAIFAAEGAwT/xAAtEQABAgQEBQQBBQAAAAAAAAABAhEAAwQhBRIx8BNBUWGhIjJx0RQVYoGR8f/aAAwDAQACEQMRAD8A6jxRxEMpUV6wV7bjXflGPM9+3s+2kpON6laQmxXFRSDhy7rPje+4K5mFy6xa1Zll16M2w9ByGHKJSEe0NGQnVU+eXmKJjKeYXKTBqtmWLTorbH1HI4i5SF+4PEk1U+QXlqIh7wvxEM2U17IVLaDXblIPMd+3sJquk4PqTpGvwrFRVjIuyx53vsMlV84vZjbaTwhEeckjXUAgBf8AQP6w1BElCEN2jMKSqtnTZr6An6EUbILEa2BK3z4o4nWJFLFi50C9j98CKpJIbQv4gzhc1IVmPqASWH7izfP9xOHJLLfqBY+SYoRIvJhIWbwqAQdNzrv2wSqlNst3P+wEvDppzZ7MH6u5YDXnHvwLOQZzA0xAaJ1bVDqCOo+xIxWZFRKLc4vhzcPqklfIjTz9RSOwchzK/XkriUfQFZtBswZT3Gw2664Eo/IlpUC27waZpw+fMllL8vLg/HaKx8SSLLBKYC0iqqzt8TeXwqyjpt9RPXfTyxRpAQQ/x220dE4uoKSopuNb6sCB8avzu0afvqmq9R6zvWCRrFGZuXgJP8tt9Sd9NOQGL/GObODe726/UD+pgyzKKHSwYP062u/Nm6RFiudZ7GIIXQ2JdXDP4judT0GwH4wV5EkudBHIkV1YMiWzG93+f4AhlxRw6M2UWKxVLaDTflIPI9+/sK6Sr4PpVpGmxXChVjOiyx53vsCuZfcpMVtVpYtOrLsfQ8jhyiahftLxkJ1LPkFpiSN9Yynl9y6wWrWll16quw9TyGIuahHuLRJNLPnlpaSYe8L8OjKVNiyVe24025RjyHfv7Karq+N6U6Rr8KwoUgzrus+N77//2Q==',
-          rating: 3.5,
-          complaints: 43,
-          description: 'Beynəlxalq yemək çatdırılması platforması'
-        },
-        {
-          id: 'bolt',
-          name: 'Bolt',
-          logo: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTQiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCA1NCAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC42OTYgMTEuMTE3M0MxNi43OTc2IDcuNjk0MiAxNS43NTA2IDMuMjA3MiAxMi4zNTc1IDEuMDg3MDZDMTEuMjE4OCAwLjM3Nzc3MiA5Ljg5NjY5IDAgOC41NTkzIDBIMFYyMy41OTE0SDkuNjI5MjFDMTMuNjE4NSAyMy41OTE0IDE2Ljg1MTEgMjAuMzMwMyAxNi44NTExIDE2LjMwNTlDMTYuODUxMSAxNC4zNTUzIDE2LjA3OTMgMTIuNDg5NiAxNC42OTYgMTEuMTE3M1pNNS41MDI0MSA1LjU1MDkzSDguNTU5M0M5LjUwNjkzIDUuNTUwOTMgMTAuMjc4OCA2LjMyOTYgMTAuMjc4OCA3LjI4NTU5QzEwLjI3ODggOC4yNDE1OSA5LjUwNjkzIDkuMDIwMjYgOC41NTkzIDkuMDIwMjZINS41MDI0MVY1LjU1MDkzWk05LjYyOTIxIDE4LjA0MDVINS41MDI0MVYxNC41NzEySDkuNjI5MjFDMTAuNTc2OCAxNC41NzEyIDExLjM0ODcgMTUuMzQ5OSAxMS4zNDg3IDE2LjMwNTlDMTEuMzQ4NyAxNy4yNjE4IDEwLjU3NjggMTguMDQwNSA5LjYyOTIxIDE4LjA0MDVaTTQzLjQ0NjEgMFYyMy41OTE0SDM3Ljk0MzdWMS4xNzk1N0w0My40NDYxIDBaTTI3LjM5NzQgNi42OTk2NUMyMi43MTI3IDYuNjk5NjUgMTguOTA2OSAxMC41MzEzIDE4LjkwNjkgMTUuMjY1QzE4LjkwNjkgMTkuOTkxIDIyLjcwNTEgMjMuODMwNCAyNy4zOTc0IDIzLjgzMDRDMzIuMDgyMSAyMy44MzA0IDM1Ljg4NzkgMTkuOTk4OCAzNS44ODc5IDE1LjI2NUMzNS44ODAzIDEwLjUzOSAzMi4wODIxIDYuNjk5NjUgMjcuMzk3NCA2LjY5OTY1Wk0yNy4zOTc0IDE4LjA0MDVDMjUuODc2NiAxOC4wNDA1IDI0LjY0NjIgMTYuNzk5MyAyNC42NDYyIDE1LjI2NUMyNC42NDYyIDEzLjczMDggMjUuODc2NiAxMi40ODk2IDI3LjM5NzQgMTIuNDg5NkMyOC45MTgyIDEyLjQ4OTYgMzAuMTQ4NiAxMy43MzA4IDMwLjE0ODYgMTUuMjY1QzMwLjE0ODYgMTYuNzk5MyAyOC45MTgyIDE4LjA0MDUgMjcuMzk3NCAxOC4wNDA1Wk0zMC4xNDg2IDI4LjYwMjdDMzAuMTQ4NiAzMC4xMzU1IDI4LjkxNjggMzEuMzc4MiAyNy4zOTc0IDMxLjM3ODJDMjUuODc4IDMxLjM3ODIgMjQuNjQ2MiAzMC4xMzU1IDI0LjY0NjIgMjguNjAyN0MyNC42NDYyIDI3LjA2OTggMjUuODc4IDI1LjgyNzIgMjcuMzk3NCAyNS44MjcyQzI4LjkxNjggMjUuODI3MiAzMC4xNDg2IDI3LjA2OTggMzAuMTQ4NiAyOC42MDI3Wk01My45OTIzIDcuMDE1NzZWMTIuNTU5SDUxLjI0ODhWMTYuOTIyNkM1MS4yNDg4IDE4LjI0MSA1MS42NjkxIDE5LjIxMjQgNTIuNzY5NiAxOS4yMTI0QzUzLjE4OTkgMTkuMjIwMSA1My42MDI2IDE5LjE2NjEgNTQgMTkuMDUwNVYyMy4xMzY2QzUzLjE3NDYgMjMuNTkxNCA1Mi4yNTc2IDIzLjgzMDQgNTEuMzE3NiAyMy44MzA0SDUxLjI0ODhDNTEuMjEzNCAyMy44MzA0IDUxLjE3OCAyMy44Mjg0IDUxLjE0MzYgMjMuODI2NEM1MS4xMTEyIDIzLjgyNDUgNTEuMDc5OCAyMy44MjI3IDUxLjA1MDEgMjMuODIyN0g1MC45OTY2TDUwLjg5NzIgMjMuODE1QzQ3LjgyNTEgMjMuNjUzMSA0NS43Mzg3IDIxLjcwMjYgNDUuNzM4NyAxOC4zMTgxVjE4LjMwMjZWMTguMjc5NVYxMi41NjY3VjMuOTU1MDRMNTEuMjQxMSAyLjc3NTQ2VjcuMDE1NzZINTMuOTkyM1oiIGZpbGw9IiMyRjMxM0YiLz4KPC9zdmc+Cg==',
+          id: 'uber-eats',
+          name: 'Uber Eats',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Uber_logo_2018.png/200px-Uber_logo_2018.png',
           rating: 3.2,
           complaints: 156,
-          description: 'Sürətli yemək çatdırılması xidməti'
+          description: 'Dünyada ən məşhur yemək çatdırılması platforması'
         },
         {
-          id: 'yango',
-          name: 'Yango',
-          logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACHElEQVR4AcWXRVrtQBCF+8Lw+cPdXacMkS3g7oyYoDtgASwBm+Hu7rALXK77vV2k8FA46dDfF62TnD+VVnZXtIyln2s0fRcazbG0gaDtSPLovWQslT0u0o1iKeBAkRqb5GWXPIvuv5yYqweRyjDtRKAeRA+TTk7e+4AhJweMeXmyTRsYKNNc/v9PNLjp0tOfrROYAf5eAOfWFjwpCCXTWDs7iYabzaCLi3suA5x9JGXOjQ3ycn1Gxn1cFx8P4HAQjbmx8cV3fgxgfZ28XJeWdh93jIyQuHNlBS48PRUCWF2lADExN/UjK4um3mQCbXQ0xhUCWFkhJlgJ8Qude3skZmpowOcUBFhaIiaX//6Bqbqa3HdMT8OFh4fCAIuLFMDLC9yHh/LU63SgDQvDZ5QFcCwsyN1dLrB2dNDUV1aiXgDA3BwB4FarPPWjo6gVBDA7C68VrtWCNiREIMDMzKsAxuJi1AkEmJp60dw+OIgawQCTk8+n/uwMtP7+KgCMjz+f+rw8qlerDtj7+jAmHuDy50/s2+lYEBurDoCxqIiYu/b3iU4YgH1ggI7z7e3qAFz+/g3cYiEAZKgVBWAqKyPmOD0jWlEAz810zM3NygC8NSnF8R5sNrk756AND1diWs7ZW0sxHFxM9fWyjfb5H9notLz3Gxcm3QyXR7hM+gZz2wVjyXeL0yICId68kD0qd5nokQSHAs0PMe13X47lCmQF/ACoNIq8AAAAAElFTkSuQmCC',
-          rating: 3.8,
+          id: 'doordash',
+          name: 'DoorDash',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/DoorDash_logo.svg/200px-DoorDash_logo.svg.png',
+          rating: 3.1,
           complaints: 89,
-          description: 'Müasir yemək çatdırılması platforması'
+          description: 'Amerika Birləşmiş Ştatlarında aparıcı yemək çatdırılması platforması'
         },
         {
-          id: 'fooderos',
-          name: 'Fooderos',
-          logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAWCAYAAAChWZ5EAAAA0ElEQVR4AWJwL/AhGv8PEPIHNFfGNgzDMBBcgot4Eo3hFTSBem+hXlXaLKAdvEIGSEiAbgL4QRh8w8V1gu5BkaJSlZaB3RkVb8o3mRkKYAcJcmOBAVzeSfJ6OJB8IcmL3R8JsHr53wn0fzEOwOfhAfz9m9ITGEoJBXDxzho5GMBSkrp+wCdwuZDke6gHSF9td0kowOfkkteFplsVCU8BKH/jjyEOsHHlgScAX/FUSlzEaULJDCCgCtT+uLJ+B20XeCUmkNe7lpH4PDelHg3H4AcefmsOpI9osAAAAABJRU5ErkJggg==',
+          id: 'deliveroo',
+          name: 'Deliveroo',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Deliveroo_logo.svg/200px-Deliveroo_logo.svg.png',
           rating: 3.4,
           complaints: 67,
-          description: 'Yerli yemək çatdırılması xidməti'
+          description: 'Böyük Britaniya və Avropada fəaliyyət göstərən yemək çatdırılması platforması'
         }
       ]
     }
