@@ -178,7 +178,12 @@ const Login = () => {
           }
           navigate('/');
         } else {
-          setError(result.message || 'Giriş zamanı xəta baş verdi');
+          if (result.requiresVerification) {
+            // Redirect to email verification page
+            navigate(`/verify-email?email=${encodeURIComponent(result.email)}`);
+          } else {
+            setError(result.message || 'Giriş zamanı xəta baş verdi');
+          }
         }
       } else {
         // Company/Bank login

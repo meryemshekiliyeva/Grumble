@@ -366,6 +366,10 @@ router.post('/register/company', [
   body('lastName').trim().isLength({ min: 2, max: 50 }).withMessage('Soyad 2-50 simvol arasında olmalıdır'),
   body('companyName').trim().isLength({ min: 2, max: 100 }).withMessage('Şirkət adı 2-100 simvol arasında olmalıdır'),
   body('email').isEmail().normalizeEmail().withMessage('Düzgün email daxil edin'),
+  body('password')
+    .isLength({ min: 8 }).withMessage('Şifrə ən azı 8 simvol olmalıdır')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
+    .withMessage('Şifrə ən azı bir böyük hərf, bir kiçik hərf, bir rəqəm və bir xüsusi simvol olmalıdır'),
   body('phone').matches(/^\+994[0-9]{9}$/).withMessage('Düzgün telefon nömrəsi daxil edin (+994XXXXXXXXX)')
 ], async (req, res) => {
   try {
@@ -378,7 +382,7 @@ router.post('/register/company', [
       });
     }
 
-    const { firstName, lastName, companyName, email, phone } = req.body;
+    const { firstName, lastName, companyName, email, password, phone } = req.body;
 
     // Check if company already exists
     const existingCompany = await Company.findOne({ email });
@@ -407,6 +411,7 @@ router.post('/register/company', [
       lastName,
       companyName,
       email,
+      password,
       phone,
       category: defaultCategory._id
     });
@@ -457,6 +462,16 @@ router.post('/login/user', [
       return res.status(401).json({
         success: false,
         message: 'Email və ya şifrə yanlışdır'
+      });
+    }
+
+    // Check if email is verified
+    if (!user.isEmailVerified) {
+      return res.status(401).json({
+        success: false,
+        message: 'Email ünvanınız doğrulanmayıb. Zəhmət olmasa email-də olan doğrulama linkini klikləyin.',
+        requiresVerification: true,
+        email: user.email
       });
     }
 
@@ -522,7 +537,7 @@ router.post('/login/company', [
     const { email, password } = req.body;
 
     // Find company
-    const company = await Company.findOne({ email }).populate('category');
+    const company = await Company.findOne({ email }).select('+password').populate('category');
     if (!company) {
       return res.status(401).json({
         success: false,
@@ -530,9 +545,14 @@ router.post('/login/company', [
       });
     }
 
-    // For now, companies don't have passwords in the current model
-    // You might want to add password field to Company model if needed
-    // This is a simplified login for companies
+    // Check password
+    const isMatch = await company.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Email və ya şifrə yanlışdır'
+      });
+    }
 
     // Update last activity
     company.lastActivity = new Date();

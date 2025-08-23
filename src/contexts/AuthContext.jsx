@@ -119,7 +119,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/api/auth/login/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -136,7 +136,12 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         return { success: true, user: data.user };
       } else {
-        return { success: false, message: data.message };
+        return {
+          success: false,
+          message: data.message,
+          requiresVerification: data.requiresVerification,
+          email: data.email
+        };
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -315,11 +320,42 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginCompany = async (email, password) => {
+    try {
+      const response = await fetch('/api/auth/login/company', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('grumble_user', JSON.stringify(data.company));
+        setUser(data.company);
+        setIsAuthenticated(true);
+        return { success: true, user: data.company };
+      } else {
+        return {
+          success: false,
+          message: data.message
+        };
+      }
+    } catch (error) {
+      console.error('Company login error:', error);
+      return { success: false, message: 'Giriş zamanı xəta baş verdi' };
+    }
+  };
+
   const value = {
     user,
     isAuthenticated,
     isLoading,
     login,
+    loginCompany,
     logout,
     register,
     updateProfile,

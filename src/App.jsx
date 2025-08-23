@@ -26,6 +26,7 @@ import CompanyView from './admin/CompanyView';
 import CategoryPage from './pages/CategoryPage';
 import CompanyDetailPage from './pages/CompanyDetailPage';
 import ReviewPage from './pages/ReviewPage';
+import ComplaintDetail from './pages/ComplaintDetail';
 
 import Profile from './pages/Profile';
 import AuthSuccess from './pages/AuthSuccess';
@@ -62,6 +63,7 @@ const AppContent = () => {
         }>
           <Route index element={<Home />} />
           <Route path="complaints" element={<Complaints />} />
+          <Route path="complaints/:id" element={<ComplaintDetail />} />
           <Route path="companies" element={<Companies />} />
           <Route path="categories" element={<Categories />} />
           <Route path="about" element={<About />} />

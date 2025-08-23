@@ -37,7 +37,7 @@ const Profile = () => {
   // Handle direct navigation from URL parameters
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['profile', 'complaints', 'my-complaints', 'comments', 'likes', 'notifications'].includes(tab)) {
+    if (tab && ['profile', 'complaints', 'comments', 'likes', 'notifications'].includes(tab)) {
       setActiveTab(tab);
     }
   }, [searchParams]);
@@ -611,7 +611,7 @@ const Profile = () => {
         );
 
       case 'complaints':
-      case 'my-complaints':
+        const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
@@ -627,34 +627,91 @@ const Profile = () => {
               </Link>
             </div>
 
-            {/* Table Header */}
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Şikayət</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Şirkət</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Status</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Tarix</th>
-                    <th className="text-left py-3 px-4 font-medium text-gray-700">Əməliyyatlar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* Empty state */}
-                  <tr>
-                    <td colSpan="5" className="text-center py-12">
-                      <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
-                        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
+            {userComplaints.length > 0 ? (
+              <div className="space-y-6">
+                {userComplaints.map((complaint) => (
+                  <div key={complaint.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{complaint.title}</h3>
+                        <div className="flex items-center space-x-4 text-sm text-gray-600 mb-3">
+                          <span className="font-medium">{complaint.company}</span>
+                          <span>•</span>
+                          <span>{complaint.category}</span>
+                          <span>•</span>
+                          <span>{complaint.date}</span>
+                        </div>
+
+                        {/* Rating Section */}
+                        {complaint.rating && (
+                          <div className="flex items-center space-x-2 mb-3">
+                            <span className="text-sm text-gray-600">Reytinq:</span>
+                            <div className="flex items-center">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <svg
+                                  key={star}
+                                  className={`w-4 h-4 ${
+                                    star <= complaint.rating ? 'text-yellow-400' : 'text-gray-300'
+                                  }`}
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              ))}
+                              <span className="ml-2 text-sm text-gray-600">{complaint.rating}/5</span>
+                            </div>
+                          </div>
+                        )}
+
+                        <p className="text-gray-700 text-sm leading-relaxed">{complaint.summary}</p>
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir şikayətiniz yoxdur</h3>
-                      <p className="text-gray-500">Şikayətlərinizi burada izləyə bilərsiniz.</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+
+                      <div className="ml-4 flex flex-col items-end space-y-2">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          complaint.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                          complaint.status === 'resolved' ? 'bg-green-100 text-green-800' :
+                          complaint.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {complaint.status === 'pending' ? 'Gözləyir' :
+                           complaint.status === 'resolved' ? 'Həll olundu' :
+                           complaint.status === 'in-progress' ? 'İcrada' : complaint.status}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <div className="flex items-center space-x-4">
+                        <button className="flex items-center space-x-1 text-gray-500 hover:text-red-500 transition-colors">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                          </svg>
+                          <span className="text-sm">{complaint.likes || 0}</span>
+                        </button>
+                        <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 transition-colors">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                          </svg>
+                          <span className="text-sm">{complaint.comments || 0}</span>
+                        </button>
+                      </div>
+                      <span className="text-xs text-gray-500">#{complaint.id}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir şikayətiniz yoxdur</h3>
+                <p className="text-gray-500">Şikayətlərinizi burada izləyə bilərsiniz.</p>
+              </div>
+            )}
           </div>
         );
 
@@ -772,11 +829,19 @@ const Profile = () => {
                 {notifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 rounded-lg border-l-4 ${
+                    className={`p-4 rounded-lg border-l-4 cursor-pointer hover:bg-gray-100 transition-colors ${
                       !notification.isRead
                         ? 'bg-blue-50 border-l-blue-500'
                         : 'bg-gray-50 border-l-gray-300'
                     }`}
+                    onClick={() => {
+                      if (!notification.isRead) {
+                        markAsRead(notification.id);
+                      }
+                      if (notification.relatedComplaintId) {
+                        navigate(`/complaints/${notification.relatedComplaintId}`);
+                      }
+                    }}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-3 flex-1">
