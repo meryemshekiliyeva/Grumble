@@ -151,6 +151,64 @@ const CategoryPage = () => {
           description: 'Böyük Britaniya və Avropada fəaliyyət göstərən yemək çatdırılması platforması'
         }
       ]
+    },
+    'kommunal': {
+      name: 'Kommunal Xidmətlər',
+      companies: [
+        {
+          id: 'edf-energy',
+          name: 'EDF Energy',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/EDF_logo.svg/200px-EDF_logo.svg.png',
+          rating: 2.9,
+          complaints: 98,
+          description: 'Böyük Britaniyada aparıcı enerji təchizatçısı'
+        },
+        {
+          id: 'national-grid',
+          name: 'National Grid',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/National_Grid_logo.svg/200px-National_Grid_logo.svg.png',
+          rating: 3.1,
+          complaints: 87,
+          description: 'Elektrik və qaz şəbəkələrini idarə edən beynəlxalq enerji şirkəti'
+        },
+        {
+          id: 'veolia',
+          name: 'Veolia',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Veolia_logo.svg/200px-Veolia_logo.svg.png',
+          rating: 2.7,
+          complaints: 65,
+          description: 'Dünyada aparıcı ekoloji həllər şirkəti'
+        }
+      ]
+    },
+    'sigorta': {
+      name: 'Sığorta',
+      companies: [
+        {
+          id: 'allianz',
+          name: 'Allianz',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Allianz_logo.svg/200px-Allianz_logo.svg.png',
+          rating: 3.5,
+          complaints: 87,
+          description: 'Dünyada aparıcı sığorta və maliyyə xidmətləri şirkəti'
+        },
+        {
+          id: 'axa',
+          name: 'AXA',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/AXA_Logo.svg/200px-AXA_Logo.svg.png',
+          rating: 3.2,
+          complaints: 65,
+          description: 'Dünyada aparıcı sığorta şirkətlərindən biri'
+        },
+        {
+          id: 'prudential',
+          name: 'Prudential',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Prudential_plc_logo.svg/200px-Prudential_plc_logo.svg.png',
+          rating: 3.7,
+          complaints: 54,
+          description: 'Beynəlxalq maliyyə xidmətləri şirkəti'
+        }
+      ]
     }
   };
 
