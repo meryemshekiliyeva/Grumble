@@ -209,6 +209,270 @@ const CompanyDetailPage = () => {
         linkedin: 'https://linkedin.com/company/hsbc'
       }
     },
+    'doordash': {
+      name: 'DoorDash',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/DoorDash_logo.svg/200px-DoorDash_logo.svg.png',
+      rating: 3.1,
+      totalReviews: 89,
+      website: 'www.doordash.com',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi',
+      description: 'DoorDash Amerika Birləşmiş Ştatlarında aparıcı yemək çatdırılması platformalarından biridir. Müştərilərə geniş restoran seçimi və sürətli çatdırılma xidməti təqdim edir.',
+      stats: {
+        positive: 65,
+        resolved: 42,
+        negative: 35
+      },
+      views: 54000,
+      socialLinks: {
+        website: 'https://doordash.com',
+        facebook: 'https://facebook.com/doordash',
+        instagram: 'https://instagram.com/doordash',
+        linkedin: 'https://linkedin.com/company/doordash'
+      }
+    },
+    'deliveroo': {
+      name: 'Deliveroo',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Deliveroo_logo.svg/200px-Deliveroo_logo.svg.png',
+      rating: 3.4,
+      totalReviews: 67,
+      website: 'www.deliveroo.com',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi',
+      description: 'Deliveroo Böyük Britaniya və Avropada fəaliyyət göstərən aparıcı yemək çatdırılması platformasıdır. Keyfiyyətli restoranlardan sürətli çatdırılma xidməti təqdim edir.',
+      stats: {
+        positive: 72,
+        resolved: 48,
+        negative: 28
+      },
+      views: 41000,
+      socialLinks: {
+        website: 'https://deliveroo.com',
+        facebook: 'https://facebook.com/deliveroo',
+        instagram: 'https://instagram.com/deliveroo',
+        linkedin: 'https://linkedin.com/company/deliveroo'
+      }
+    },
+    'lufthansa': {
+      name: 'Lufthansa',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Lufthansa_Logo_2018.svg/200px-Lufthansa_Logo_2018.svg.png',
+      rating: 3.8,
+      totalReviews: 89,
+      website: 'www.lufthansa.com',
+      category: 'Havayolu',
+      categoryId: 'havayolu',
+      description: 'Lufthansa Almaniyanın milli havayolu şirkətidir və dünyada aparıcı havayolu şirkətlərindən biridir. Yüksək keyfiyyətli xidmət və geniş marşrut şəbəkəsi ilə tanınır.',
+      stats: {
+        positive: 85,
+        resolved: 62,
+        negative: 27
+      },
+      views: 78000,
+      socialLinks: {
+        website: 'https://lufthansa.com',
+        facebook: 'https://facebook.com/lufthansa',
+        instagram: 'https://instagram.com/lufthansa',
+        linkedin: 'https://linkedin.com/company/lufthansa'
+      }
+    },
+    'delta-air-lines': {
+      name: 'Delta Air Lines',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Delta_logo.svg/200px-Delta_logo.svg.png',
+      rating: 3.6,
+      totalReviews: 32,
+      website: 'www.delta.com',
+      category: 'Havayolu',
+      categoryId: 'havayolu',
+      description: 'Delta Air Lines Amerika Birləşmiş Ştatlarının aparıcı havayolu şirkətlərindən biridir. Daxili və beynəlxalq uçuşlarda keyfiyyətli xidmət təqdim edir.',
+      stats: {
+        positive: 78,
+        resolved: 55,
+        negative: 22
+      },
+      views: 34000,
+      socialLinks: {
+        website: 'https://delta.com',
+        facebook: 'https://facebook.com/delta',
+        instagram: 'https://instagram.com/delta',
+        linkedin: 'https://linkedin.com/company/delta-air-lines'
+      }
+    },
+    'veolia': {
+      name: 'Veolia',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Veolia_logo.svg/200px-Veolia_logo.svg.png',
+      rating: 2.7,
+      totalReviews: 65,
+      website: 'www.veolia.com',
+      category: 'Kommunal',
+      categoryId: 'kommunal',
+      description: 'Veolia dünyada aparıcı ekoloji həllər şirkətidir. Su idarəçiliyi, tullantı idarəçiliyi və enerji xidmətləri sahəsində fəaliyyət göstərir.',
+      stats: {
+        positive: 48,
+        resolved: 35,
+        negative: 52
+      },
+      views: 38000,
+      socialLinks: {
+        website: 'https://veolia.com',
+        facebook: 'https://facebook.com/veolia',
+        instagram: 'https://instagram.com/veolia',
+        linkedin: 'https://linkedin.com/company/veolia'
+      }
+    },
+    'allianz': {
+      name: 'Allianz',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Allianz_logo.svg/200px-Allianz_logo.svg.png',
+      rating: 3.5,
+      totalReviews: 87,
+      website: 'www.allianz.com',
+      category: 'Sığorta',
+      categoryId: 'sigorta',
+      description: 'Allianz dünyada aparıcı sığorta və maliyyə xidmətləri şirkətidir. Şəxsi və korporativ sığorta həlləri təqdim edir.',
+      stats: {
+        positive: 76,
+        resolved: 58,
+        negative: 24
+      },
+      views: 65000,
+      socialLinks: {
+        website: 'https://allianz.com',
+        facebook: 'https://facebook.com/allianz',
+        instagram: 'https://instagram.com/allianz',
+        linkedin: 'https://linkedin.com/company/allianz'
+      }
+    },
+    'axa': {
+      name: 'AXA',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/AXA_Logo.svg/200px-AXA_Logo.svg.png',
+      rating: 3.2,
+      totalReviews: 65,
+      website: 'www.axa.com',
+      category: 'Sığorta',
+      categoryId: 'sigorta',
+      description: 'AXA dünyada aparıcı sığorta şirkətlərindən biridir. Həyat sığortası, əmlak sığortası və investisiya xidmətləri təqdim edir.',
+      stats: {
+        positive: 68,
+        resolved: 45,
+        negative: 32
+      },
+      views: 48000,
+      socialLinks: {
+        website: 'https://axa.com',
+        facebook: 'https://facebook.com/axa',
+        instagram: 'https://instagram.com/axa',
+        linkedin: 'https://linkedin.com/company/axa'
+      }
+    },
+    'prudential': {
+      name: 'Prudential',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Prudential_plc_logo.svg/200px-Prudential_plc_logo.svg.png',
+      rating: 3.7,
+      totalReviews: 54,
+      website: 'www.prudential.com',
+      category: 'Sığorta',
+      categoryId: 'sigorta',
+      description: 'Prudential beynəlxalq maliyyə xidmətləri şirkətidir. Həyat sığortası, pensiya planları və investisiya məhsulları təqdim edir.',
+      stats: {
+        positive: 81,
+        resolved: 62,
+        negative: 19
+      },
+      views: 42000,
+      socialLinks: {
+        website: 'https://prudential.com',
+        facebook: 'https://facebook.com/prudential',
+        instagram: 'https://instagram.com/prudential',
+        linkedin: 'https://linkedin.com/company/prudential'
+      }
+    },
+    'amazon': {
+      name: 'Amazon',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/200px-Amazon_logo.svg.png',
+      rating: 3.9,
+      totalReviews: 156,
+      website: 'www.amazon.com',
+      category: 'E-ticarət',
+      categoryId: 'e-ticaret',
+      description: 'Amazon dünyada ən böyük e-ticarət və bulud hesablama şirkətidir. Milyonlarla məhsul və xidmət təklif edir.',
+      stats: {
+        positive: 88,
+        resolved: 72,
+        negative: 12
+      },
+      views: 125000,
+      socialLinks: {
+        website: 'https://amazon.com',
+        facebook: 'https://facebook.com/amazon',
+        instagram: 'https://instagram.com/amazon',
+        linkedin: 'https://linkedin.com/company/amazon'
+      }
+    },
+    'alibaba': {
+      name: 'Alibaba',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Alibaba_Group_Holding_Limited_Logo.svg/200px-Alibaba_Group_Holding_Limited_Logo.svg.png',
+      rating: 3.6,
+      totalReviews: 98,
+      website: 'www.alibaba.com',
+      category: 'E-ticarət',
+      categoryId: 'e-ticaret',
+      description: 'Alibaba Çinin ən böyük e-ticarət şirkətidir və dünyada aparıcı B2B və B2C platformalarından birini idarə edir.',
+      stats: {
+        positive: 82,
+        resolved: 65,
+        negative: 18
+      },
+      views: 89000,
+      socialLinks: {
+        website: 'https://alibaba.com',
+        facebook: 'https://facebook.com/alibaba',
+        instagram: 'https://instagram.com/alibaba',
+        linkedin: 'https://linkedin.com/company/alibaba'
+      }
+    },
+    'ebay': {
+      name: 'eBay',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/200px-EBay_logo.svg.png',
+      rating: 3.3,
+      totalReviews: 76,
+      website: 'www.ebay.com',
+      category: 'E-ticarət',
+      categoryId: 'e-ticaret',
+      description: 'eBay dünyada aparıcı onlayn hərrac və e-ticarət platformasıdır. İstifadəçilər arasında alış-veriş imkanı yaradır.',
+      stats: {
+        positive: 71,
+        resolved: 52,
+        negative: 29
+      },
+      views: 67000,
+      socialLinks: {
+        website: 'https://ebay.com',
+        facebook: 'https://facebook.com/ebay',
+        instagram: 'https://instagram.com/ebay',
+        linkedin: 'https://linkedin.com/company/ebay'
+      }
+    },
+    'goldman-sachs': {
+      name: 'Goldman Sachs',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/200px-Goldman_Sachs.svg.png',
+      rating: 3.8,
+      totalReviews: 95,
+      website: 'www.goldmansachs.com',
+      category: 'Banklar',
+      categoryId: 'banklar',
+      description: 'Goldman Sachs dünyada aparıcı investisiya bankı və maliyyə xidmətləri şirkətidir. Korporativ maliyyə və investisiya idarəçiliyi xidmətləri təqdim edir.',
+      stats: {
+        positive: 86,
+        resolved: 68,
+        negative: 14
+      },
+      views: 78000,
+      socialLinks: {
+        website: 'https://goldmansachs.com',
+        facebook: 'https://facebook.com/goldmansachs',
+        instagram: 'https://instagram.com/goldmansachs',
+        linkedin: 'https://linkedin.com/company/goldman-sachs'
+      }
+    },
     'pasha-bank': {
       name: 'PAŞA Bank',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/PASHA_Bank_logo.svg/200px-PASHA_Bank_logo.svg.png',

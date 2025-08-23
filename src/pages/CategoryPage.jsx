@@ -10,49 +10,57 @@ const CategoryPage = () => {
       name: 'Banklar',
       companies: [
         {
-          id: 'kapital-bank',
-          name: 'Kapital Bank',
-          logo: 'https://www.kapitalbank.az/files/about/main/png.png',
+          id: 'jpmorgan-chase',
+          name: 'JPMorgan Chase',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png',
           rating: 3.0,
-          complaints: 139,
-          description: 'Azərbaycanın ən böyük istehlaklı banklarından biri'
+          complaints: 189,
+          description: 'Amerika Birləşmiş Ştatlarının ən böyük banklarından biri'
         },
         {
-          id: 'pasha-bank',
-          name: 'PAŞA Bank',
-          logo: 'https://www.pashabank.az/templates/images/pashabank-logo-en.svg',
-          rating: 2.8,
-          complaints: 8,
-          description: 'Müasir bankçılıq xidmətləri təqdim edən bank'
+          id: 'hsbc',
+          name: 'HSBC',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/200px-HSBC_logo_%282018%29.svg.png',
+          rating: 3.3,
+          complaints: 165,
+          description: 'Dünyada aparıcı beynəlxalq banklar'
         },
         {
-          id: 'birbank',
-          name: 'Birbank',
-          logo: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyOC4zLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCA2ODUgMjQ4LjIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDY4NSAyNDguMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe2ZpbGw6I0ZGMDAzOTt9DQo8L3N0eWxlPg0KPGc+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5LjgsMzkuNWMwLTMuNi0yLTQuMy00LjQtMi45TDcuNyw2NC4yYy0zLjIsMS44LTQuNCw0LjktNC40LDcuOXYxMzYuNmMwLDMuNiwyLDQuMyw0LjQsMi45TDU1LjQsMTg0DQoJCWMzLjItMS44LDQuNC00LjksNC40LTcuOVYzOS41eiIvPg0KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xMTYuMiwxMjguOXYtNzRoMTcuOXYzOS45YzUuOS03LjMsMTUuNS0xMi4yLDI2LjktMTIuMmMyMS44LDAsMzkuMywxNy4zLDM5LjMsNDEuNnY1LjQNCgkJYzAsMjQtMTcuOCw0MS40LTQyLjQsNDEuNEMxMzQuNiwxNzAuOSwxMTYuMiwxNTUuMywxMTYuMiwxMjguOUwxMTYuMiwxMjguOXogTTE4Mi4zLDEyOS4ydi00LjRjMC0xNi05LjUtMjYuMi0yNC4xLTI2LjINCgkJYy0xNC43LDAtMjQuMSwxMC4zLTI0LjEsMjYuMnY0LjRjMCwxNS43LDkuNSwyNS43LDI0LjEsMjUuN0MxNzIuOSwxNTUsMTgyLjMsMTQ0LjUsMTgyLjMsMTI5LjJ6Ii8+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTIyMy45LDUyLjljNi41LDAsMTEuNCw0LjEsMTEuNCwxMC4zdjEuMWMwLDYuMi00LjksMTAuMy0xMS40LDEwLjNzLTExLjYtNC4xLTExLjYtMTAuM3YtMS4xDQoJCUMyMTIuMyw1NywyMTcuNCw1Mi45LDIyMy45LDUyLjl6IE0yMzIuOSwxNjlIMjE1Vjg0LjZoMTcuOVYxNjl6Ii8+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTMxMy44LDEyOC45di03NGgxNy45djM5LjljNS45LTcuMywxNS41LTEyLjIsMjYuOS0xMi4yYzIxLjgsMCwzOS4zLDE3LjMsMzkuMyw0MS42djUuNA0KCQljMCwyNC0xNy44LDQxLjQtNDIuNCw0MS40QzMzMi4yLDE3MC45LDMxMy44LDE1NS4zLDMxMy44LDEyOC45TDMxMy44LDEyOC45eiBNMzc5LjksMTI5LjJ2LTQuNGMwLTE2LTkuNS0yNi4yLTI0LjEtMjYuMg0KCQljLTE0LjcsMC0yNC4xLDEwLjMtMjQuMSwyNi4ydjQuNGMwLDE1LjcsOS41LDI1LjcsMjQuMSwyNS43QzM3MC41LDE1NSwzNzkuOSwxNDQuNSwzNzkuOSwxMjkuMnoiLz4NCgk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzAzLjYsODZsLTQuMiwxNi4zYy0zLjMtMS41LTYuNS0yLjQtMTAuNC0yLjRjLTExLjQsMC0yMCw4LjgtMjAsMjMuNVYxNjlIMjUxVjg0LjZoMTcuOXYxMS43DQoJCWM0LjktOS45LDEzLTEzLjcsMjEuOC0xMy43QzI5NS42LDgyLjYsMzAwLDgzLjcsMzAzLjYsODZMMzAzLjYsODZ6Ii8+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTQwOS4xLDEyOS41VjEyNGMwLTI0LjEsMTcuNC00MS40LDM5LjMtNDEuNGMxMS40LDAsMjEsNC45LDI2LjksMTIuMlY4NC42aDE3LjlWMTY5aC0xNy45di0xMC4zDQoJCWMtNS45LDcuMy0xNS41LDEyLjItMjYuOSwxMi4yQzQyNi41LDE3MC45LDQwOS4xLDE1My43LDQwOS4xLDEyOS41eiBNNDc1LjMsMTI4Ljd2LTMuOWMwLTE2LTkuMy0yNi4yLTI0LTI2LjINCgkJYy0xNC43LDAtMjQsMTAuMy0yNCwyNi4ydjMuOWMwLDE2LDkuMywyNi4yLDI0LDI2LjJDNDY2LDE1NSw0NzUuMywxNDQuNyw0NzUuMywxMjguN3oiLz4NCgk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNTI5LDEyMC4zVjE2OWgtMTcuOVY4NC42SDUyOXYxMC42YzQuNC02LjUsMTIuNC0xMi41LDI0LjgtMTIuNWMxOS4xLDAsMzEuNiwxMy41LDMxLjYsMzYuM3Y1MGgtMTcuOXYtNDguOQ0KCQljMC0xNC4yLTctMjEuNS0xOC40LTIxLjVDNTM4LjMsOTguNiw1MjksMTA2LjcsNTI5LDEyMC4zTDUyOSwxMjAuM0w1MjksMTIwLjN6Ii8+DQoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTYyMSwxNjloLTE3LjlWNTQuOUg2MjF2NjUuOGwzNC4xLTM2LjJoMjMuM2wtMzMuOSwzNC4ybDM3LjIsNTAuMmgtMjJsLTI3LjQtMzhMNjIxLDE0Mi4zTDYyMSwxNjlMNjIxLDE2OXoiDQoJCS8+DQo8L2c+DQo8L3N2Zz4NCg==',
-          rating: 1.0,
-          complaints: 1,
-          description: 'Rəqəmsal bankçılıq həlləri təklif edən bank'
+          id: 'goldman-sachs',
+          name: 'Goldman Sachs',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/200px-Goldman_Sachs.svg.png',
+          rating: 3.8,
+          complaints: 95,
+          description: 'Aparıcı investisiya bankı və maliyyə xidmətləri'
         },
       ]
     },
-    'telekommunikasiya': {
-      name: 'Telekommunikasiya',
+    'telekom': {
+      name: 'Telekom',
       companies: [
         {
-          id: 'azercell',
-          name: 'Azercell',
-          logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcBAMAAACAI8KnAAAAMFBMVEVHcExcJINcJINcI4NWFX9PAntpOox8V5pIAHeUeKzn4ez////Qxtq9rsuumcD08fY/OFb6AAAAA3RSTlMAlfE8+ngLAAAAzElEQVR4AWNgEDKGA0UGBiZjJKDAIIzMNWRQRuYaMRijABjXBIXrmu6CxLWYtXunM5xr4rOr5LaxsTOU67Z7hnPXFIurEK5J9jZnY78nPUD1IK7bfqC5nk9XQ7nxQElj8/e7S8CKLU4DaePO3YshRrnvCQaK3d7bDLGoa4uxsWnW7htQe6uBFvTtXvkEwjV5XWzcvnpfH5Rrerq17fSu1BgY9/bd1ftnGPsVQ/Xa7941wxnsQ4i95a7OyN43QQsNBEALOrSARQt2tEgBAM2AbrbhuFpxAAAAAElFTkSuQmCC',
-          rating: 3.5,
-          complaints: 45,
-          description: 'Azərbaycanın aparıcı mobil operator şirkəti'
+          id: 'att',
+          name: 'AT&T',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AT%26T_logo_2016.svg/200px-AT%26T_logo_2016.svg.png',
+          rating: 2.5,
+          complaints: 247,
+          description: 'Amerika Birləşmiş Ştatlarının aparıcı telekommunikasiya şirkəti'
         },
         {
-          id: 'bakcell',
-          name: 'Bakcell',
-          logo: 'https://www.bakcell.com/data/new-logo.svg',
-          rating: 3.2,
-          complaints: 32,
-          description: 'Müasir telekommunikasiya xidmətləri təqdim edən şirkət'
+          id: 'vodafone',
+          name: 'Vodafone',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Vodafone_icon.svg/200px-Vodafone_icon.svg.png',
+          rating: 2.8,
+          complaints: 128,
+          description: 'Dünyada aparıcı mobil rabitə operatoru'
+        },
+        {
+          id: 't-mobile',
+          name: 'T-Mobile',
+          logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/T-Mobile_logo.svg/200px-T-Mobile_logo.svg.png',
+          rating: 3.4,
+          complaints: 112,
+          description: 'Amerika və Avropada fəaliyyət göstərən mobil operator'
         },
       ]
     },
