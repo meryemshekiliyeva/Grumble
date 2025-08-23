@@ -59,46 +59,46 @@ const testimonials = [
 
 const mostComplainedCompanies = [
   {
-    name: 'Azercell',
+    name: 'AT&T',
     category: 'Telekom',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Azercell_logo.svg/200px-Azercell_logo.svg.png',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AT%26T_logo_2016.svg/200px-AT%26T_logo_2016.svg.png',
     bgColor: '#0066CC',
-    companyId: 'azercell'
+    companyId: 'att'
   },
   {
-    name: 'Kapital Bank',
+    name: 'JPMorgan Chase',
     category: 'Banklar',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
-    bgColor: '#E31E24',
-    companyId: 'kapital-bank'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png',
+    bgColor: '#0066CC',
+    companyId: 'jpmorgan-chase'
   },
   {
-    name: 'Bolt Food',
+    name: 'Uber Eats',
     category: 'Yemək Çatdırılması',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Bolt_logo.svg/200px-Bolt_logo.svg.png',
-    bgColor: '#34D186',
-    companyId: 'bolt-food'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Uber_logo_2018.png/200px-Uber_logo_2018.png',
+    bgColor: '#000000',
+    companyId: 'uber-eats'
   },
   {
-    name: 'AZAL',
+    name: 'Emirates',
     category: 'Havayolu',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Azerbaijan_Airlines_logo.svg/200px-Azerbaijan_Airlines_logo.svg.png',
-    bgColor: '#003366',
-    companyId: 'azal'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Emirates_logo.svg/200px-Emirates_logo.svg.png',
+    bgColor: '#FF0000',
+    companyId: 'emirates'
   },
   {
-    name: 'Bakcell',
+    name: 'Vodafone',
     category: 'Telekom',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bakcell_logo.svg/200px-Bakcell_logo.svg.png',
-    bgColor: '#FF6600',
-    companyId: 'bakcell'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Vodafone_icon.svg/200px-Vodafone_icon.svg.png',
+    bgColor: '#E60000',
+    companyId: 'vodafone'
   },
   {
-    name: 'Nar Mobile',
+    name: 'T-Mobile',
     category: 'Telekom',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nar_logo.svg/200px-Nar_logo.svg.png',
-    bgColor: '#8B0000',
-    companyId: 'nar-mobile'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/T-Mobile_logo.svg/200px-T-Mobile_logo.svg.png',
+    bgColor: '#E20074',
+    companyId: 't-mobile'
   },
   {
     name: 'Azərsu',

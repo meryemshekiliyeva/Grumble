@@ -36,20 +36,20 @@ const Login = () => {
 
   // Bank credentials for demo purposes
   const BANK_CREDENTIALS = {
-    'kapital@bank.az': {
-      password: 'Kapital123!',
-      name: 'Kapital Bank',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg'
+    'jpmorgan@bank.com': {
+      password: 'JPMorgan123!',
+      name: 'JPMorgan Chase',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png'
     },
-    'pasha@bank.az': {
-      password: 'Pasha123!',
-      name: 'Pasha Bank',
-      logo: 'https://www.pashabank.az/assets/images/logo.svg'
+    'hsbc@bank.com': {
+      password: 'HSBC123!',
+      name: 'HSBC',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/200px-HSBC_logo_%282018%29.svg.png'
     },
-    'bir@bank.az': {
-      password: 'BirBank123!',
-      name: 'BirBank',
-      logo: 'https://www.kapitalbank.az/assets/images/birbank-logo.svg'
+    'goldman@bank.com': {
+      password: 'Goldman123!',
+      name: 'Goldman Sachs',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/200px-Goldman_Sachs.svg.png'
     }
   };
 

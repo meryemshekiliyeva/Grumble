@@ -16,11 +16,11 @@ const Companies = () => {
       bgColor: '#0066CC'
     },
     {
-      name: 'Kapital Bank',
+      name: 'JPMorgan Chase',
       category: 'Bank',
       complaintCount: 189,
-      icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAx0lEQVR4AWLYJqspDMQ5QPyfDlgDZOFH9wIfQO10jMIwEMRQVHdw7zoHyEVS5vbpXO8NksCqERjEhylUeJqHZrwyOon9He2PNdnUmEEPrwF0GQuwQBn2NBQgQAEWYItyLMHMxyjBCGj0NMqxAAEKsAABWmAUDBRgCEz0MjYJGn38cvQQB3ON4+Da7d5uOgkae3lGUFGMompvttfoGUbV3qx9MgBs1shRMYyjAliT6w4VuxlHEzy7ZhwVwAh6JDiFOcuo+A/C0C/zLxx69ssOUQAAAABJRU5ErkJggg==',
-      bgColor: '#E31E24'
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png',
+      bgColor: '#0066CC'
     },
     {
       name: 'Bolt Food',
