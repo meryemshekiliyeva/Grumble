@@ -48,7 +48,7 @@ const testimonials = [
   },
   {
     name: 'Səbinə Abbasova',
-    company: 'AZAL',
+    company: 'Emirates',
     avatar: 'SA',
     message: 'Uçuş təxirə salındı, lakin vaxtında məlumat verilmədi. Şikayətimi burada yazdım və şirkət üzr istəyib kompensasiya verdi.',
     status: 'Həll edilib',
@@ -101,32 +101,25 @@ const mostComplainedCompanies = [
     companyId: 't-mobile'
   },
   {
-    name: 'Azərsu',
+    name: 'EDF Energy',
     category: 'Kommunal',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Azersu_logo.svg/200px-Azersu_logo.svg.png',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/EDF_logo.svg/200px-EDF_logo.svg.png',
+    bgColor: '#FF6600',
+    companyId: 'edf-energy'
+  },
+  {
+    name: 'National Grid',
+    category: 'Kommunal',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/National_Grid_logo.svg/200px-National_Grid_logo.svg.png',
     bgColor: '#0066CC',
-    companyId: 'azersu'
+    companyId: 'national-grid'
   },
   {
-    name: 'Azərişıq',
-    category: 'Kommunal',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Azerishiq_logo.svg/200px-Azerishiq_logo.svg.png',
-    bgColor: '#FFD700',
-    companyId: 'azerishiq'
-  },
-  {
-    name: 'BiP',
-    category: 'Nəqliyyat',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/BiP_logo.svg/200px-BiP_logo.svg.png',
-    bgColor: '#FF4500',
-    companyId: 'bip'
-  },
-  {
-    name: 'PAŞA Bank',
+    name: 'HSBC',
     category: 'Banklar',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/PASHA_Bank_logo.svg/200px-PASHA_Bank_logo.svg.png',
-    bgColor: '#a29bfe',
-    companyId: 'pasha-bank'
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/200px-HSBC_logo_%282018%29.svg.png',
+    bgColor: '#DB0011',
+    companyId: 'hsbc'
   }
 ];
 
@@ -137,7 +130,7 @@ const categories = [
     icon: '📱',
     bgColor: '#6c5ce7',
     categoryId: 'telekommunikasiya',
-    brands: ['Azercell', 'Bakcell', 'Nar', 'Delta Telecom', 'AzTelecom', 'Naxtel']
+    brands: ['AT&T', 'Vodafone', 'T-Mobile', 'Verizon', 'Orange', 'Telefonica']
   },
   {
     name: 'E-ticarət',
@@ -177,7 +170,7 @@ const categories = [
     icon: '🏦',
     bgColor: '#0984e3',
     categoryId: 'banklar',
-    brands: ['Kapital Bank', 'Pasha Bank', 'AccessBank', 'Rabitabank', 'Unibank', 'Bank of Baku']
+    brands: ['JPMorgan Chase', 'HSBC', 'Goldman Sachs', 'Bank of America', 'Wells Fargo', 'Citibank']
   },
   {
     name: 'Təhsil',
@@ -233,7 +226,7 @@ const categories = [
     icon: '✈️',
     bgColor: '#e84393',
     categoryId: 'havayolu',
-    brands: ['AZAL', 'Buta Airways', 'Turkish Airlines', 'Qatar Airways', 'Emirates', 'Lufthansa']
+    brands: ['Emirates', 'Lufthansa', 'Delta Air Lines', 'American Airlines', 'British Airways', 'Air France']
   },
   {
     name: 'Turizm',
@@ -249,7 +242,7 @@ const categories = [
     icon: '💻',
     bgColor: '#0984e3',
     categoryId: 'texnologiya',
-    brands: ['ASAN Radio', 'Azercell Telecom', 'Pronet', 'Azintelecom', 'Bakinternet', 'Ultel']
+    brands: ['Microsoft', 'Google', 'Apple', 'Amazon Web Services', 'IBM', 'Oracle']
   },
   {
     name: 'Kuryer',

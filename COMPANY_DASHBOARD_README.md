@@ -75,9 +75,9 @@ This is a comprehensive company dashboard system that opens after successful reg
   - Contact: Əli Məmmədov
 
 ### For Testing Login (Bank System):
-- **Kapital Bank**: `kapital@bank.az` / `Kapital123!`
-- **Pasha Bank**: `pasha@bank.az` / `Pasha123!`
-- **BirBank**: `bir@bank.az` / `BirBank123!`
+- **JPMorgan Chase**: `jpmorgan@bank.com` / `JPMorgan123!`
+- **HSBC**: `hsbc@bank.com` / `HSBC123!`
+- **Goldman Sachs**: `goldman@bank.com` / `Goldman123!`
 
 ## Dashboard Features
 

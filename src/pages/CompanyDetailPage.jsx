@@ -11,15 +11,15 @@ const CompanyDetailPage = () => {
 
   // Company data
   const companies = {
-    'kapital-bank': {
-      name: 'Kapital Bank',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kapital_Bank_logo.svg/200px-Kapital_Bank_logo.svg.png',
+    'jpmorgan-chase': {
+      name: 'JPMorgan Chase',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png',
       rating: 3.0,
       totalReviews: 139,
-      website: 'www.kapitalbank.az',
+      website: 'www.jpmorganchase.com',
       category: 'Banklar',
       categoryId: 'banklar',
-      description: 'Kapital Bank Azərbaycanın ən böyük istehlaklı banklarından biridir. Hazırda Kapital Bank ölkədə ən böyük xidmət şəbəkəsinə malik maliyyə qurumudur. Kapital Bankın təqdim etdiyi xidmətlər, kredit, əlaqə, komissiya, filiallər, qaynar xətt, iş saatları, müştəri təcrübəsi haqqında burada!',
+      description: 'JPMorgan Chase Amerika Birləşmiş Ştatlarının ən böyük banklarından biridir. Dünya üzrə maliyyə xidmətləri təqdim edən aparıcı beynəlxalq bankdır. Şirkətin təqdim etdiyi xidmətlər, kredit, investisiya, müştəri xidmətləri və digər maliyyə həlləri haqqında burada!',
       stats: {
         positive: 91,
         resolved: 6,
@@ -27,10 +27,186 @@ const CompanyDetailPage = () => {
       },
       views: 143077,
       socialLinks: {
-        website: 'https://kapitalbank.az',
-        facebook: 'https://facebook.com/kapitalbank',
-        instagram: 'https://instagram.com/kapitalbank',
-        linkedin: 'https://linkedin.com/company/kapitalbank'
+        website: 'https://jpmorganchase.com',
+        facebook: 'https://facebook.com/jpmorganchase',
+        instagram: 'https://instagram.com/jpmorganchase',
+        linkedin: 'https://linkedin.com/company/jpmorganchase'
+      }
+    },
+    'att': {
+      name: 'AT&T',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AT%26T_logo_2016.svg/200px-AT%26T_logo_2016.svg.png',
+      rating: 2.5,
+      totalReviews: 247,
+      website: 'www.att.com',
+      category: 'Telekom',
+      categoryId: 'telekom',
+      description: 'AT&T Amerika Birləşmiş Ştatlarının aparıcı telekommunikasiya şirkətidir. Mobil rabitə, internet və televiziya xidmətləri təqdim edir. Şirkət müştərilərinə yüksək keyfiyyətli rabitə həlləri təklif edir.',
+      stats: {
+        positive: 45,
+        resolved: 25,
+        negative: 30
+      },
+      views: 89000,
+      socialLinks: {
+        website: 'https://att.com',
+        facebook: 'https://facebook.com/att',
+        instagram: 'https://instagram.com/att',
+        linkedin: 'https://linkedin.com/company/att'
+      }
+    },
+    'uber-eats': {
+      name: 'Uber Eats',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Uber_logo_2018.png/200px-Uber_logo_2018.png',
+      rating: 3.2,
+      totalReviews: 156,
+      website: 'www.ubereats.com',
+      category: 'Yemək Çatdırılması',
+      categoryId: 'yemek-catdirilmasi',
+      description: 'Uber Eats dünyada ən məşhur yemək çatdırılması platformalarından biridir. Müştərilərə geniş restoran seçimi və sürətli çatdırılma xidməti təqdim edir.',
+      stats: {
+        positive: 78,
+        resolved: 45,
+        negative: 33
+      },
+      views: 67000,
+      socialLinks: {
+        website: 'https://ubereats.com',
+        facebook: 'https://facebook.com/ubereats',
+        instagram: 'https://instagram.com/ubereats',
+        linkedin: 'https://linkedin.com/company/uber'
+      }
+    },
+    'emirates': {
+      name: 'Emirates',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Emirates_logo.svg/200px-Emirates_logo.svg.png',
+      rating: 4.1,
+      totalReviews: 134,
+      website: 'www.emirates.com',
+      category: 'Havayolu',
+      categoryId: 'havayolu',
+      description: 'Emirates dünyada aparıcı havayolu şirkətlərindən biridir. Yüksək keyfiyyətli xidmət və lüks səyahət təcrübəsi ilə tanınır. 80-dən çox ölkəyə uçuş həyata keçirir.',
+      stats: {
+        positive: 89,
+        resolved: 67,
+        negative: 23
+      },
+      views: 95000,
+      socialLinks: {
+        website: 'https://emirates.com',
+        facebook: 'https://facebook.com/emirates',
+        instagram: 'https://instagram.com/emirates',
+        linkedin: 'https://linkedin.com/company/emirates'
+      }
+    },
+    'vodafone': {
+      name: 'Vodafone',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Vodafone_icon.svg/200px-Vodafone_icon.svg.png',
+      rating: 2.8,
+      totalReviews: 128,
+      website: 'www.vodafone.com',
+      category: 'Telekom',
+      categoryId: 'telekom',
+      description: 'Vodafone dünyada aparıcı mobil rabitə operatorlarından biridir. Mobil telefon, internet və rəqəmsal xidmətlər sahəsində fəaliyyət göstərir.',
+      stats: {
+        positive: 52,
+        resolved: 38,
+        negative: 38
+      },
+      views: 76000,
+      socialLinks: {
+        website: 'https://vodafone.com',
+        facebook: 'https://facebook.com/vodafone',
+        instagram: 'https://instagram.com/vodafone',
+        linkedin: 'https://linkedin.com/company/vodafone'
+      }
+    },
+    't-mobile': {
+      name: 'T-Mobile',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/T-Mobile_logo.svg/200px-T-Mobile_logo.svg.png',
+      rating: 3.4,
+      totalReviews: 112,
+      website: 'www.t-mobile.com',
+      category: 'Telekom',
+      categoryId: 'telekom',
+      description: 'T-Mobile Amerika və Avropada fəaliyyət göstərən aparıcı mobil rabitə operatorudur. İnnovativ xidmətlər və müştəri məmnuniyyəti ilə tanınır.',
+      stats: {
+        positive: 67,
+        resolved: 45,
+        negative: 33
+      },
+      views: 58000,
+      socialLinks: {
+        website: 'https://t-mobile.com',
+        facebook: 'https://facebook.com/tmobile',
+        instagram: 'https://instagram.com/tmobile',
+        linkedin: 'https://linkedin.com/company/t-mobile'
+      }
+    },
+    'edf-energy': {
+      name: 'EDF Energy',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/EDF_logo.svg/200px-EDF_logo.svg.png',
+      rating: 2.9,
+      totalReviews: 98,
+      website: 'www.edfenergy.com',
+      category: 'Kommunal',
+      categoryId: 'kommunal',
+      description: 'EDF Energy Böyük Britaniyada aparıcı enerji təchizatçısıdır. Elektrik və qaz xidmətləri təqdim edir, təmiz enerji həllərinə fokuslanır.',
+      stats: {
+        positive: 58,
+        resolved: 42,
+        negative: 40
+      },
+      views: 45000,
+      socialLinks: {
+        website: 'https://edfenergy.com',
+        facebook: 'https://facebook.com/edfenergy',
+        instagram: 'https://instagram.com/edfenergy',
+        linkedin: 'https://linkedin.com/company/edf-energy'
+      }
+    },
+    'national-grid': {
+      name: 'National Grid',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/National_Grid_logo.svg/200px-National_Grid_logo.svg.png',
+      rating: 3.1,
+      totalReviews: 87,
+      website: 'www.nationalgrid.com',
+      category: 'Kommunal',
+      categoryId: 'kommunal',
+      description: 'National Grid elektrik və qaz şəbəkələrini idarə edən beynəlxalq enerji şirkətidir. ABŞ və Böyük Britaniyada milyonlarla müştəriyə xidmət edir.',
+      stats: {
+        positive: 54,
+        resolved: 38,
+        negative: 33
+      },
+      views: 52000,
+      socialLinks: {
+        website: 'https://nationalgrid.com',
+        facebook: 'https://facebook.com/nationalgrid',
+        instagram: 'https://instagram.com/nationalgrid',
+        linkedin: 'https://linkedin.com/company/national-grid'
+      }
+    },
+    'hsbc': {
+      name: 'HSBC',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/200px-HSBC_logo_%282018%29.svg.png',
+      rating: 3.3,
+      totalReviews: 165,
+      website: 'www.hsbc.com',
+      category: 'Banklar',
+      categoryId: 'banklar',
+      description: 'HSBC dünyada aparıcı beynəlxalq banklardan biridir. 64 ölkə və ərazidə fəaliyyət göstərir, şəxsi və korporativ bankçılıq xidmətləri təqdim edir.',
+      stats: {
+        positive: 82,
+        resolved: 58,
+        negative: 25
+      },
+      views: 98000,
+      socialLinks: {
+        website: 'https://hsbc.com',
+        facebook: 'https://facebook.com/hsbc',
+        instagram: 'https://instagram.com/hsbc',
+        linkedin: 'https://linkedin.com/company/hsbc'
       }
     },
     'pasha-bank': {
@@ -65,15 +241,15 @@ const CompanyDetailPage = () => {
       },
       views: 5200
     },
-    'azercell': {
-      name: 'Azercell',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Azercell_logo.svg/200px-Azercell_logo.svg.png',
+    'att': {
+      name: 'AT&T',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AT%26T_logo_2016.svg/200px-AT%26T_logo_2016.svg.png',
       rating: 2.5,
       totalReviews: 89,
-      website: 'www.azercell.com',
+      website: 'www.att.com',
       category: 'Telekom',
       categoryId: 'telekom',
-      description: 'Azercell Azərbaycanın aparıcı mobil rabitə operatorudur. 1996-cı ildən fəaliyyət göstərir.',
+      description: 'AT&T Amerika Birləşmiş Ştatlarının aparıcı telekommunikasiya şirkətidir. Mobil rabitə və internet xidmətləri təqdim edir.',
       stats: {
         positive: 45,
         resolved: 25,

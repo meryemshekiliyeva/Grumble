@@ -37,19 +37,19 @@ This is a comprehensive bank dashboard system integrated into the main Grumble p
 
 ## Test Bank Accounts
 
-### Kapital Bank
-- **Email**: `kapital@bank.az`
-- **Password**: `kapital123`
+### JPMorgan Chase
+- **Email**: `jpmorgan@bank.com`
+- **Password**: `JPMorgan123!`
 - **Features**: Full dashboard with sample reviews
 
-### Pasha Bank
-- **Email**: `pasha@bank.az`
-- **Password**: `pasha123`
+### HSBC
+- **Email**: `hsbc@bank.com`
+- **Password**: `HSBC123!`
 - **Features**: Full dashboard with sample reviews
 
-### BirBank
-- **Email**: `bir@bank.az`
-- **Password**: `bir123`
+### Goldman Sachs
+- **Email**: `goldman@bank.com`
+- **Password**: `Goldman123!`
 - **Features**: Full dashboard with sample reviews
 
 ## How to Use
