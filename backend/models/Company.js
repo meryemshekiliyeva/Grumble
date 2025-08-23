@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const companySchema = new mongoose.Schema({
   firstName: {
@@ -25,6 +26,18 @@ const companySchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Düzgün email daxil edin']
+  },
+  password: {
+    type: String,
+    required: [true, 'Şifrə tələb olunur'],
+    minlength: [8, 'Şifrə ən azı 8 simvol olmalıdır'],
+    validate: {
+      validator: function(password) {
+        // Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(password);
+      },
+      message: 'Şifrə ən azı bir böyük hərf, bir kiçik hərf, bir rəqəm və bir xüsusi simvol olmalıdır'
+    }
   },
   phone: {
     type: String,
@@ -184,9 +197,28 @@ companySchema.methods.updateComplaintStats = async function() {
   }
 };
 
+// Pre-save middleware to hash password
+companySchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Method to compare password
+companySchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
 // Transform output
 companySchema.methods.toJSON = function() {
   const company = this.toObject();
+  delete company.password; // Don't include password in JSON output
   company.resolutionRate = this.resolutionRate;
   return company;
 };

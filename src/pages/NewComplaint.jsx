@@ -10,8 +10,10 @@ const NewComplaint = () => {
   const [formData, setFormData] = useState({
     title: '',
     company: '',
+    customCompany: '',
     category: '',
     summary: '',
+    rating: 0,
     attachments: null
   });
 
@@ -20,6 +22,13 @@ const NewComplaint = () => {
     setFormData({
       ...formData,
       [name]: files ? files[0] : value
+    });
+  };
+
+  const handleRatingChange = (rating) => {
+    setFormData({
+      ...formData,
+      rating
     });
   };
 
@@ -41,6 +50,7 @@ const NewComplaint = () => {
     const complaint = {
       id: newComplaintId,
       ...formData,
+      company: formData.company === 'digər' ? formData.customCompany : formData.company,
       author: user.name,
       authorEmail: user.email,
       date: new Date().toLocaleDateString('az-AZ'),
@@ -57,10 +67,54 @@ const NewComplaint = () => {
   };
 
   const categories = [
-    'E-ticarət', 'Yemək Çatdırılması', 'Nəqliyyat', 'Bank Xidmətləri',
-    'Telekom', 'Dövlət Xidmətləri', 'Sığorta', 'Təhsil', 'Səhiyyə',
-    'Kommunal', 'Pərakəndə', 'Havayolu', 'Turizm', 'Texnologiya'
+    'Telekommunikasiya', 'Bank və Maliyyə', 'Yemək Çatdırılması', 'Nəqliyyat',
+    'Kommunal Xidmətlər', 'E-ticarət', 'Havayolu', 'Dövlət Xidmətləri',
+    'Sığorta', 'Təhsil', 'Səhiyyə', 'Turizm', 'Texnologiya'
   ];
+
+  const companiesByCategory = {
+    'Telekommunikasiya': [
+      { name: 'Azercell', id: 'azercell' },
+      { name: 'Bakcell', id: 'bakcell' },
+      { name: 'Nar Mobile', id: 'nar-mobile' },
+      { name: 'CityNet', id: 'citynet' },
+      { name: 'AzerTelecom', id: 'azertelecom' }
+    ],
+    'Bank və Maliyyə': [
+      { name: 'Kapital Bank', id: 'kapital-bank' },
+      { name: 'PAŞA Bank', id: 'pasha-bank' },
+      { name: 'Birbank', id: 'birbank' },
+      { name: 'Unibank', id: 'unibank' },
+      { name: 'Bank of Baku', id: 'bank-of-baku' }
+    ],
+    'Yemək Çatdırılması': [
+      { name: 'Wolt', id: 'wolt' },
+      { name: 'Bolt Food', id: 'bolt-food' },
+      { name: 'Fooderos', id: 'fooderos' },
+      { name: 'Yemeksepeti', id: 'yemeksepeti' }
+    ],
+    'Nəqliyyat': [
+      { name: 'BiP', id: 'bip' },
+      { name: 'Bolt', id: 'bolt' },
+      { name: 'Uber', id: 'uber' },
+      { name: 'BakuBus', id: 'bakubus' }
+    ],
+    'Kommunal Xidmətlər': [
+      { name: 'Azərsu', id: 'azersu' },
+      { name: 'Azərişıq', id: 'azerishiq' },
+      { name: 'Azəriqaz', id: 'azeriqaz' }
+    ],
+    'E-ticarət': [
+      { name: 'Trendyol', id: 'trendyol' },
+      { name: 'Amazon', id: 'amazon' },
+      { name: 'Aliexpress', id: 'aliexpress' }
+    ],
+    'Havayolu': [
+      { name: 'AZAL', id: 'azal' },
+      { name: 'Buta Airways', id: 'buta-airways' },
+      { name: 'Turkish Airlines', id: 'turkish-airlines' }
+    ]
+  };
 
   if (showSuccess) {
     return (
@@ -143,45 +197,98 @@ const NewComplaint = () => {
               />
             </div>
 
-            {/* Company and Category */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Rating Section */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2 az-text">
+                Şirkəti Qiymətləndirin *
+              </label>
+              <div className="flex items-center space-x-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => handleRatingChange(star)}
+                    className={`text-2xl transition-colors ${
+                      star <= formData.rating ? 'text-yellow-400' : 'text-gray-300'
+                    } hover:text-yellow-400`}
+                  >
+                    ★
+                  </button>
+                ))}
+                <span className="ml-3 text-sm text-gray-600 az-text">
+                  {formData.rating > 0 ? `${formData.rating}/5` : 'Reytinq seçin'}
+                </span>
+              </div>
+              <p className="mt-2 text-xs text-gray-500 az-text">
+                Şirkətin ümumi xidmət keyfiyyətini qiymətləndirin
+              </p>
+            </div>
+
+            {/* Category Selection */}
+            <div>
+              <label htmlFor="category" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
+                Kateqoriya *
+              </label>
+              <select
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm az-text"
+                required
+              >
+                <option value="">Kateqoriya seçin</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Company Selection */}
+            {formData.category && (
               <div>
                 <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
                   Şirkət Adı *
                 </label>
-                <input
-                  type="text"
+                <select
                   id="company"
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm az-text"
-                  placeholder="məs., Wolt, Trendyol, CityNet"
+                  required
+                >
+                  <option value="">Şirkət seçin</option>
+                  {companiesByCategory[formData.category]?.map((company) => (
+                    <option key={company.id} value={company.name}>
+                      {company.name}
+                    </option>
+                  ))}
+                  <option value="digər">Digər (siyahıda yoxdur)</option>
+                </select>
+              </div>
+            )}
+
+            {/* Custom Company Name */}
+            {formData.company === 'digər' && (
+              <div>
+                <label htmlFor="customCompany" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
+                  Şirkət Adını Yazın *
+                </label>
+                <input
+                  type="text"
+                  id="customCompany"
+                  name="customCompany"
+                  value={formData.customCompany}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm az-text"
+                  placeholder="Şirkət adını daxil edin"
                   required
                 />
               </div>
-
-              <div>
-                <label htmlFor="category" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-                  Kateqoriya *
-                </label>
-                <select
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm az-text"
-                  required
-                >
-                  <option value="">Kateqoriya seçin</option>
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            )}
 
             {/* Summary */}
             <div>

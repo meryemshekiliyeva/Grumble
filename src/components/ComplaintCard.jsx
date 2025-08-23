@@ -117,30 +117,8 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
       return;
     }
 
-    const newLikedState = !isLiked;
-    if (newLikedState) {
-      setLikeCount(prev => prev + 1);
-      // Track user like
-      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
-      const likeData = {
-        id: `like-${Date.now()}`,
-        complaintId: complaintId,
-        complaintTitle: title,
-        company: company,
-        timestamp: new Date().toISOString(),
-        type: 'complaint'
-      };
-      userLikes.push(likeData);
-      localStorage.setItem('userLikes', JSON.stringify(userLikes));
-    } else {
-      setLikeCount(prev => prev - 1);
-      // Remove from user likes
-      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
-      const filteredLikes = userLikes.filter(like => like.complaintId !== complaintId);
-      localStorage.setItem('userLikes', JSON.stringify(filteredLikes));
-    }
-    setIsLiked(newLikedState);
-    if (onLike) onLike();
+    // Navigate to complaint detail page
+    navigate(`/complaints/${complaintId}`);
   };
 
   const handleCommentToggle = () => {
@@ -149,8 +127,8 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
       return;
     }
 
-    setShowComments(!showComments);
-    if (onComment) onComment();
+    // Navigate to complaint detail page
+    navigate(`/complaints/${complaintId}`);
   };
 
   const handleAddMessage = () => {
@@ -275,7 +253,10 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
       <div className="p-6 pb-4">
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1 pr-4">
-            <h3 className="text-lg font-bold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors mb-2">
+            <h3
+              className="text-lg font-bold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors mb-2 cursor-pointer"
+              onClick={() => navigate(`/complaints/${complaintId}`)}
+            >
               {title}
             </h3>
             <p className="text-sm font-medium text-gray-500">

@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useNotifications } from '../contexts/NotificationContext';
 
 const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { 
-    notifications, 
-    unreadCount, 
-    markAsRead, 
-    markAllAsRead, 
-    getNotificationIcon, 
-    getNotificationColor, 
-    formatTimestamp 
+  const navigate = useNavigate();
+  const {
+    notifications,
+    unreadCount,
+    markAsRead,
+    markAllAsRead,
+    getNotificationIcon,
+    getNotificationColor,
+    formatTimestamp
   } = useNotifications();
 
   useEffect(() => {
@@ -33,6 +34,15 @@ const NotificationDropdown = () => {
       markAsRead(notification.id);
     }
     setIsOpen(false);
+
+    // Navigate based on notification type
+    if (notification.relatedComplaintId) {
+      // If notification is related to a specific complaint, navigate to that complaint
+      navigate(`/complaints/${notification.relatedComplaintId}`);
+    } else {
+      // Otherwise, navigate to notifications tab in profile
+      navigate('/profile?tab=notifications');
+    }
   };
 
   return (

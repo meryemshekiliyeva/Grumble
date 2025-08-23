@@ -6,7 +6,7 @@ import SocialLogin from '../components/SocialLogin';
 const Login = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loginCompany } = useAuth();
   const [activeTab, setActiveTab] = useState('user'); // 'user' or 'company'
   const [formData, setFormData] = useState({
     email: '',
@@ -88,11 +88,28 @@ const Login = () => {
           }
           navigate('/');
         } else {
-          setError(result.message || 'Giriş zamanı xəta baş verdi');
+          if (result.requiresVerification) {
+            // Redirect to email verification page
+            navigate(`/verify-email?email=${encodeURIComponent(result.email)}`);
+          } else {
+            setError(result.message || 'Giriş zamanı xəta baş verdi');
+          }
         }
       } else {
-        // Company login - implement later
-        setError('Şirkət girişi hələ hazır deyil');
+        // Company login
+        const result = await loginCompany(currentFormData.email, currentFormData.password);
+
+        if (result.success) {
+          // Store remember me preference
+          if (currentFormData.rememberMe) {
+            localStorage.setItem('rememberedEmail', currentFormData.email);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+          }
+          navigate('/');
+        } else {
+          setError(result.message || 'Şirkət girişi zamanı xəta baş verdi');
+        }
       }
     } catch (err) {
       setError('Giriş zamanı xəta baş verdi');
