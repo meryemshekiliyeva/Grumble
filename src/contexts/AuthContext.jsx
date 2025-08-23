@@ -28,28 +28,64 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const checkAuthStatus = async () => {
-    const token = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('grumble_user');
+    try {
+      const token = localStorage.getItem('token');
+      const savedUser = localStorage.getItem('grumble_user');
+      const bankLogin = localStorage.getItem('bankLogin');
 
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser);
-        setUser(userData);
-        setIsAuthenticated(true);
+      // Check for bank/company login first
+      if (bankLogin) {
+        try {
+          const bankData = JSON.parse(bankLogin);
+
+          // Validate bank data
+          if (!bankData.email || !bankData.name) {
+            console.error('Invalid bank data:', bankData);
+            localStorage.removeItem('bankLogin');
+            setIsLoading(false);
+            return;
+          }
+
+          const companyUser = {
+            id: bankData.email,
+            firstName: bankData.firstName || bankData.name?.split(' ')[0] || 'Company',
+            lastName: bankData.lastName || bankData.name?.split(' ')[1] || 'User',
+            email: bankData.email,
+            name: bankData.name,
+            companyName: bankData.name,
+            phone: bankData.phone || '',
+            avatar: bankData.logo,
+            userType: 'company',
+            category: bankData.category || 'Company'
+          };
+          setUser(companyUser);
+          setIsAuthenticated(true);
+          setIsLoading(false);
+          return;
+        } catch (error) {
+          console.error('Error parsing bank login:', error);
+          localStorage.removeItem('bankLogin');
+        }
+      }
+
+      if (savedUser) {
+        try {
+          const userData = JSON.parse(savedUser);
+          setUser(userData);
+          setIsAuthenticated(true);
+          setIsLoading(false);
+          return;
+        } catch (error) {
+          console.error('Error parsing saved user:', error);
+          localStorage.removeItem('grumble_user');
+        }
+      }
+
+      if (!token) {
         setIsLoading(false);
         return;
-      } catch (error) {
-        console.error('Error parsing saved user:', error);
-        localStorage.removeItem('grumble_user');
       }
-    }
 
-    if (!token) {
-      setIsLoading(false);
-      return;
-    }
-
-    try {
       const response = await fetch('/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -70,12 +106,12 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Auth check error:', error);
-      // Don't remove user data on network error, backend might be down
-      if (!savedUser) {
-        localStorage.removeItem('token');
-        setUser(null);
-        setIsAuthenticated(false);
-      }
+      // Clear potentially corrupted data on any error
+      localStorage.removeItem('bankLogin');
+      localStorage.removeItem('grumble_user');
+      localStorage.removeItem('token');
+      setUser(null);
+      setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
     }
@@ -207,8 +243,12 @@ export const AuthProvider = ({ children }) => {
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('grumble_user');
+      localStorage.removeItem('bankLogin');
+      localStorage.removeItem('rememberedEmail');
+      localStorage.removeItem('rememberedCompanyEmail');
       setUser(null);
       setIsAuthenticated(false);
+      setIsLoading(false);
     }
   };
 

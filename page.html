@@ -398,13 +398,310 @@
         .inputs-wrapper input:last-child {
             flex: 1;
         }
+
+        /* Bank Dashboard Styles */
+        .bank-info-card {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .bank-logo {
+            margin-bottom: 16px;
+        }
+
+        .bank-logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f8f9fa;
+            padding: 8px;
+        }
+
+        .bank-info-card h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .bank-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #515bc3;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .bank-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .rating-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #515bc3;
+        }
+
+        .reviews-section {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #f0f0f0;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 24px 24px 0 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section-header h2 {
+            color: #333;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .review-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            color: #666;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: #515bc3;
+            border-bottom-color: #515bc3;
+        }
+
+        .tab-btn:hover {
+            color: #515bc3;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 24px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-item {
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fafbfc;
+        }
+
+        .review-item.pending {
+            border-left: 4px solid #ffc107;
+        }
+
+        .review-item.answered {
+            border-left: 4px solid #28a745;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .customer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .customer-avatar img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .customer-details h4 {
+            color: #333;
+            margin-bottom: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .review-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rating-text {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .review-date {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .review-date span:first-child {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.answered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .review-content {
+            margin-bottom: 16px;
+        }
+
+        .review-content p {
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-reply, .btn-view-details {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-reply {
+            background: #515bc3;
+            color: white;
+        }
+
+        .btn-reply:hover {
+            background: #4147a3;
+            transform: translateY(-1px);
+        }
+
+        .btn-view-details {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e9ecef;
+        }
+
+        .btn-view-details:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .bank-reply {
+            margin-top: 16px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #515bc3;
+        }
+
+        .reply-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .bank-logo-small {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .bank-name {
+            font-weight: 600;
+            color: #515bc3;
+        }
+
+        .reply-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
+        .reply-content p {
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            font-style: italic;
+        }
         /* Company Dashboard Styles */
         .company-dashboard {
             display: none;
         }
 
         .company-dashboard.active {
-            display: block;
+            display: block !important;
         }
 
         .welcome-section {
@@ -794,7 +1091,7 @@
             <article class="sign-in-about-platform">
                 <section class="form-container">
                     <h4>Şirkət olaraq daxil ol</h4>
-                    <form action="#" id="company-sign-in" method="post">
+                    <form action="javascript:void(0)" id="company-sign-in" method="post" onsubmit="return false;">
                         <input type="hidden" name="csrfmiddlewaretoken" value="">
                         <section class="email-field">
                             <input type="email" name="username" id="company-sign-in-email" placeholder="Email*" maxlength="255" required="">
@@ -810,7 +1107,19 @@
                         <section class="forgot-password">
                             <a href="#">Şifrəmi unutmuşam</a>
                         </section>
-                        <button type="submit" name="company-login" formnovalidate="">Daxil ol</button>
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin: 12px 0; border-left: 4px solid #28a745;">
+                            <h5 style="color: #28a745; font-size: 0.9rem; margin-bottom: 8px;">Test Bank Accounts:</h5>
+                            <p style="color: #666; font-size: 0.8rem; margin: 4px 0;"><strong>Kapital Bank:</strong> kapital@bank.az / Kapital123!</p>
+                            <p style="color: #666; font-size: 0.8rem; margin: 4px 0;"><strong>Pasha Bank:</strong> pasha@bank.az / Pasha123!</p>
+                            <p style="color: #666; font-size: 0.8rem; margin: 4px 0;"><strong>BirBank:</strong> bir@bank.az / BirBank123!</p>
+                        </div>
+                        <button type="button" onclick="handleBankLogin(event)" name="company-login" style="background: #515bc3; color: white; border: none; padding: 12px 24px; border-radius: 6px; width: 100%; cursor: pointer; font-weight: 600;">Daxil ol</button>
+                        <button type="button" onclick="directBankLogin()" style="background: #6f42c1; color: white; border: none; padding: 12px 24px; border-radius: 6px; width: 100%; cursor: pointer; font-weight: 600; margin-top: 8px;">Alternativ Giriş</button>
+                        <div style="margin-top: 12px; padding: 12px; background: #fff3cd; border-radius: 6px; border-left: 4px solid #ffc107;">
+                            <p style="color: #856404; font-size: 0.9rem; margin: 0; font-weight: 500;">⚠️ Əgər "hazır deyil" xətası alırsınızsa, "Alternativ Giriş" və ya test düymələrindən istifadə edin:</p>
+                        </div>
+                        <button type="button" onclick="testBankLogin()" style="background: #dc3545; color: white; border: none; padding: 12px 24px; border-radius: 6px; margin-top: 8px; width: 100%; cursor: pointer;">Test Bank Dashboard</button>
+                        <button type="button" onclick="testCompanyRegistration()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 6px; margin-top: 8px; width: 100%; cursor: pointer;">Test Company Registration</button>
                     </form>
                 </section>
                 <section class="about-platform">
@@ -894,6 +1203,11 @@
                             <div id="confirm-password-constraints" class="error-message"></div>
                             <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/hide-icon.svg" alt="hide icon" class="hide-icon" onclick="togglePassword('confirm-password')">
                         </section>
+                        <div style="background: #e8f5e8; padding: 12px; border-radius: 6px; margin: 12px 0; border-left: 4px solid #28a745;">
+                            <h5 style="color: #28a745; font-size: 0.9rem; margin-bottom: 8px;">Test Registration:</h5>
+                            <p style="color: #666; font-size: 0.8rem; margin: 4px 0;"><strong>Sample Password:</strong> Test123!</p>
+                            <p style="color: #666; font-size: 0.8rem; margin: 4px 0;">Or click the green "Test Company Registration" button below</p>
+                        </div>
                         <button type="submit" name="company-request" formnovalidate="">Göndər</button>
                     </form>
                 </section>
@@ -909,185 +1223,251 @@
                 <a href="#" class="logout-btn" id="logoutBtnMain">Çıxış</a>
             </section>
 
-            <section class="filter-sort">
-                <h1>Şirkətlər</h1>
-                <article class="sort">
-                    <span>Sıralama</span>
-                    <select class="form-select form-select-sm" id="sortBy">
-                        <option value="lastReviewed">Son rəylənən</option>
-                        <option value="mostReviewed">Ən çox rəylənən</option>
-                        <option value="mostViewed">Ən çox baxılan</option>
-                        <option value="companyRating">Ən yüksək reytinq</option>
-                    </select>
-                </article>
-            </section>
-
+            <!-- Bank Dashboard Section -->
             <div class="row">
-                <aside class="col-md-3">
-                    <article class="categories">
-                        <h5>Kateqoriyalar</h5>
-                        <ul>
-                            <li class="result active" data-category="all">Hamısı</li>
-                            <li class="result" data-category="bank">Banklar</li>
-                            <li class="result" data-category="telekom">Telekom</li>
-                            <li class="result" data-category="yemek">Yemək Çatdırılması</li>
-                            <li class="result" data-category="nəqliyyat">Nəqliyyat</li>
-                            <li class="result" data-category="kommunal">Kommunal</li>
-                            <li class="result" data-category="avtomobil">Avtomobil</li>
-                            <li class="result" data-category="ticarət">Ticarət</li>
-                            <li class="result" data-category="təhsil">Təhsil</li>
-                            <li class="result" data-category="it">IT Xidmətləri</li>
-                        </ul>
-                    </article>
-                </aside>
+                <!-- Bank Info Card -->
+                <div class="col-md-4 mb-4">
+                    <div class="bank-info-card">
+                        <div class="bank-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg" alt="Kapital Bank" id="bankLogo">
+                        </div>
+                        <h3 id="bankName">Kapital Bank</h3>
+                        <div class="bank-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="totalReviews">189</span>
+                                <span class="stat-label">Ümumi Rəylər</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="pendingReviews">33</span>
+                                <span class="stat-label">Gözləyən</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="answeredReviews">156</span>
+                                <span class="stat-label">Cavablanmış</span>
+                            </div>
+                        </div>
+                        <div class="bank-rating">
+                            <div class="stars" data-rating="4.2">
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i>
+                                <i class="far fa-star star empty"></i>
+                            </div>
+                            <span class="rating-number">4.2</span>
+                        </div>
+                    </div>
+                </div>
 
-                <section class="col-md-9">
-                    <article class="company-list" id="companyList">
-                        <!-- Kapital Bank -->
-                        <a href="#" class="company-wrapper" data-category="bank">
-                            <section class="company">
-                                <div class="company-logo">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg" alt="Kapital Bank">
-                                </div>
-                                <div class="company-info">
-                                    <div class="company-name"><h5>Kapital Bank</h5></div>
-                                    <div class="star-rating__result">
-                                        <div class="stars" data-rating="4.2">
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="far fa-star star empty"></i>
-                                        </div>
-                                        <span>4.2</span>
-                                    </div>
-                                    <p class="company-title">Bank</p>
-                                    <p class="company-stats">Şikayətlər: 189 | Cavablar: 156</p>
-                                </div>
-                            </section>
-                        </a>
+                <!-- Reviews Management -->
+                <div class="col-md-8">
+                    <div class="reviews-section">
+                        <div class="section-header">
+                            <h2>Mənim Rəylərim</h2>
+                            <div class="review-tabs">
+                                <button class="tab-btn active" data-tab="pending">Gözləyən (33)</button>
+                                <button class="tab-btn" data-tab="answered">Cavablanmış (156)</button>
+                            </div>
+                        </div>
 
-                        <!-- Pasha Bank -->
-                        <a href="#" class="company-wrapper" data-category="bank">
-                            <section class="company">
-                                <div class="company-logo">
-                                    <img src="https://www.pashabank.az/assets/images/logo.svg" alt="Pasha Bank">
-                                </div>
-                                <div class="company-info">
-                                    <div class="company-name"><h5>Pasha Bank</h5></div>
-                                    <div class="star-rating__result">
-                                        <div class="stars" data-rating="3.8">
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="far fa-star star empty"></i>
+                        <!-- Pending Reviews Tab -->
+                        <div class="tab-content active" id="pending-tab">
+                            <div class="reviews-list">
+                                <!-- Review Item 1 -->
+                                <div class="review-item pending">
+                                    <div class="review-header">
+                                        <div class="customer-info">
+                                            <div class="customer-avatar">
+                                                <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/user-profile-img-placeholder-light.svg" alt="Customer">
+                                            </div>
+                                            <div class="customer-details">
+                                                <h4>Əli Məmmədov</h4>
+                                                <div class="review-rating">
+                                                    <div class="stars" data-rating="2">
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                    </div>
+                                                    <span class="rating-text">2.0</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span>3.8</span>
+                                        <div class="review-date">
+                                            <span>2 gün əvvəl</span>
+                                            <span class="status-badge pending">Gözləyir</span>
+                                        </div>
                                     </div>
-                                    <p class="company-title">Bank</p>
-                                    <p class="company-stats">Şikayətlər: 65 | Cavablar: 52</p>
+                                    <div class="review-content">
+                                        <p>Kartımı itirdim və yeni kart sifarişi verdim. Artıq 10 gündür gözləyirəm, hələ də kart gəlməyib. Müştəri xidmətləri də çox yavaş cavab verir.</p>
+                                    </div>
+                                    <div class="review-actions">
+                                        <button class="btn-reply" onclick="openReplyModal(1)">Cavab Ver</button>
+                                        <button class="btn-view-details" onclick="viewReviewDetails(1)">Ətraflı</button>
+                                    </div>
                                 </div>
-                            </section>
-                        </a>
 
-                        <!-- BirBank -->
-                        <a href="#" class="company-wrapper" data-category="bank">
-                            <section class="company">
-                                <div class="company-logo">
-                                    <img src="https://www.kapitalbank.az/assets/images/birbank-logo.svg" alt="BirBank">
-                                </div>
-                                <div class="company-info">
-                                    <div class="company-name"><h5>BirBank</h5></div>
-                                    <div class="star-rating__result">
-                                        <div class="stars" data-rating="4.5">
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
+                                <!-- Review Item 2 -->
+                                <div class="review-item pending">
+                                    <div class="review-header">
+                                        <div class="customer-info">
+                                            <div class="customer-avatar">
+                                                <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/user-profile-img-placeholder-light.svg" alt="Customer">
+                                            </div>
+                                            <div class="customer-details">
+                                                <h4>Leyla Həsənova</h4>
+                                                <div class="review-rating">
+                                                    <div class="stars" data-rating="1">
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                    </div>
+                                                    <span class="rating-text">1.0</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span>4.5</span>
+                                        <div class="review-date">
+                                            <span>1 həftə əvvəl</span>
+                                            <span class="status-badge pending">Gözləyir</span>
+                                        </div>
                                     </div>
-                                    <p class="company-title">Bank</p>
-                                    <p class="company-stats">Şikayətlər: 32 | Cavablar: 30</p>
+                                    <div class="review-content">
+                                        <p>Mobil bankçılıq tətbiqi çox yavaş işləyir. Pul köçürmələri çox vaxt alır və bəzən xəta verir. Bu problem artıq 1 aydır davam edir.</p>
+                                    </div>
+                                    <div class="review-actions">
+                                        <button class="btn-reply" onclick="openReplyModal(2)">Cavab Ver</button>
+                                        <button class="btn-view-details" onclick="viewReviewDetails(2)">Ətraflı</button>
+                                    </div>
                                 </div>
-                            </section>
-                        </a>
 
-                        <!-- Azercell -->
-                        <a href="#" class="company-wrapper" data-category="telekom">
-                            <section class="company">
-                                <div class="company-logo">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Azercell_logo.svg/200px-Azercell_logo.svg.png" alt="Azercell">
-                                </div>
-                                <div class="company-info">
-                                    <div class="company-name"><h5>Azercell</h5></div>
-                                    <div class="star-rating__result">
-                                        <div class="stars" data-rating="3.2">
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="far fa-star star empty"></i>
-                                            <i class="far fa-star star empty"></i>
+                                <!-- Review Item 3 -->
+                                <div class="review-item pending">
+                                    <div class="review-header">
+                                        <div class="customer-info">
+                                            <div class="customer-avatar">
+                                                <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/user-profile-img-placeholder-light.svg" alt="Customer">
+                                            </div>
+                                            <div class="customer-details">
+                                                <h4>Rəşad Quliyev</h4>
+                                                <div class="review-rating">
+                                                    <div class="stars" data-rating="3">
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                    </div>
+                                                    <span class="rating-text">3.0</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span>3.2</span>
+                                        <div class="review-date">
+                                            <span>3 gün əvvəl</span>
+                                            <span class="status-badge pending">Gözləyir</span>
+                                        </div>
                                     </div>
-                                    <p class="company-title">Telekom</p>
-                                    <p class="company-stats">Şikayətlər: 247 | Cavablar: 198</p>
+                                    <div class="review-content">
+                                        <p>Filialda növbə çox uzun olur. Xüsusilə səhər saatlarında çox sıxlıq olur. Daha çox işçi olsa yaxşı olar.</p>
+                                    </div>
+                                    <div class="review-actions">
+                                        <button class="btn-reply" onclick="openReplyModal(3)">Cavab Ver</button>
+                                        <button class="btn-view-details" onclick="viewReviewDetails(3)">Ətraflı</button>
+                                    </div>
                                 </div>
-                            </section>
-                        </a>
+                            </div>
+                        </div>
 
-                        <!-- Bolt Food -->
-                        <a href="#" class="company-wrapper" data-category="yemek">
-                            <section class="company">
-                                <div class="company-logo">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Bolt_logo.svg/200px-Bolt_logo.svg.png" alt="Bolt Food">
-                                </div>
-                                <div class="company-info">
-                                    <div class="company-name"><h5>Bolt Food</h5></div>
-                                    <div class="star-rating__result">
-                                        <div class="stars" data-rating="4.1">
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="far fa-star star empty"></i>
+                        <!-- Answered Reviews Tab -->
+                        <div class="tab-content" id="answered-tab">
+                            <div class="reviews-list">
+                                <!-- Answered Review Item 1 -->
+                                <div class="review-item answered">
+                                    <div class="review-header">
+                                        <div class="customer-info">
+                                            <div class="customer-avatar">
+                                                <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/user-profile-img-placeholder-light.svg" alt="Customer">
+                                            </div>
+                                            <div class="customer-details">
+                                                <h4>Nigar Əliyeva</h4>
+                                                <div class="review-rating">
+                                                    <div class="stars" data-rating="5">
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                    </div>
+                                                    <span class="rating-text">5.0</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span>4.1</span>
+                                        <div class="review-date">
+                                            <span>1 həftə əvvəl</span>
+                                            <span class="status-badge answered">Cavablanıb</span>
+                                        </div>
                                     </div>
-                                    <p class="company-title">Yemək Çatdırılması</p>
-                                    <p class="company-stats">Şikayətlər: 156 | Cavablar: 134</p>
+                                    <div class="review-content">
+                                        <p>Çox yaxşı xidmət. Müştəri xidmətləri çox peşəkar və köməkçi idi. Problemim tez həll olundu.</p>
+                                    </div>
+                                    <div class="bank-reply">
+                                        <div class="reply-header">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg" alt="Kapital Bank" class="bank-logo-small">
+                                            <span class="bank-name">Kapital Bank</span>
+                                            <span class="reply-date">6 gün əvvəl</span>
+                                        </div>
+                                        <div class="reply-content">
+                                            <p>Hörmətli Nigar xanım, müsbət rəyiniz üçün təşəkkür edirik! Müştərilərimizin məmnuniyyəti bizim üçün ən vacib məsələdir. Gələcəkdə də sizə keyfiyyətli xidmət göstərməyə davam edəcəyik.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </section>
-                        </a>
 
-                        <!-- Wolt -->
-                        <a href="#" class="company-wrapper" data-category="yemek">
-                            <section class="company">
-                                <div class="company-logo">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Wolt_logo.svg/200px-Wolt_logo.svg.png" alt="Wolt">
-                                </div>
-                                <div class="company-info">
-                                    <div class="company-name"><h5>Wolt</h5></div>
-                                    <div class="star-rating__result">
-                                        <div class="stars" data-rating="4.3">
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="fas fa-star star"></i>
-                                            <i class="far fa-star star empty"></i>
+                                <!-- Answered Review Item 2 -->
+                                <div class="review-item answered">
+                                    <div class="review-header">
+                                        <div class="customer-info">
+                                            <div class="customer-avatar">
+                                                <img src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/img/user-profile-img-placeholder-light.svg" alt="Customer">
+                                            </div>
+                                            <div class="customer-details">
+                                                <h4>Elçin Məmmədov</h4>
+                                                <div class="review-rating">
+                                                    <div class="stars" data-rating="4">
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="fas fa-star star"></i>
+                                                        <i class="far fa-star star empty"></i>
+                                                    </div>
+                                                    <span class="rating-text">4.0</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span>4.3</span>
+                                        <div class="review-date">
+                                            <span>2 həftə əvvəl</span>
+                                            <span class="status-badge answered">Cavablanıb</span>
+                                        </div>
                                     </div>
-                                    <p class="company-title">Yemək Çatdırılması</p>
-                                    <p class="company-stats">Şikayətlər: 43 | Cavablar: 41</p>
+                                    <div class="review-content">
+                                        <p>Kredit müraciətim tez baxıldı və təsdiqləndi. Prosedur çox sadə idi. Təşəkkür edirəm.</p>
+                                    </div>
+                                    <div class="bank-reply">
+                                        <div class="reply-header">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg" alt="Kapital Bank" class="bank-logo-small">
+                                            <span class="bank-name">Kapital Bank</span>
+                                            <span class="reply-date">2 həftə əvvəl</span>
+                                        </div>
+                                        <div class="reply-content">
+                                            <p>Hörmətli Elçin bəy, bizə etibar etdiyiniz üçün təşəkkür edirik. Kredit xidmətlərimizdən məmnun qaldığınıza şadıq. Hər zaman xidmətinizdəyik!</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </section>
-                        </a>
-                    </article>
-                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -1143,7 +1523,31 @@
 <script type="module" src="https://cdn.jsdelivr.net/gh/grumble-org/grumble-repo@latest/js/alerts.js"></script>
 
 <script>
+// Immediately prevent any external form handling
+document.addEventListener('DOMContentLoaded', function() {
+    // Override any existing form submission handlers
+    const companyForm = document.getElementById('company-sign-in');
+    if (companyForm) {
+        // Remove all existing event listeners by cloning the form
+        const newForm = companyForm.cloneNode(true);
+        companyForm.parentNode.replaceChild(newForm, companyForm);
+
+        // Prevent any form submission
+        newForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Form submission prevented - using custom handler');
+            return false;
+        });
+
+        console.log('Form submission handlers overridden');
+    }
+});
+
+// Bank Dashboard System - Override external scripts
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM Content Loaded - Bank Dashboard System');
+
     // Global variables
     let isLoggedIn = false;
     let currentCompany = null;
@@ -1156,6 +1560,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const mobileLoginLinks = document.getElementById('mobileLoginLinks');
     const mobileUserLinks = document.getElementById('mobileUserLinks');
     const breadcrumbTitle = document.getElementById('breadcrumbTitle');
+
+    console.log('DOM Elements found:');
+    console.log('loginSection:', !!loginSection);
+    console.log('companyDashboard:', !!companyDashboard);
+    console.log('loginWrapper:', !!loginWrapper);
+    console.log('userWrapper:', !!userWrapper);
 
     // Forms
     const signInForm = document.getElementById('company-sign-in');
@@ -1191,36 +1601,137 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Password strength validation
+    function validatePasswordStrength(password) {
+        const errors = [];
+
+        // At least 8 characters
+        if (password.length < 8) {
+            errors.push('Ən azı 8 simvol');
+        }
+
+        // Uppercase letter
+        if (!/[A-Z]/.test(password)) {
+            errors.push('Böyük hərf');
+        }
+
+        // Number
+        if (!/[0-9]/.test(password)) {
+            errors.push('Rəqəm');
+        }
+
+        // Special character
+        if (!/[!@#$%^&*]/.test(password)) {
+            errors.push('Xüsusi simvol (!@#$%^&*)');
+        }
+
+        return errors;
+    }
+
+    // Real-time password strength display
+    function updatePasswordStrength() {
+        const password = document.getElementById('signup-password').value;
+        const strengthDiv = document.getElementById('signup-password-constraints');
+        const errors = validatePasswordStrength(password);
+
+        if (password.length === 0) {
+            strengthDiv.innerHTML = '';
+            strengthDiv.style.display = 'none';
+            return;
+        }
+
+        let html = '<div style="margin-top: 8px; font-size: 0.8rem;">';
+
+        // Check each requirement
+        const requirements = [
+            { test: password.length >= 8, text: 'Ən azı 8 simvol' },
+            { test: /[A-Z]/.test(password), text: 'Böyük hərf' },
+            { test: /[0-9]/.test(password), text: 'Rəqəm' },
+            { test: /[!@#$%^&*]/.test(password), text: 'Xüsusi simvol (!@#$%^&*)' }
+        ];
+
+        requirements.forEach(req => {
+            const icon = req.test ? '✓' : '✗';
+            const color = req.test ? '#28a745' : '#dc3545';
+            html += `<div style="color: ${color}; margin: 2px 0;">${icon} ${req.text}</div>`;
+        });
+
+        html += '</div>';
+        strengthDiv.innerHTML = html;
+        strengthDiv.style.display = 'block';
+    }
+
     // Real-time password validation
     document.getElementById('confirm-password').addEventListener('input', validatePasswords);
-    document.getElementById('signup-password').addEventListener('input', validatePasswords);
+    document.getElementById('signup-password').addEventListener('input', function() {
+        updatePasswordStrength();
+        validatePasswords();
+    });
 
-    // Sign-in form submission
+    // Bank login credentials for testing
+    const BANK_CREDENTIALS = {
+        'kapital@bank.az': {
+            password: 'Kapital123!',
+            name: 'Kapital Bank',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg'
+        },
+        'pasha@bank.az': {
+            password: 'Pasha123!',
+            name: 'Pasha Bank',
+            logo: 'https://www.pashabank.az/assets/images/logo.svg'
+        },
+        'bir@bank.az': {
+            password: 'BirBank123!',
+            name: 'BirBank',
+            logo: 'https://www.kapitalbank.az/assets/images/birbank-logo.svg'
+        }
+    };
+
+    // Sign-in form submission - Override any existing handlers
     if (signInForm) {
-        signInForm.addEventListener('submit', function(e) {
+        console.log('Sign-in form found and event listener attached');
+
+        // Remove any existing event listeners by cloning the form
+        const newForm = signInForm.cloneNode(true);
+        signInForm.parentNode.replaceChild(newForm, signInForm);
+
+        // Add our event listener to the new form
+        newForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log('Form submitted');
 
             const email = document.getElementById('company-sign-in-email').value;
             const password = document.getElementById('signin-password').value;
+            console.log('Login attempt:', email, password);
 
             if (!email || !password) {
                 alert('Zəhmət olmasa bütün sahələri doldurun.');
                 return;
             }
 
-            // Simulate login
-            console.log('Sign-in attempt:', { email, password });
+            // Check bank credentials
+            console.log('Checking credentials against:', BANK_CREDENTIALS);
+            if (BANK_CREDENTIALS[email] && BANK_CREDENTIALS[email].password === password) {
+                console.log('Credentials match! Logging in...');
+                // Successful bank login
+                currentCompany = {
+                    name: BANK_CREDENTIALS[email].name,
+                    email: email,
+                    logo: BANK_CREDENTIALS[email].logo,
+                    category: 'Bank'
+                };
 
-            // Mock successful login
-            currentCompany = {
-                name: 'Kapital Bank',
-                email: email,
-                category: 'Bank'
-            };
-
-            showDashboard();
-            alert('Uğurla daxil oldunuz!');
+                console.log('Current company set:', currentCompany);
+                showDashboard();
+                alert('Uğurla daxil oldunuz!');
+            } else {
+                console.log('Credentials do not match');
+                alert('Yanlış email və ya şifrə. Zəhmət olmasa yenidən cəhd edin.');
+                document.getElementById('signin-password').value = '';
+            }
         });
+    } else {
+        console.log('Sign-in form NOT found!');
     }
 
     // Sign-up form submission
@@ -1265,8 +1776,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Password strength validation
-            if (formData.password.length < 6) {
-                alert('Şifrə ən azı 6 simvoldan ibarət olmalıdır.');
+            const passwordErrors = validatePasswordStrength(formData.password);
+            if (passwordErrors.length > 0) {
+                alert('Şifrə aşağıdakı tələbləri qarşılamalıdır:\n• ' + passwordErrors.join('\n• '));
                 return;
             }
 
@@ -1277,37 +1789,79 @@ document.addEventListener('DOMContentLoaded', function () {
             currentCompany = {
                 name: formData.companyName,
                 email: formData.email,
-                category: 'Bank'
+                category: 'Company'
             };
 
-            showDashboard();
+            // Store company data in localStorage for the dashboard
+            localStorage.setItem('companyData', JSON.stringify({
+                name: formData.companyName,
+                email: formData.email,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                phone: formData.phone
+            }));
+
             alert(`Təşəkkür edirik, ${formData.firstName}! ${formData.companyName} şirkəti üçün qeydiyyat tamamlandı.`);
+
+            // Redirect to company dashboard
+            window.location.href = 'company-dashboard.html';
         });
     }
 
     // Show dashboard after login/registration
     function showDashboard() {
+        console.log('showDashboard called');
         isLoggedIn = true;
 
         // Hide login section, show dashboard
-        loginSection.style.display = 'none';
-        companyDashboard.classList.add('active');
+        console.log('Hiding login section, showing dashboard');
+        if (loginSection) {
+            loginSection.style.display = 'none';
+            console.log('Login section hidden');
+        }
+        if (companyDashboard) {
+            companyDashboard.classList.add('active');
+            console.log('Dashboard activated');
+        }
 
         // Update header
-        loginWrapper.style.display = 'none';
-        userWrapper.style.display = 'flex';
+        if (loginWrapper) loginWrapper.style.display = 'none';
+        if (userWrapper) userWrapper.style.display = 'flex';
 
         // Update mobile menu
-        mobileLoginLinks.style.display = 'none';
-        mobileUserLinks.style.display = 'block';
+        if (mobileLoginLinks) mobileLoginLinks.style.display = 'none';
+        if (mobileUserLinks) mobileUserLinks.style.display = 'block';
 
         // Update breadcrumb
-        breadcrumbTitle.textContent = 'Şirkət Paneli';
+        if (breadcrumbTitle) breadcrumbTitle.textContent = 'Şirkət Paneli';
 
         // Update company name displays
-        document.getElementById('companyNameDisplay').textContent = currentCompany.name;
-        document.getElementById('welcomeCompanyName').textContent = currentCompany.name;
-        document.getElementById('mobileCompanyName').textContent = currentCompany.name;
+        const companyNameEl = document.getElementById('companyNameDisplay');
+        const welcomeNameEl = document.getElementById('welcomeCompanyName');
+        const mobileNameEl = document.getElementById('mobileCompanyName');
+
+        if (companyNameEl) companyNameEl.textContent = currentCompany.name;
+        if (welcomeNameEl) welcomeNameEl.textContent = currentCompany.name;
+        if (mobileNameEl) mobileNameEl.textContent = currentCompany.name;
+
+        // Update bank dashboard specific elements
+        const bankNameEl = document.getElementById('bankName');
+        const bankLogoEl = document.getElementById('bankLogo');
+
+        if (bankNameEl) {
+            bankNameEl.textContent = currentCompany.name;
+            console.log('Bank name updated:', currentCompany.name);
+        }
+        if (bankLogoEl && currentCompany.logo) {
+            bankLogoEl.src = currentCompany.logo;
+            bankLogoEl.alt = currentCompany.name;
+            console.log('Bank logo updated:', currentCompany.logo);
+        }
+
+        // Initialize bank dashboard functionality
+        console.log('Initializing bank dashboard');
+        initializeBankDashboard();
+        console.log('Dashboard initialization complete');
     }
 
     // Logout functionality
@@ -1349,6 +1903,157 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         logout();
     });
+
+    // Initialize Bank Dashboard functionality
+    function initializeBankDashboard() {
+        console.log('initializeBankDashboard called');
+
+        // Tab functionality for reviews
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        console.log('Found tab buttons:', tabBtns.length);
+        console.log('Found tab contents:', tabContents.length);
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                console.log('Tab clicked:', tabName);
+
+                // Remove active class from all tabs and contents
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                const targetTab = document.getElementById(tabName + '-tab');
+                if (targetTab) {
+                    targetTab.classList.add('active');
+                    console.log('Tab activated:', tabName);
+                } else {
+                    console.log('Target tab not found:', tabName + '-tab');
+                }
+            });
+        });
+
+        // Initialize star ratings
+        const starContainers = document.querySelectorAll('.stars[data-rating]');
+        console.log('Found star containers:', starContainers.length);
+
+        starContainers.forEach(starsContainer => {
+            const rating = parseFloat(starsContainer.getAttribute('data-rating'));
+            updateStarRating(starsContainer, rating);
+        });
+
+        console.log('Bank dashboard initialization complete');
+    }
+
+    // Global functions for review actions
+    window.openReplyModal = function(reviewId) {
+        const replyText = prompt('Müştəriyə cavabınızı yazın:');
+        if (replyText && replyText.trim()) {
+            alert('Cavabınız göndərildi və müştəriyə bildiriş göndərildi.');
+            console.log('Reply sent for review', reviewId, ':', replyText);
+            // In a real app, this would send the reply to the server
+        }
+    };
+
+    window.viewReviewDetails = function(reviewId) {
+        alert('Rəy detalları səhifəsinə yönləndirilirsiniz...');
+        console.log('View details for review', reviewId);
+        // In a real app, this would navigate to review details page
+    };
+
+    // Update star rating display
+    function updateStarRating(starsContainer, rating) {
+        const stars = starsContainer.querySelectorAll('.star');
+        const fullStars = Math.floor(rating);
+
+        stars.forEach((star, index) => {
+            if (index < fullStars) {
+                star.className = 'fas fa-star star';
+            } else {
+                star.className = 'far fa-star star empty';
+            }
+        });
+    }
+
+    // Handle bank login directly
+    window.handleBankLogin = function(event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        console.log('Bank login button clicked');
+
+        const email = document.getElementById('company-sign-in-email').value;
+        const password = document.getElementById('signin-password').value;
+
+        console.log('Login attempt:', email, password);
+
+        if (!email || !password) {
+            alert('Zəhmət olmasa bütün sahələri doldurun.');
+            return false;
+        }
+
+        // Check bank credentials
+        console.log('Checking credentials against:', BANK_CREDENTIALS);
+        if (BANK_CREDENTIALS[email] && BANK_CREDENTIALS[email].password === password) {
+            console.log('Credentials match! Logging in...');
+            // Successful bank login
+            currentCompany = {
+                name: BANK_CREDENTIALS[email].name,
+                email: email,
+                logo: BANK_CREDENTIALS[email].logo,
+                category: 'Bank'
+            };
+
+            console.log('Current company set:', currentCompany);
+            showDashboard();
+            alert('Uğurla daxil oldunuz!');
+            return true;
+        } else {
+            console.log('Credentials do not match');
+            alert('Yanlış email və ya şifrə. Zəhmət olmasa yenidən cəhd edin.');
+            document.getElementById('signin-password').value = '';
+            return false;
+        }
+    };
+
+    // Test function for debugging
+    window.testBankLogin = function() {
+        console.log('Test bank login triggered');
+        currentCompany = {
+            name: 'Kapital Bank',
+            email: 'kapital@bank.az',
+            logo: 'https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg',
+            category: 'Bank'
+        };
+        console.log('Test company set:', currentCompany);
+        showDashboard();
+    };
+
+    // Test company registration function
+    window.testCompanyRegistration = function() {
+        console.log('Test company registration triggered');
+
+        // Store test company data
+        const testCompanyData = {
+            name: 'Test Şirkəti',
+            email: 'test@company.az',
+            firstName: 'Əli',
+            lastName: 'Məmmədov',
+            phone: '501234567'
+        };
+
+        localStorage.setItem('companyData', JSON.stringify(testCompanyData));
+
+        alert('Test şirkəti qeydiyyatdan keçdi! Şirkət panelinə yönləndirilirsiniz...');
+
+        // Redirect to company dashboard
+        window.location.href = 'company-dashboard.html';
+    };
 
     // User profile dropdown toggle
     const userProfileBtn = document.getElementById('userProfileBtn');
@@ -1520,36 +2225,124 @@ document.addEventListener('DOMContentLoaded', function () {
         return token ? token.value : '';
     }
 
+    // Check for login from standalone page
+    const urlParams = new URLSearchParams(window.location.search);
+    const loginType = urlParams.get('login');
+
+    if (loginType === 'bank') {
+        const bankLogin = localStorage.getItem('bankLogin');
+        if (bankLogin) {
+            const bankData = JSON.parse(bankLogin);
+            currentCompany = bankData;
+            console.log('Auto-login from standalone page:', bankData);
+            showDashboard();
+            // Clear the URL parameter
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }
+
     // Initialize page
     console.log('Grumble Company Portal initialized');
-});
 
-// Handle credential response for Google One Tap (if implemented)
-function handleCredentialResponse(response) {
-    fetch('/user/google/one-tap/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken()
-        },
-        body: JSON.stringify({
-            'credential': response.credential
+    // Handle credential response for Google One Tap (if implemented)
+    window.handleCredentialResponse = function(response) {
+        fetch('/user/google/one-tap/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({
+                'credential': response.credential
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            window.location.href = data.redirect_url;
-        } else {
-            console.error('Login failed:', data.error);
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = data.redirect_url;
+            } else {
+                console.error('Login failed:', data.error);
+            }
+        });
+    };
+
+    function getCsrfToken() {
+        const token = document.querySelector('[name=csrfmiddlewaretoken]');
+        return token ? token.value : '';
+    }
+
+}); // End DOMContentLoaded
+</script>
+
+<!-- Override external scripts completely -->
+<script>
+// Wait for all scripts to load, then override
+setTimeout(function() {
+    console.log('Overriding external login handlers...');
+
+    // Find and override any form submission
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        if (form.id === 'company-sign-in') {
+            // Remove all event listeners
+            const newForm = form.cloneNode(true);
+            form.parentNode.replaceChild(newForm, form);
+
+            // Add our custom handler
+            newForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                console.log('External form submission blocked');
+                handleBankLogin(e);
+                return false;
+            });
+
+            console.log('Form handlers successfully overridden');
         }
     });
-}
 
-function getCsrfToken() {
-    const token = document.querySelector('[name=csrfmiddlewaretoken]');
-    return token ? token.value : '';
-}
+    // Override any global login functions
+    if (window.submitCompanyLogin) {
+        window.submitCompanyLogin = function() {
+            console.log('External login function overridden');
+            return handleBankLogin();
+        };
+    }
+
+    console.log('External script override complete');
+}, 1000);
+
+// Alternative direct login function
+window.directBankLogin = function() {
+    console.log('Direct bank login called');
+    const email = document.getElementById('company-sign-in-email').value;
+    const password = document.getElementById('signin-password').value;
+
+    if (!email || !password) {
+        alert('Zəhmət olmasa email və şifrə daxil edin.');
+        return;
+    }
+
+    // Check credentials
+    const BANK_CREDS = {
+        'kapital@bank.az': { password: 'Kapital123!', name: 'Kapital Bank' },
+        'pasha@bank.az': { password: 'Pasha123!', name: 'Pasha Bank' },
+        'bir@bank.az': { password: 'BirBank123!', name: 'BirBank' }
+    };
+
+    if (BANK_CREDS[email] && BANK_CREDS[email].password === password) {
+        alert('Uğurla daxil oldunuz! Dashboard-a yönləndirilirsiniz...');
+        // Store login data
+        localStorage.setItem('bankLogin', JSON.stringify({
+            name: BANK_CREDS[email].name,
+            email: email
+        }));
+        // Redirect or show dashboard
+        window.location.reload();
+    } else {
+        alert('Yanlış məlumatlar. Test hesablarından istifadə edin.');
+    }
+};
 </script>
 
 </body>

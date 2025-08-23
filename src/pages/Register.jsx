@@ -154,14 +154,24 @@ const Register = () => {
           return;
         }
 
+        // Store registered company data
+        const registeredCompanies = JSON.parse(localStorage.getItem('registeredCompanies') || '[]');
+        const newCompany = {
+          ...companyFormData,
+          registeredAt: new Date().toISOString(),
+          id: Date.now()
+        };
+        registeredCompanies.push(newCompany);
+        localStorage.setItem('registeredCompanies', JSON.stringify(registeredCompanies));
+
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 1500));
 
-        setSuccess('Şirkət qeydiyyatı uğurla tamamlandı! Giriş səhifəsinə yönləndirilirsiniz...');
+        setSuccess('Şirkət qeydiyyatı uğurla tamamlandı! Giriş üçün şifrə: Company123! - Giriş səhifəsinə yönləndirilirsiniz...');
 
         setTimeout(() => {
           navigate('/login?type=company');
-        }, 2000);
+        }, 3000);
       }
     } catch (err) {
       setError('Qeydiyyat zamanı xəta baş verdi');

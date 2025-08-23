@@ -94,8 +94,23 @@ const CompanyRegistrationForm = ({ formData, handleChange }) => {
         />
       </div>
 
-
-
+      {/* Registration Info */}
+      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+        <div className="flex items-start space-x-2">
+          <svg className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div>
+            <h4 className="text-sm font-semibold text-green-800 mb-1 az-text">Qeydiyyat Məlumatı</h4>
+            <p className="text-xs text-green-700 az-text">
+              Qeydiyyatdan sonra giriş üçün şifrə: <strong>Company123!</strong>
+            </p>
+            <p className="text-xs text-green-700 az-text mt-1">
+              Bu şifrə ilə şirkət dashboard-ına daxil ola biləcəksiniz.
+            </p>
+          </div>
+        </div>
+      </div>
 
     </>
   );

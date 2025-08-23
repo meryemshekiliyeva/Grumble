@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import UserProfileDropdown from './UserProfileDropdown';
+import CompanyProfileDropdown from './CompanyProfileDropdown';
 import NotificationDropdown from './NotificationDropdown';
 
 const Header = () => {
@@ -25,8 +26,8 @@ const Header = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
 
@@ -76,10 +77,16 @@ const Header = () => {
           {isAuthenticated ? (
             <div className="flex items-center space-x-2">
               <NotificationDropdown />
-              <Link to="/yeni-sikayetler" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
-                Yeni Şikayət
-              </Link>
-              <UserProfileDropdown user={user} onLogout={handleLogout} />
+              {user?.userType === 'company' ? (
+                <CompanyProfileDropdown user={user} onLogout={handleLogout} />
+              ) : (
+                <>
+                  <Link to="/yeni-sikayetler" className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90">
+                    Yeni Şikayət
+                  </Link>
+                  <UserProfileDropdown user={user} onLogout={handleLogout} />
+                </>
+              )}
             </div>
           ) : (
             <>

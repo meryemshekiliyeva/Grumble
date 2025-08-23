@@ -518,6 +518,31 @@ const CompanyDetailPage = () => {
                       <p className="text-gray-700">
                         {review.review}
                       </p>
+
+                      {/* Company Response */}
+                      {review.companyResponse && (
+                        <div className="mt-4 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                              {company.name.charAt(0)}
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-2 mb-2">
+                                <span className="font-medium text-blue-900">{company.name}</span>
+                                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                  Şirkət Cavabı
+                                </span>
+                                <span className="text-sm text-blue-600">
+                                  {new Date(review.companyResponse.date).toLocaleDateString('az-AZ')}
+                                </span>
+                              </div>
+                              <p className="text-blue-800">
+                                {review.companyResponse.message}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

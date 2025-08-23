@@ -6,7 +6,7 @@ import SocialLogin from '../components/SocialLogin';
 const Login = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, checkAuthStatus, isAuthenticated, user } = useAuth();
   const [activeTab, setActiveTab] = useState('user'); // 'user' or 'company'
   const [formData, setFormData] = useState({
     email: '',
@@ -34,22 +34,112 @@ const Login = () => {
     }
   };
 
+  // Bank credentials for demo purposes
+  const BANK_CREDENTIALS = {
+    'kapital@bank.az': {
+      password: 'Kapital123!',
+      name: 'Kapital Bank',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/4/47/Kapital_Bank_logo.svg'
+    },
+    'pasha@bank.az': {
+      password: 'Pasha123!',
+      name: 'Pasha Bank',
+      logo: 'https://www.pashabank.az/assets/images/logo.svg'
+    },
+    'bir@bank.az': {
+      password: 'BirBank123!',
+      name: 'BirBank',
+      logo: 'https://www.kapitalbank.az/assets/images/birbank-logo.svg'
+    }
+  };
+
+  const handleBankLogin = async (email, password, rememberMe) => {
+    try {
+      // Check if it's a registered company from registration
+      const registeredCompanies = JSON.parse(localStorage.getItem('registeredCompanies') || '[]');
+      const registeredCompany = registeredCompanies.find(company => company.email === email);
+
+      if (registeredCompany) {
+        // For registered companies, use a default password or the one they set during registration
+        const defaultPassword = 'Company123!';
+        if (password === defaultPassword) {
+          // Store bank login data
+          localStorage.setItem('bankLogin', JSON.stringify({
+            name: registeredCompany.companyName,
+            email: email,
+            logo: null,
+            category: 'Company',
+            firstName: registeredCompany.firstName,
+            lastName: registeredCompany.lastName,
+            phone: registeredCompany.phone
+          }));
+
+          return { success: true };
+        }
+      }
+
+      // Check predefined bank credentials
+      if (BANK_CREDENTIALS[email] && BANK_CREDENTIALS[email].password === password) {
+        // Store bank login data
+        localStorage.setItem('bankLogin', JSON.stringify({
+          name: BANK_CREDENTIALS[email].name,
+          email: email,
+          logo: BANK_CREDENTIALS[email].logo,
+          category: 'Bank'
+        }));
+
+        return { success: true };
+      }
+
+      return {
+        success: false,
+        message: 'Yanlış email və ya şifrə. Test hesabları: kapital@bank.az/Kapital123!, pasha@bank.az/Pasha123!, bir@bank.az/BirBank123! və ya qeydiyyatdan keçmiş şirkət hesabları üçün Company123! şifrəsini istifadə edin.'
+      };
+
+    } catch (error) {
+      console.error('Bank login error:', error);
+      return { success: false, message: 'Giriş zamanı xəta baş verdi' };
+    }
+  };
+
   useEffect(() => {
+    // Redirect if already authenticated
+    if (isAuthenticated && user) {
+      if (user.userType === 'company') {
+        navigate('/company-profile');
+      } else {
+        navigate('/');
+      }
+      return;
+    }
+
     const type = searchParams.get('type');
     if (type === 'company') {
       setActiveTab('company');
     }
 
-    // Load remembered email if exists
-    const rememberedEmail = localStorage.getItem('rememberedEmail');
-    if (rememberedEmail) {
-      setFormData(prev => ({
-        ...prev,
-        email: rememberedEmail,
-        rememberMe: true
-      }));
+    // Load remembered email if exists (only if not authenticated)
+    if (!isAuthenticated) {
+      const rememberedEmail = localStorage.getItem('rememberedEmail');
+      const rememberedCompanyEmail = localStorage.getItem('rememberedCompanyEmail');
+
+      if (rememberedEmail) {
+        setFormData(prev => ({
+          ...prev,
+          email: rememberedEmail,
+          rememberMe: true
+        }));
+      }
+
+      if (rememberedCompanyEmail) {
+        setCompanyFormData(prev => ({
+          ...prev,
+          email: rememberedCompanyEmail,
+          rememberMe: true
+        }));
+      }
     }
-  }, [searchParams]);
+  }, [searchParams, isAuthenticated, user, navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -91,8 +181,23 @@ const Login = () => {
           setError(result.message || 'Giriş zamanı xəta baş verdi');
         }
       } else {
-        // Company login - implement later
-        setError('Şirkət girişi hələ hazır deyil');
+        // Company/Bank login
+        const result = await handleBankLogin(currentFormData.email, currentFormData.password, currentFormData.rememberMe);
+
+        if (result.success) {
+          // Store remember me preference
+          if (currentFormData.rememberMe) {
+            localStorage.setItem('rememberedCompanyEmail', currentFormData.email);
+          } else {
+            localStorage.removeItem('rememberedCompanyEmail');
+          }
+
+          // Trigger auth context to update with company login
+          await checkAuthStatus();
+          navigate('/company-profile');
+        } else {
+          setError(result.message || 'Şirkət girişi zamanı xəta baş verdi');
+        }
       }
     } catch (err) {
       setError('Giriş zamanı xəta baş verdi');
@@ -245,6 +350,19 @@ const Login = () => {
                   onGoogleLogin={handleSocialLogin}
                   onFacebookLogin={handleSocialLogin}
                 />
+              </div>
+            )}
+
+            {/* Company Login Help */}
+            {activeTab === 'company' && (
+              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                <h4 className="text-sm font-semibold text-blue-800 mb-2 az-text">Test Hesabları:</h4>
+                <div className="space-y-1 text-xs text-blue-700">
+                  <p><strong>Kapital Bank:</strong> kapital@bank.az / Kapital123!</p>
+                  <p><strong>Pasha Bank:</strong> pasha@bank.az / Pasha123!</p>
+                  <p><strong>BirBank:</strong> bir@bank.az / BirBank123!</p>
+                  <p className="mt-2"><strong>Qeydiyyatdan keçmiş şirkətlər:</strong> Company123!</p>
+                </div>
               </div>
             )}
           </form>
