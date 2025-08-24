@@ -33,6 +33,7 @@ import AuthSuccess from './pages/AuthSuccess';
 import CompanyProfile from './pages/CompanyProfile';
 import CompanyPage from './pages/CompanyPage';
 import AiChatAssistant from './components/AiChatAssistant'; // Import the assistant UI
+import AdminRoute from './components/AdminRoute';
 
 // Loading component
 const LoadingScreen = () => (
@@ -79,13 +80,17 @@ const AppContent = () => {
           <Route path="company/:companyId" element={<CompanyDetailPage />} />
           <Route path="companies/:companyId" element={<CompanyDetailPage />} />
           <Route path="review/:companyId" element={<ReviewPage />} />
-          <Route path="my-complaints" element={<Navigate to="/profile?tab=my-complaints" replace />} />
+          <Route path="my-complaints" element={<Navigate to="/profile?tab=complaints" replace />} />
           <Route path="profile" element={<Profile />} />
           <Route path="auth/success" element={<AuthSuccess />} />
           <Route path="company-profile" element={<CompanyProfile />} />
           <Route path="companies/:companyId" element={<CompanyPage />} />
         </Route>
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={
+          <AdminRoute>
+            <AdminLayout />
+          </AdminRoute>
+        }>
           <Route index element={<AdminDashboard />} />
           <Route path="complaints" element={<ComplaintsList />} />
           <Route path="complaints/:id" element={<ComplaintView />} />

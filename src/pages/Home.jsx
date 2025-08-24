@@ -5,6 +5,7 @@ import ComplaintCard from '../components/ComplaintCard';
 import CompanyCard from '../components/CompanyCard';
 import CategoryCard from '../components/CategoryCard';
 import FAQItem from '../components/FAQItem';
+import { sortComplaints } from '../utils/statusConfig';
 
 const mockComplaints = [
   {
@@ -14,7 +15,10 @@ const mockComplaints = [
     author: 'Orxan Məmmədov',
     date: '9 İyul 2025',
     summary: 'İnternetim 3 gündür işləmir. Müştəri xidmətləri zənglərimi cavablamır. Bu qəbuledilməzdir!',
-    status: 'pending'
+    status: 'pending',
+    rating: 2,
+    likes: 12,
+    comments: 3
   },
   {
     id: 'SKWOLT002',
@@ -23,7 +27,10 @@ const mockComplaints = [
     author: 'Aysel Əliyeva',
     date: '8 İyul 2025',
     summary: 'Pizza sifariş etdim, amma tamamilə fərqli sifariş gətirdilər. Restoran və Wolt bir-birini günahlandırır.',
-    status: 'resolved'
+    status: 'resolved',
+    rating: 1,
+    likes: 8,
+    comments: 5
   },
     {
     id: 'SKTREN003',
@@ -32,7 +39,10 @@ const mockComplaints = [
     author: 'Leyla Hüseynova',
     date: '7 İyul 2025',
     summary: '2 həftə əvvəl paltar sifariş etdim, hələ də çatdırılmayıb. İzləmə nömrəsi işləmir.',
-    status: 'in_progress'
+    status: 'in_progress',
+    rating: 2,
+    likes: 15,
+    comments: 7
   },
 ];
 
@@ -605,12 +615,17 @@ const Home = () => {
       </section>
 
       <section className="w-full py-10 md:py-16">
-        <div className="container mx-auto max-w-6xl px-6">
-          <h2 className="text-3xl font-bold tracking-tighter text-center mb-10">
-            Son Şikayətlər
-          </h2>
-          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-            {mockComplaints.map((complaint, index) => (
+        <div className="container mx-auto max-w-4xl px-6">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold tracking-tighter mb-4">
+              Son Şikayətlər
+            </h2>
+            <p className="text-muted-foreground">
+              Ən son paylaşılan şikayətləri görün və öz təcrübənizi paylaşın
+            </p>
+          </div>
+          <div className="space-y-6">
+            {sortComplaints(mockComplaints).map((complaint, index) => (
               <ComplaintCard
                 key={complaint.id}
                 {...complaint}
@@ -619,6 +634,17 @@ const Home = () => {
                 onComment={() => handleComment(complaint.id)}
               />
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              to="/complaints"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            >
+              Bütün Şikayətləri Gör
+              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>

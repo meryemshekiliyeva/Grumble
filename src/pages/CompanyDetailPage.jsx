@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import StarRating from '../components/StarRating';
 import ReviewForm from '../components/ReviewForm';
+import { getCompanyRating, updateCompanyRating, getCompanyReviewStats } from '../utils/companyRating';
 
 const CompanyDetailPage = () => {
   const { companyId } = useParams();
   const [userRating, setUserRating] = useState(0);
   const [showRatingForm, setShowRatingForm] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [companyRating, setCompanyRating] = useState(0);
+  const [reviewStats, setReviewStats] = useState(null);
 
   // Company data
   const companies = {
@@ -757,6 +760,14 @@ const CompanyDetailPage = () => {
     if (existingReviews[companyId]) {
       setReviews(existingReviews[companyId]);
     }
+
+    // Calculate company rating
+    const rating = getCompanyRating(companyId);
+    setCompanyRating(rating);
+
+    // Get review statistics
+    const stats = getCompanyReviewStats(companyId);
+    setReviewStats(stats);
   }, [companyId]);
 
   if (!company) {
@@ -809,23 +820,14 @@ const CompanyDetailPage = () => {
               
               <div className="flex items-center space-x-4 mb-3">
                 <div className="flex items-center space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className={`w-5 h-5 ${
-                        i < Math.floor(company.rating)
-                          ? 'text-yellow-400'
-                          : 'text-gray-300'
-                      }`}
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                  <span className="text-lg font-semibold text-gray-900 ml-2">{company.rating}/5</span>
+                  <StarRating
+                    rating={companyRating || company.rating}
+                    readonly={true}
+                    size="md"
+                  />
+                  <span className="text-lg font-semibold text-gray-900 ml-2">{companyRating || company.rating}/5</span>
                 </div>
-                <span className="text-gray-600">Müştərin sayı: {company.totalReviews}</span>
+                <span className="text-gray-600">Müştərin sayı: {reviewStats?.totalReviews || company.totalReviews}</span>
                 {company.website && (
                   <a 
                     href={`https://${company.website}`}
@@ -944,15 +946,11 @@ const CompanyDetailPage = () => {
                           {new Date(review.date).toLocaleDateString('az-AZ')}
                         </span>
                         <div className="flex items-center">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <svg
-                              key={star}
-                              className={`w-4 h-4 ${star <= review.rating ? 'text-yellow-400' : 'text-gray-300'} fill-current`}
-                              viewBox="0 0 20 20"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                          ))}
+                          <StarRating
+                            rating={review.rating || 0}
+                            readonly={true}
+                            size="sm"
+                          />
                         </div>
                       </div>
                       <p className="text-gray-700">

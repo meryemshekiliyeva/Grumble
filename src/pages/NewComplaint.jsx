@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import StarRating from '../components/StarRating';
 
 const NewComplaint = () => {
   const navigate = useNavigate();
@@ -197,18 +198,11 @@ const NewComplaint = () => {
                 Şirkəti Qiymətləndirin *
               </label>
               <div className="flex items-center space-x-2">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    key={star}
-                    type="button"
-                    onClick={() => handleRatingChange(star)}
-                    className={`text-2xl transition-colors ${
-                      star <= formData.rating ? 'text-yellow-400' : 'text-gray-300'
-                    } hover:text-yellow-400`}
-                  >
-                    ★
-                  </button>
-                ))}
+                <StarRating
+                  rating={formData.rating}
+                  onRatingChange={handleRatingChange}
+                  size="lg"
+                />
                 <span className="ml-3 text-sm text-gray-600 az-text">
                   {formData.rating > 0 ? `${formData.rating}/5` : 'Reytinq seçin'}
                 </span>

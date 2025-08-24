@@ -35,7 +35,7 @@ const UserProfileDropdown = ({ user, onLogout }) => {
         </svg>
       ),
       label: 'Şikayətlərim',
-      href: '/profile?tab=my-complaints'
+      href: '/profile?tab=complaints'
     },
     {
       icon: (

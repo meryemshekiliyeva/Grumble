@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReviewForm from '../components/ReviewForm';
+import { updateCompanyRating } from '../utils/companyRating';
 
 const ReviewPage = () => {
   const { companyId } = useParams();
@@ -129,19 +130,18 @@ const ReviewPage = () => {
 
   const handleReviewSubmit = (reviewData) => {
     console.log('Review submitted:', reviewData);
-    // Handle review submission
-    // Store review in localStorage for now
-    const existingReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
-    if (!existingReviews[companyId]) {
-      existingReviews[companyId] = [];
-    }
-    existingReviews[companyId].push({
+
+    // Create review object
+    const newReview = {
       ...reviewData,
       id: Date.now(),
       date: new Date().toISOString(),
       author: 'Current User' // In real app, get from auth context
-    });
-    localStorage.setItem('companyReviews', JSON.stringify(existingReviews));
+    };
+
+    // Update company rating and save review
+    const newRating = updateCompanyRating(companyId, newReview);
+    console.log('New company rating:', newRating);
 
     // Redirect to company page
     navigate(`/company/${companyId}`);

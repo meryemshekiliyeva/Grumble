@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import StarRating from '../components/StarRating';
+import { getStatusConfig } from '../utils/statusConfig';
 
 const ComplaintDetail = () => {
   const { id } = useParams();
@@ -63,7 +65,25 @@ const ComplaintDetail = () => {
         
         // Load comments
         const allComments = JSON.parse(localStorage.getItem('complaintComments') || '{}');
-        setComments(allComments[id] || []);
+        const existingComments = allComments[id] || [];
+
+        // Add company response if this is a specific complaint and no company response exists
+        if (foundComplaint && foundComplaint.id === 'SKNET001' && !existingComments.some(c => c.isCompany)) {
+          const companyResponse = {
+            id: 'company-response-1',
+            author: 'CityNet',
+            text: 'Hörmətli müştəri, şikayətinizi qəbul etdik və texniki komandamız problemi araşdırır. 24 saat ərzində sizinlə əlaqə saxlayacağıq.',
+            timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(), // 1 hour ago
+            avatar: 'CN',
+            isCompany: true,
+            companyName: 'CityNet'
+          };
+          existingComments.push(companyResponse);
+          allComments[id] = existingComments;
+          localStorage.setItem('complaintComments', JSON.stringify(allComments));
+        }
+
+        setComments(existingComments);
       }
       
       setLoading(false);
@@ -144,42 +164,7 @@ const ComplaintDetail = () => {
     setNewComment('');
   };
 
-  const getStatusConfig = (status) => {
-    switch (status) {
-      case 'pending':
-        return {
-          label: 'Gözləyir',
-          bg: 'bg-yellow-50',
-          text: 'text-yellow-700',
-          border: 'border-yellow-200',
-          icon: '⏳'
-        };
-      case 'resolved':
-        return {
-          label: 'Həll olundu',
-          bg: 'bg-green-50',
-          text: 'text-green-700',
-          border: 'border-green-200',
-          icon: '✅'
-        };
-      case 'in_progress':
-        return {
-          label: 'İcrada',
-          bg: 'bg-blue-50',
-          text: 'text-blue-700',
-          border: 'border-blue-200',
-          icon: '🔄'
-        };
-      default:
-        return {
-          label: status,
-          bg: 'bg-gray-50',
-          text: 'text-gray-700',
-          border: 'border-gray-200',
-          icon: '📋'
-        };
-    }
-  };
+
 
   if (loading) {
     return (
@@ -255,20 +240,13 @@ const ComplaintDetail = () => {
             {complaint.rating && (
               <div className="flex items-center space-x-2 mb-4">
                 <span className="text-sm text-gray-600">Reytinq:</span>
-                <div className="flex items-center">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg
-                      key={star}
-                      className={`w-4 h-4 ${
-                        star <= complaint.rating ? 'text-yellow-400' : 'text-gray-300'
-                      }`}
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                  <span className="ml-2 text-sm text-gray-600">{complaint.rating}/5</span>
+                <div className="flex items-center space-x-2">
+                  <StarRating
+                    rating={complaint.rating}
+                    readonly={true}
+                    size="sm"
+                  />
+                  <span className="text-sm text-gray-600">{complaint.rating}/5</span>
                 </div>
               </div>
             )}
@@ -365,12 +343,24 @@ const ComplaintDetail = () => {
               comments.map((comment) => (
                 <div key={comment.id} className="p-6">
                   <div className="flex space-x-4">
-                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium ${
+                      comment.isCompany
+                        ? 'bg-gradient-to-r from-blue-600 to-purple-600'
+                        : 'bg-blue-500'
+                    }`}>
                       {comment.avatar}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-2">
                         <span className="font-medium text-gray-900">{comment.author}</span>
+                        {comment.isCompany && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" clipRule="evenodd" />
+                            </svg>
+                            Şirkət
+                          </span>
+                        )}
                         <span className="text-sm text-gray-500">
                           {new Date(comment.timestamp).toLocaleDateString('az-AZ')}
                         </span>

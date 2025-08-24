@@ -167,6 +167,17 @@ export const AuthProvider = ({ children }) => {
           phone: '+994557654321',
           avatar: null,
           isEmailVerified: true
+        },
+        {
+          email: 'admin@grumble.az',
+          password: 'admin123',
+          firstName: 'Admin',
+          lastName: 'İstifadəçi',
+          id: '3',
+          phone: '+994501111111',
+          avatar: null,
+          isEmailVerified: true,
+          role: 'admin'
         }
       ];
 

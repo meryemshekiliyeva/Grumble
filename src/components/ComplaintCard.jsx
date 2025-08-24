@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { getStatusConfig } from '../utils/statusConfig';
+import StarRating from './StarRating';
 
-const ComplaintCard = ({ title, company, author, date, summary, status = 'pending', likes = 0, comments = 0, onLike, onComment, complaintId }) => {
+const ComplaintCard = ({ title, company, author, date, summary, status = 'pending', likes = 0, comments = 0, rating, onLike, onComment, complaintId }) => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -208,43 +210,6 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
     }
   };
 
-  const getStatusConfig = (status) => {
-    switch (status) {
-      case 'resolved':
-        return {
-          bg: 'bg-green-50',
-          text: 'text-green-700',
-          border: 'border-green-200',
-          label: 'Cavablandırılıb',
-          icon: '✓'
-        };
-      case 'pending':
-        return {
-          bg: 'bg-yellow-50',
-          text: 'text-yellow-700',
-          border: 'border-yellow-200',
-          label: 'Gözləyir',
-          icon: '⏳'
-        };
-      case 'in_progress':
-        return {
-          bg: 'bg-yellow-50',
-          text: 'text-yellow-700',
-          border: 'border-yellow-200',
-          label: 'Gözləyir',
-          icon: '⏳'
-        };
-      default:
-        return {
-          bg: 'bg-yellow-50',
-          text: 'text-yellow-700',
-          border: 'border-yellow-200',
-          label: 'Gözləyir',
-          icon: '⏳'
-        };
-    }
-  };
-
   const statusConfig = getStatusConfig(status);
 
   return (
@@ -259,9 +224,14 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
             >
               {title}
             </h3>
-            <p className="text-sm font-medium text-gray-500">
-              <span className="font-semibold text-gray-700">{company}</span> üçün
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-gray-500">
+                <span className="font-semibold text-gray-700">{company}</span> üçün
+              </p>
+              {complaintId && (
+                <span className="text-xs text-gray-400 font-mono">#{complaintId}</span>
+              )}
+            </div>
           </div>
           <div className={`flex items-center px-3 py-1.5 rounded-full text-xs font-semibold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border} whitespace-nowrap`}>
             {statusConfig.icon && <span className="mr-1">{statusConfig.icon}</span>}
@@ -272,6 +242,18 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
         <p className="text-gray-600 text-base line-clamp-3 leading-relaxed mb-4">
           {summary}
         </p>
+
+        {rating && (
+          <div className="flex items-center space-x-2 mb-3">
+            <span className="text-sm text-gray-600">Reytinq:</span>
+            <StarRating
+              rating={rating}
+              readonly={true}
+              size="sm"
+            />
+            <span className="text-sm text-gray-600">{rating}/5</span>
+          </div>
+        )}
 
         <div className="text-xs text-gray-500 font-medium">
           {date}

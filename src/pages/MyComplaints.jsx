@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { getStatusConfig, sortComplaints } from '../utils/statusConfig';
 
 const MyComplaints = () => {
   const navigate = useNavigate();
@@ -16,45 +17,12 @@ const MyComplaints = () => {
     // Load user's complaints from localStorage
     const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
     const myComplaints = userComplaints.filter(complaint => complaint.authorEmail === user.email);
-    setComplaints(myComplaints);
+    // Sort complaints by date (newest first)
+    const sortedComplaints = sortComplaints(myComplaints);
+    setComplaints(sortedComplaints);
   }, [isAuthenticated, navigate, user]);
 
-  const getStatusConfig = (status) => {
-    switch (status) {
-      case 'resolved':
-        return {
-          label: 'Cavablandırılıb',
-          bg: 'bg-green-50',
-          text: 'text-green-700',
-          border: 'border-green-200',
-          icon: '✓'
-        };
-      case 'in-progress':
-        return {
-          label: 'Gözləyir',
-          bg: 'bg-yellow-50',
-          text: 'text-yellow-700',
-          border: 'border-yellow-200',
-          icon: '⏳'
-        };
-      case 'rejected':
-        return {
-          label: 'Gözləyir',
-          bg: 'bg-yellow-50',
-          text: 'text-yellow-700',
-          border: 'border-yellow-200',
-          icon: '⏳'
-        };
-      default:
-        return {
-          label: 'Gözləyir',
-          bg: 'bg-yellow-50',
-          text: 'text-yellow-700',
-          border: 'border-yellow-200',
-          icon: '⏳'
-        };
-    }
-  };
+
 
   if (!isAuthenticated) {
     return null;

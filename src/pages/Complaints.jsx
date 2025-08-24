@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ComplaintCard from '../components/ComplaintCard';
+import { sortComplaints } from '../utils/statusConfig';
 
 
 const complaints = [
@@ -12,7 +13,10 @@ const complaints = [
 		date: '9 İyul 2025',
 		summary:
 			'İnternetim 3 gündür işləmir. Müştəri xidmətləri zənglərimi cavablamır. Bu qəbuledilməzdir!',
-		status: 'pending'
+		status: 'pending',
+		rating: 2,
+		likes: 12,
+		comments: 3
 	},
 	{
 		id: 'SKWOLT002',
@@ -23,7 +27,10 @@ const complaints = [
 		date: '8 İyul 2025',
 		summary:
 			'Pizza sifariş etdim, amma tamamilə fərqli sifariş gətirdilər. Restoran və Wolt bir-birini günahlandırır.',
-		status: 'resolved'
+		status: 'resolved',
+		rating: 1,
+		likes: 8,
+		comments: 5
 	},
 	{
 		id: 'SKTREN003',
@@ -34,7 +41,10 @@ const complaints = [
 		date: '7 İyul 2025',
 		summary:
 			'2 həftə əvvəl paltar sifariş etdim, hələ də çatdırılmayıb. İzləmə nömrəsi işləmir.',
-		status: 'in_progress'
+		status: 'in_progress',
+		rating: 2,
+		likes: 15,
+		comments: 7
 	},
 	{
 		id: 'SKBANK004',
@@ -44,7 +54,10 @@ const complaints = [
 		author: 'Murad Quliyev',
 		date: '6 İyul 2025',
 		summary: 'Kartım səbəbsiz bloklanıb və dəstək xidməti zəifdir.',
-		status: 'pending'
+		status: 'pending',
+		rating: 1,
+		likes: 22,
+		comments: 9
 	},
 	{
 		id: 'SKAZER005',
@@ -54,7 +67,10 @@ const complaints = [
 		author: 'Nigar Məmmədova',
 		date: '5 İyul 2025',
 		summary: 'Mobil internet sürəti çox zəifdir, müqaviləyə uyğun deyil.',
-		status: 'in_progress'
+		status: 'in_progress',
+		rating: 2,
+		likes: 18,
+		comments: 4
 	},
 	{
 		id: 'SKBOLT006',
@@ -64,7 +80,10 @@ const complaints = [
 		author: 'Elvin Əliyev',
 		date: '4 İyul 2025',
 		summary: 'Sifarişim 1 saatdan çox gecikdi və heç bir məlumat verilmədi.',
-		status: 'resolved'
+		status: 'resolved',
+		rating: 2,
+		likes: 11,
+		comments: 6
 	},
 	{
 		id: 'SKYANGO007',
@@ -74,7 +93,10 @@ const complaints = [
 		author: 'Səbinə Qasımova',
 		date: '3 İyul 2025',
 		summary: 'Kuryer yanlış ünvana getdi və yemək soyudu. Pul geri qaytarılmadı.',
-		status: 'pending'
+		status: 'pending',
+		rating: 1,
+		likes: 19,
+		comments: 8
 	},
 	{
 		id: 'SKFOOD008',
@@ -84,7 +106,10 @@ const complaints = [
 		author: 'Tural Həsənov',
 		date: '2 İyul 2025',
 		summary: 'Sifariş etdiyim yemək tamamilə keyfiyyətsiz idi. Restoran cavab vermir.',
-		status: 'pending'
+		status: 'pending',
+		rating: 1,
+		likes: 25,
+		comments: 12
 	},
 ];
 
@@ -101,12 +126,14 @@ const Complaints = () => {
 		// TODO: Implement comment functionality with backend
 	};
 
-	const filteredComplaints = complaints.filter(
-		(c) =>
-			c.title.toLowerCase().includes(search.toLowerCase()) ||
-			c.company.toLowerCase().includes(search.toLowerCase()) ||
-			c.author.toLowerCase().includes(search.toLowerCase()) ||
-			c.summary.toLowerCase().includes(search.toLowerCase())
+	const filteredComplaints = sortComplaints(
+		complaints.filter(
+			(c) =>
+				c.title.toLowerCase().includes(search.toLowerCase()) ||
+				c.company.toLowerCase().includes(search.toLowerCase()) ||
+				c.author.toLowerCase().includes(search.toLowerCase()) ||
+				c.summary.toLowerCase().includes(search.toLowerCase())
+		)
 	);
 
 	return (
@@ -135,7 +162,7 @@ const Complaints = () => {
 					onChange={(e) => setSearch(e.target.value)}
 				/>
 			</div>
-			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+			<div className="max-w-4xl mx-auto space-y-6">
 				{filteredComplaints.length > 0 ? (
 					filteredComplaints.map((complaint) => (
 						<ComplaintCard
@@ -147,7 +174,7 @@ const Complaints = () => {
 						/>
 					))
 				) : (
-					<div className="col-span-full text-center text-muted-foreground py-12">
+					<div className="text-center text-muted-foreground py-12">
 						Heç bir şikayət tapılmadı.
 					</div>
 				)}
