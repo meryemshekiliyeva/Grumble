@@ -29,10 +29,46 @@ Google ilə login
 
 Mobil cihazlara uyğun responsive dizayn
 
-🚀 Gələcək Plana Daxildir
+�🔐 Admin Paneli
 
-Şikayətlərə status vermə (həll olundu, baxılır, cavablandırıldı)
+## Admin Hesabı
+
+Sistem administratoru üçün aşağıdakı məlumatlarla daxil ola bilərsiniz:
+
+**Email:** admin@grumble.az
+**Şifrə:** Admin123!
+
+Admin paneli aşağıdakı funksiyaları təqdim edir:
+- İstifadəçi idarəetməsi
+- Şirkət idarəetməsi
+- Şikayət idarəetməsi
+- Sistem statistikaları
+- Dashboard məlumatları
+
+Admin paneline daxil olmaq üçün `/admin` səhifəsinə keçin və ya istifadəçi menyusundan "Admin Paneli" seçimini edin.
+
+Admin paneli vasitəsilə bütün sistem idarə edilir. Admin hesabı ilə giriş etdikdən sonra `/admin` səhifəsinə yönləndirilirsiniz.
+
+**Admin Hesabı:**
+- Email: `admin@grumble.az`
+- Şifrə: `admin123`
+
+**Admin Panel Xüsusiyyətləri:**
+- Şikayətləri idarə etmə (baxma, təsdiqləmə, rədd etmə, silmə)
+- İstifadəçiləri idarə etmə
+- Şirkətləri idarə etmə
+- Sistem statistikalarını görüntüləmə
+
+Admin panelə daxil olmaq üçün admin hesabı ilə giriş etdikdən sonra `/admin` linkini ziyarət edin.
+
+🚀 Mövcud Xüsusiyyətlər
+
+Şikayətlərə status vermə (Gözləyir, İcradadır, Həll edilib)
 
 Admin paneli
 
 Şirkətlər üçün cavab interfeysi
+
+İstifadəçi bildirişləri sistemi
+
+Şirkət reytinq sistemi

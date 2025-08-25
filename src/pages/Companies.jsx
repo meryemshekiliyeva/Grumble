@@ -257,8 +257,7 @@ const Companies = () => {
           {filteredCompanies.map((company, index) => (
             <div
               key={index}
-              onClick={() => handleCompanyClick(company.companyId)}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer group"
+              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow group"
             >
               <div className="flex items-center space-x-4 mb-4">
                 <div
@@ -289,7 +288,7 @@ const Companies = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <div className="flex items-center">
                     <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -302,11 +301,25 @@ const Companies = () => {
                   <span className="text-sm text-gray-500">şikayət</span>
                 </div>
 
-                <div className="flex items-center text-blue-600 group-hover:text-blue-700">
-                  <span className="text-sm font-medium">Bax</span>
-                  <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/review/${company.companyId}`);
+                    }}
+                    className="flex-1 px-3 py-2 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                  >
+                    Rəy Bildir
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCompanyClick(company.companyId);
+                    }}
+                    className="flex-1 px-3 py-2 text-xs font-medium text-gray-600 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    Bax
+                  </button>
                 </div>
               </div>
             </div>

@@ -131,7 +131,7 @@ Seed skripti aşağıdakı test məlumatlarını yaradır:
 
 **Admin İstifadəçi:**
 - Email: admin@grumble.az
-- Şifrə: admin123
+- Şifrə: Admin123!
 
 **Test İstifadəçiləri:**
 - ali@example.com / password123

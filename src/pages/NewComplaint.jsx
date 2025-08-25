@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import StarRating from '../components/StarRating';
 
 const NewComplaint = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
+  const [searchParams] = useSearchParams();
   const [showSuccess, setShowSuccess] = useState(false);
   const [complaintId, setComplaintId] = useState(null);
   const [formData, setFormData] = useState({
@@ -17,6 +18,21 @@ const NewComplaint = () => {
     rating: 0,
     attachments: null
   });
+
+  // Pre-fill form data from URL parameters
+  useEffect(() => {
+    const companyParam = searchParams.get('company');
+    const categoryParam = searchParams.get('category');
+
+    if (companyParam || categoryParam) {
+      setFormData(prev => ({
+        ...prev,
+        company: companyParam === 'digər' ? 'digər' : companyParam || prev.company,
+        customCompany: companyParam && companyParam !== 'digər' ? companyParam : prev.customCompany,
+        category: categoryParam || prev.category
+      }));
+    }
+  }, [searchParams]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -75,29 +91,38 @@ const NewComplaint = () => {
 
   const companiesByCategory = {
     'Telekommunikasiya': [
-      { name: 'AT&T', id: 'att' },
-      { name: 'Vodafone', id: 'vodafone' },
-      { name: 'T-Mobile', id: 't-mobile' }
+      { name: 'Azercell', id: 'azercell' },
+      { name: 'Bakcell', id: 'bakcell' },
+      { name: 'Nar', id: 'nar' },
+      { name: 'CityNet', id: 'citynet' }
     ],
     'Bank və Maliyyə': [
       { name: 'JPMorgan Chase', id: 'jpmorgan-chase' },
-      { name: 'HSBC', id: 'hsbc' },
-      { name: 'Goldman Sachs', id: 'goldman-sachs' }
+      { name: 'Kapital Bank', id: 'kapital-bank' },
+      { name: 'Pasha Bank', id: 'pasha-bank' },
+      { name: 'Unibank', id: 'unibank' },
+      { name: 'Bank of Baku', id: 'bank-of-baku' },
+      { name: 'AccessBank', id: 'accessbank' }
     ],
     'Yemək Çatdırılması': [
-      { name: 'Uber Eats', id: 'uber-eats' },
-      { name: 'DoorDash', id: 'doordash' },
-      { name: 'Deliveroo', id: 'deliveroo' }
+      { name: 'Wolt', id: 'wolt' },
+      { name: 'Bolt Food', id: 'bolt-food' },
+      { name: 'Glovo', id: 'glovo' }
     ],
     'Kommunal Xidmətlər': [
-      { name: 'EDF Energy', id: 'edf-energy' },
-      { name: 'National Grid', id: 'national-grid' },
-      { name: 'Veolia', id: 'veolia' }
+      { name: 'Azersu', id: 'azersu' },
+      { name: 'Azerishiq', id: 'azerishiq' },
+      { name: 'Azerigas', id: 'azerigas' }
     ],
     'E-ticarət': [
-      { name: 'Amazon', id: 'amazon' },
-      { name: 'Alibaba', id: 'alibaba' },
-      { name: 'eBay', id: 'ebay' }
+      { name: 'Trendyol', id: 'trendyol' },
+      { name: 'Kontakt Home', id: 'kontakt-home' },
+      { name: 'Irshad', id: 'irshad' }
+    ],
+    'Nəqliyyat': [
+      { name: 'Bolt', id: 'bolt' },
+      { name: 'BiP', id: 'bip' },
+      { name: 'AZAL', id: 'azal' }
     ],
     'Havayolu': [
       { name: 'Emirates', id: 'emirates' },

@@ -44,6 +44,30 @@ const mockComplaints = [
     likes: 15,
     comments: 7
   },
+  {
+    id: 'SKJPM001',
+    title: 'Faiz Problemi',
+    company: 'JPMorgan Chase',
+    author: 'Test User',
+    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
+    summary: 'Faizlərin bu qədər yüksək olması qəbuledilməzdir',
+    status: 'in_progress',
+    rating: 4,
+    likes: 8,
+    comments: 3
+  },
+  {
+    id: 'SKJPM002',
+    title: 'Gecikmiş Ödəniş',
+    company: 'JPMorgan Chase',
+    author: 'Test User',
+    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
+    summary: 'Ödəniş gecikməsi problemi yaşayıram',
+    status: 'resolved',
+    rating: 5,
+    likes: 15,
+    comments: 7
+  },
 ];
 
 const testimonials = [

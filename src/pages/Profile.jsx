@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useNotifications } from '../contexts/NotificationContext';
+import { getStatusConfig, sortComplaints } from '../utils/statusConfig';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -25,6 +26,13 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
+  // User statistics state
+  const [userStats, setUserStats] = useState({
+    complaints: 0,
+    comments: 0,
+    likes: 0
+  });
+
   // Form data state
   const [formData, setFormData] = useState({
     firstName: '',
@@ -41,6 +49,29 @@ const Profile = () => {
       setActiveTab(tab);
     }
   }, [searchParams]);
+
+  // Load user statistics
+  useEffect(() => {
+    if (user) {
+      // Calculate actual statistics from localStorage data
+      const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+      const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
+      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+
+      // Filter data for current user
+      const userSpecificComplaints = userComplaints.filter(c => c.authorEmail === user.email);
+      const userSpecificComments = userComments.filter(c => c.authorEmail === user.email);
+      const userSpecificLikes = userLikes.filter(l => l.userEmail === user.email);
+
+      const stats = {
+        complaints: userSpecificComplaints.length,
+        comments: userSpecificComments.length,
+        likes: userSpecificLikes.length
+      };
+
+      setUserStats(stats);
+    }
+  }, [user]);
 
   // Initialize form data when user data is available
   useEffect(() => {
@@ -405,15 +436,15 @@ const Profile = () => {
                   <p className="text-gray-600">{user?.email}</p>
                   <div className="flex space-x-6 mt-2">
                     <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">0</div>
+                      <div className="text-xl font-bold text-gray-700">{userStats.complaints}</div>
                       <div className="text-sm text-gray-500">Şikayətlərim</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">0</div>
+                      <div className="text-xl font-bold text-gray-700">{userStats.comments}</div>
                       <div className="text-sm text-gray-500">Rəylərim</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">0</div>
+                      <div className="text-xl font-bold text-gray-700">{userStats.likes}</div>
                       <div className="text-sm text-gray-500">Bəyəndiklərim</div>
                     </div>
                   </div>
@@ -629,11 +660,16 @@ const Profile = () => {
 
             {userComplaints.length > 0 ? (
               <div className="space-y-6">
-                {userComplaints.map((complaint) => (
+                {sortComplaints(userComplaints).map((complaint) => (
                   <div key={complaint.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{complaint.title}</h3>
+                        <Link
+                          to={`/complaints/${complaint.id}`}
+                          className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors block"
+                        >
+                          {complaint.title}
+                        </Link>
                         <div className="flex items-center space-x-4 text-sm text-gray-600 mb-3">
                           <span className="font-medium">{complaint.company}</span>
                           <span>•</span>
@@ -668,15 +704,9 @@ const Profile = () => {
                       </div>
 
                       <div className="ml-4 flex flex-col items-end space-y-2">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          complaint.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          complaint.status === 'resolved' ? 'bg-green-100 text-green-800' :
-                          complaint.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {complaint.status === 'pending' ? 'Gözləyir' :
-                           complaint.status === 'resolved' ? 'Həll olundu' :
-                           complaint.status === 'in-progress' ? 'İcrada' : complaint.status}
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusConfig(complaint.status).bg} ${getStatusConfig(complaint.status).text} ${getStatusConfig(complaint.status).border} border`}>
+                          <span className="mr-1">{getStatusConfig(complaint.status).icon}</span>
+                          {getStatusConfig(complaint.status).label}
                         </span>
                       </div>
                     </div>
@@ -716,7 +746,8 @@ const Profile = () => {
         );
 
       case 'comments':
-        const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
+        const allUserComments = JSON.parse(localStorage.getItem('userComments') || '[]');
+        const userComments = allUserComments.filter(comment => comment.authorEmail === user.email);
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Rəylərim</h3>
@@ -726,7 +757,12 @@ const Profile = () => {
                   <div key={comment.id} className="border border-gray-200 rounded-lg p-4">
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{comment.complaintTitle}</h4>
+                        <Link
+                          to={`/complaints/${comment.complaintId}`}
+                          className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                        >
+                          {comment.complaintTitle}
+                        </Link>
                         <p className="text-sm text-gray-600">{comment.company}</p>
                       </div>
                       <span className="text-xs text-gray-500">
@@ -759,7 +795,8 @@ const Profile = () => {
         );
 
       case 'likes':
-        const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+        const allUserLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+        const userLikes = allUserLikes.filter(like => like.userEmail === user.email);
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Bəyəndiklərim</h3>
@@ -769,7 +806,12 @@ const Profile = () => {
                   <div key={like.id} className="border border-gray-200 rounded-lg p-4">
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{like.complaintTitle}</h4>
+                        <Link
+                          to={`/complaints/${like.complaintId}`}
+                          className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                        >
+                          {like.complaintTitle}
+                        </Link>
                         <p className="text-sm text-gray-600">{like.company}</p>
                       </div>
                       <span className="text-xs text-gray-500">

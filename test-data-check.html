@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Data Check</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .section h3 { margin-top: 0; color: #333; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        button { padding: 10px 15px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .clear-btn { background: #dc3545; }
+        .clear-btn:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <h1>Grumble App - Test Data Check</h1>
+    
+    <div class="section">
+        <h3>User Complaints</h3>
+        <button onclick="showUserComplaints()">Show User Complaints</button>
+        <button onclick="clearUserComplaints()" class="clear-btn">Clear User Complaints</button>
+        <pre id="userComplaints"></pre>
+    </div>
+
+    <div class="section">
+        <h3>User Comments</h3>
+        <button onclick="showUserComments()">Show User Comments</button>
+        <button onclick="clearUserComments()" class="clear-btn">Clear User Comments</button>
+        <pre id="userComments"></pre>
+    </div>
+
+    <div class="section">
+        <h3>User Likes</h3>
+        <button onclick="showUserLikes()">Show User Likes</button>
+        <button onclick="clearUserLikes()" class="clear-btn">Clear User Likes</button>
+        <pre id="userLikes"></pre>
+    </div>
+
+    <div class="section">
+        <h3>Notifications (test@example.com)</h3>
+        <button onclick="showNotifications()">Show Notifications</button>
+        <button onclick="clearNotifications()" class="clear-btn">Clear Notifications</button>
+        <pre id="notifications"></pre>
+    </div>
+
+    <div class="section">
+        <h3>Complaint Comments</h3>
+        <button onclick="showComplaintComments()">Show Complaint Comments</button>
+        <button onclick="clearComplaintComments()" class="clear-btn">Clear Complaint Comments</button>
+        <pre id="complaintComments"></pre>
+    </div>
+
+    <div class="section">
+        <h3>Initialize Test Data</h3>
+        <button onclick="initializeTestData()">Initialize Test Data for test@example.com</button>
+        <button onclick="clearAllData()" class="clear-btn">Clear All Data</button>
+    </div>
+
+    <script>
+        function showUserComplaints() {
+            const data = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+            document.getElementById('userComplaints').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function showUserComments() {
+            const data = JSON.parse(localStorage.getItem('userComments') || '[]');
+            document.getElementById('userComments').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function showUserLikes() {
+            const data = JSON.parse(localStorage.getItem('userLikes') || '[]');
+            document.getElementById('userLikes').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function showNotifications() {
+            const data = JSON.parse(localStorage.getItem('notifications_test@example.com') || '[]');
+            document.getElementById('notifications').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function showComplaintComments() {
+            const data = JSON.parse(localStorage.getItem('complaintComments') || '{}');
+            document.getElementById('complaintComments').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function clearUserComplaints() {
+            localStorage.removeItem('userComplaints');
+            document.getElementById('userComplaints').textContent = 'Cleared';
+        }
+
+        function clearUserComments() {
+            localStorage.removeItem('userComments');
+            document.getElementById('userComments').textContent = 'Cleared';
+        }
+
+        function clearUserLikes() {
+            localStorage.removeItem('userLikes');
+            document.getElementById('userLikes').textContent = 'Cleared';
+        }
+
+        function clearNotifications() {
+            localStorage.removeItem('notifications_test@example.com');
+            document.getElementById('notifications').textContent = 'Cleared';
+        }
+
+        function clearComplaintComments() {
+            localStorage.removeItem('complaintComments');
+            document.getElementById('complaintComments').textContent = 'Cleared';
+        }
+
+        function clearAllData() {
+            localStorage.clear();
+            document.querySelectorAll('pre').forEach(pre => pre.textContent = 'All data cleared');
+        }
+
+        function initializeTestData() {
+            // Initialize test complaints
+            const testComplaints = [
+                {
+                    id: 'SKJPM001',
+                    title: 'Faiz Problemi',
+                    company: 'JPMorgan Chase',
+                    category: 'Bank və Maliyyə',
+                    author: 'Test User',
+                    authorEmail: 'test@example.com',
+                    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
+                    summary: 'Faizlərin bu qədər yüksək olması qəbuledilməzdir',
+                    status: 'in_progress',
+                    likes: 8,
+                    comments: 3,
+                    rating: 4
+                },
+                {
+                    id: 'SKJPM002',
+                    title: 'Gecikmiş Ödəniş',
+                    company: 'JPMorgan Chase',
+                    category: 'Bank və Maliyyə',
+                    author: 'Test User',
+                    authorEmail: 'test@example.com',
+                    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
+                    summary: 'Ödəniş gecikməsi problemi yaşayıram',
+                    status: 'resolved',
+                    likes: 15,
+                    comments: 7,
+                    rating: 5
+                }
+            ];
+            localStorage.setItem('userComplaints', JSON.stringify(testComplaints));
+
+            // Initialize test comments
+            const testComments = [
+                {
+                    id: 'comment-test-1',
+                    complaintId: 'SKJPM001',
+                    complaintTitle: 'Faiz Problemi',
+                    company: 'JPMorgan Chase',
+                    text: 'Bu problem həqiqətən ciddidir və həll edilməlidir.',
+                    timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                    type: 'comment',
+                    authorEmail: 'test@example.com'
+                },
+                {
+                    id: 'comment-test-2',
+                    complaintId: 'SKJPM002',
+                    complaintTitle: 'Gecikmiş Ödəniş',
+                    company: 'JPMorgan Chase',
+                    text: 'Mən də eyni problemi yaşayıram.',
+                    timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+                    type: 'comment',
+                    authorEmail: 'test@example.com'
+                }
+            ];
+            localStorage.setItem('userComments', JSON.stringify(testComments));
+
+            // Initialize test likes
+            const testLikes = [
+                {
+                    id: 'like-test-1',
+                    complaintId: 'SKNET001',
+                    complaintTitle: 'İnternet Bağlantı Problemləri',
+                    company: 'CityNet',
+                    timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                    userEmail: 'test@example.com'
+                },
+                {
+                    id: 'like-test-2',
+                    complaintId: 'SKWOLT002',
+                    complaintTitle: 'Səhv Yemək Çatdırılması',
+                    company: 'Wolt',
+                    timestamp: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+                    userEmail: 'test@example.com'
+                }
+            ];
+            localStorage.setItem('userLikes', JSON.stringify(testLikes));
+
+            // Initialize test notifications
+            const testNotifications = [
+                {
+                    id: '1',
+                    type: 'reply',
+                    title: 'Şikayətinizə cavab verildi',
+                    message: 'JPMorgan Chase şirkəti şikayətinizə cavab verdi.',
+                    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+                    isRead: false,
+                    relatedComplaintId: 'SKJPM001',
+                    companyName: 'JPMorgan Chase',
+                    userId: 'test@example.com'
+                },
+                {
+                    id: '2',
+                    type: 'status',
+                    title: 'Şikayət statusu dəyişdi',
+                    message: 'JPMorgan Chase şikayətinizin statusu "İcradadır" olaraq dəyişdirildi.',
+                    timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+                    isRead: false,
+                    relatedComplaintId: 'SKJPM001',
+                    companyName: 'JPMorgan Chase',
+                    userId: 'test@example.com'
+                }
+            ];
+            localStorage.setItem('notifications_test@example.com', JSON.stringify(testNotifications));
+
+            alert('Test data initialized successfully!');
+        }
+    </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import apiService from '../services/api';
 
 const AuthContext = createContext();
 
@@ -86,19 +87,14 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const response = await fetch('/api/auth/me', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
+      try {
+        const userData = await apiService.auth.me();
         setUser(userData.user);
         setIsAuthenticated(true);
         localStorage.setItem('grumble_user', JSON.stringify(userData.user));
-      } else {
-        // Token is invalid
+      } catch (error) {
+        // Token is invalid or API is down
+        console.error('Auth check failed:', error);
         localStorage.removeItem('token');
         localStorage.removeItem('grumble_user');
         setUser(null);
@@ -119,30 +115,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/auth/login/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
+      const data = await apiService.auth.login(email, password);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('grumble_user', JSON.stringify(data.user));
-        setUser(data.user);
-        setIsAuthenticated(true);
-        return { success: true, user: data.user };
-      } else {
-        return {
-          success: false,
-          message: data.message,
-          requiresVerification: data.requiresVerification,
-          email: data.email
-        };
-      }
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('grumble_user', JSON.stringify(data.user));
+      setUser(data.user);
+      setIsAuthenticated(true);
+      return { success: true, user: data.user };
     } catch (error) {
       console.error('Login error:', error);
 
@@ -170,7 +149,7 @@ export const AuthProvider = ({ children }) => {
         },
         {
           email: 'admin@grumble.az',
-          password: 'admin123',
+          password: 'Admin123!',
           firstName: 'Admin',
           lastName: 'İstifadəçi',
           id: '3',
@@ -197,21 +176,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await fetch('/api/auth/register/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        return { success: true, data };
-      } else {
-        return { success: false, message: data.message, errors: data.errors };
-      }
+      const data = await apiService.auth.register(userData);
+      return { success: true, data };
     } catch (error) {
       console.error('Registration error:', error);
 
@@ -333,31 +299,16 @@ export const AuthProvider = ({ children }) => {
 
   const loginCompany = async (email, password) => {
     try {
-      const response = await fetch('/api/auth/login/company', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
+      const data = await apiService.auth.loginCompany(email, password);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('grumble_user', JSON.stringify(data.company));
-        setUser(data.company);
-        setIsAuthenticated(true);
-        return { success: true, user: data.company };
-      } else {
-        return {
-          success: false,
-          message: data.message
-        };
-      }
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('grumble_user', JSON.stringify(data.company));
+      setUser(data.company);
+      setIsAuthenticated(true);
+      return { success: true, user: data.company };
     } catch (error) {
       console.error('Company login error:', error);
-      return { success: false, message: 'Giriş zamanı xəta baş verdi' };
+      return { success: false, message: error.message || 'Giriş zamanı xəta baş verdi' };
     }
   };
 

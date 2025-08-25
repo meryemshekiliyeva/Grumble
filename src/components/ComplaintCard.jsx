@@ -119,8 +119,13 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
       return;
     }
 
-    // Navigate to complaint detail page
-    navigate(`/complaints/${complaintId}`);
+    setIsLiked(!isLiked);
+    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
+
+    // Call the parent onLike handler if provided
+    if (onLike) {
+      onLike();
+    }
   };
 
   const handleCommentToggle = () => {
@@ -129,8 +134,12 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
       return;
     }
 
-    // Navigate to complaint detail page
-    navigate(`/complaints/${complaintId}`);
+    setShowComments(!showComments);
+
+    // Call the parent onComment handler if provided
+    if (onComment) {
+      onComment();
+    }
   };
 
   const handleAddMessage = () => {

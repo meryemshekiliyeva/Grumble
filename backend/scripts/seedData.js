@@ -98,7 +98,7 @@ const seedData = async () => {
       firstName: 'Admin',
       lastName: 'İstifadəçi',
       email: 'admin@grumble.az',
-      password: 'admin123',
+      password: 'Admin123!',
       role: 'admin',
       isEmailVerified: true
     });
@@ -508,7 +508,7 @@ const seedData = async () => {
     console.log(`- Reviews: ${reviews.length}`);
     console.log('\n🔐 Admin Login:');
     console.log('Email: admin@grumble.az');
-    console.log('Password: admin123');
+    console.log('Password: Admin123!');
 
     process.exit(0);
 
