@@ -28,7 +28,7 @@ const Companies = () => {
       name: 'T-Mobile',
       category: 'Telekom',
       complaintCount: 112,
-      icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/T-Mobile_logo.svg/200px-T-Mobile_logo.svg.png',
+      icon: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/T-Mobile_US_Logo_2020_RGB_Magenta_on_Transparent.svg',
       bgColor: '#E20074',
       companyId: 't-mobile'
     },
@@ -37,7 +37,7 @@ const Companies = () => {
       name: 'JPMorgan Chase',
       category: 'Bank',
       complaintCount: 189,
-      icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png',
+      icon: 'https://upload.wikimedia.org/wikipedia/en/6/6c/Jp_morgan_logo.jpg',
       bgColor: '#0066CC',
       companyId: 'jpmorgan-chase'
     },
