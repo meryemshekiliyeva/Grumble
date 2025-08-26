@@ -9,7 +9,8 @@ const mockCompanies = [
   { id: 5, name: 'CityNet', category: 'Telekommunikasiya', complaints: 34, status: 'active', email: 'info@citynet.az', verified: false },
   { id: 6, name: 'Bolt', category: 'Nəqliyyat', complaints: 12, status: 'active', email: 'support@bolt.eu', verified: true },
   { id: 7, name: 'Pasha Bank', category: 'Bank Xidmətləri', complaints: 18, status: 'active', email: 'info@pashabank.az', verified: true },
-  { id: 8, name: 'Azersu', category: 'Kommunal Xidmətlər', complaints: 156, status: 'active', email: 'info@azersu.az', verified: true }
+  { id: 8, name: 'Azersu', category: 'Kommunal Xidmətlər', complaints: 156, status: 'active', email: 'info@azersu.az', verified: true },
+  { id: 9, name: 'Emirates', category: 'Havayolu', complaints: 45, status: 'active', email: 'support@emirates.com', verified: true }
 ];
 
 const CompanyList = () => {
@@ -23,8 +24,27 @@ const CompanyList = () => {
   });
 
   useEffect(() => {
-    // fetch('/api/companies').then(res => res.json()).then(setCompanies);
-    setCompanies(mockCompanies);
+    // Try to load real companies from localStorage
+    const loadCompanies = () => {
+      const registeredCompanies = JSON.parse(localStorage.getItem('registeredCompanies') || '[]');
+
+      if (registeredCompanies.length > 0) {
+        const transformedCompanies = registeredCompanies.map(company => ({
+          id: company.id || company.email,
+          name: company.companyName,
+          category: company.category || 'Ümumi',
+          email: company.email,
+          phone: company.phone,
+          complaints: 0, // Could be calculated from complaints data
+          status: 'active'
+        }));
+        setCompanies([...mockCompanies, ...transformedCompanies]);
+      } else {
+        setCompanies(mockCompanies);
+      }
+    };
+
+    loadCompanies();
   }, []);
 
   const handleAddCompany = (e) => {

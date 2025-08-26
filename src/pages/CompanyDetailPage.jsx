@@ -748,6 +748,53 @@ const CompanyDetailPage = () => {
     facebook: 'https://www.facebook.com/yelobank/',
     instagram: 'https://www.instagram.com/yelobank/'
   }
+},
+
+'emirates': {
+  name: 'Emirates',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Emirates_logo.svg/200px-Emirates_logo.svg.png',
+  rating: 4.1,
+  totalReviews: 89,
+  website: 'www.emirates.com',
+  category: 'Havayolu',
+  categoryId: 'havayolu',
+  description: 'Emirates dünyada aparıcı havayolu şirkətlərindən biridir. Dubai bazalı şirkət beynəlxalq sərnişin daşımalarında liderdir və yüksək keyfiyyətli xidmətləri ilə tanınır.',
+  stats: {
+    positive: 82,
+    resolved: 65,
+    negative: 18
+  },
+  views: 12500,
+  socialLinks: {
+    website: 'https://emirates.com',
+    facebook: 'https://facebook.com/Emirates',
+    instagram: 'https://instagram.com/emirates',
+    twitter: 'https://twitter.com/emirates',
+    linkedin: 'https://linkedin.com/company/emirates'
+  }
+},
+
+'uber-eats': {
+  name: 'Uber Eats',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Uber_logo_2018.png/200px-Uber_logo_2018.png',
+  rating: 3.2,
+  totalReviews: 156,
+  website: 'www.ubereats.com',
+  category: 'Yemək Çatdırılması',
+  categoryId: 'yemek-catdirilmasi',
+  description: 'Uber Eats dünyada aparıcı yemək çatdırılması platformalarından biridir. Geniş restoran seçimi və sürətli çatdırılma xidməti təqdim edir.',
+  stats: {
+    positive: 68,
+    resolved: 45,
+    negative: 32
+  },
+  views: 18900,
+  socialLinks: {
+    website: 'https://ubereats.com',
+    facebook: 'https://facebook.com/UberEats',
+    instagram: 'https://instagram.com/ubereats',
+    twitter: 'https://twitter.com/UberEats'
+  }
 }
 
   };
@@ -759,6 +806,53 @@ const CompanyDetailPage = () => {
     const existingReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
     if (existingReviews[companyId]) {
       setReviews(existingReviews[companyId]);
+    } else {
+      // Initialize sample reviews for Emirates
+      if (companyId === 'emirates') {
+        const sampleReviews = [
+          {
+            id: 'emirates-review-1',
+            author: 'Məryəm Şəkiliyeva',
+            email: 'test@example.com',
+            rating: 4,
+            review: 'Uçuş keyfiyyəti yaxşıdır, lakin gecikməler problematikdir.',
+            date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'pending',
+            companyResponse: null
+          },
+          {
+            id: 'emirates-review-2',
+            author: 'Məryəm Şəkiliyeva',
+            email: 'test@example.com',
+            rating: 5,
+            review: 'Əla xidmət və komfort. Təkrar seçərdim.',
+            date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'pending',
+            companyResponse: null
+          }
+        ];
+        existingReviews[companyId] = sampleReviews;
+        localStorage.setItem('companyReviews', JSON.stringify(existingReviews));
+        setReviews(sampleReviews);
+      }
+      // Initialize sample reviews for Uber Eats
+      else if (companyId === 'uber-eats') {
+        const sampleReviews = [
+          {
+            id: 'uber-eats-review-1',
+            author: 'Məryəm Şəkiliyeva',
+            email: 'test@example.com',
+            rating: 2,
+            review: 'Çatdırılma çox uzun çəkir və yemək soyuq gəlir.',
+            date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'pending',
+            companyResponse: null
+          }
+        ];
+        existingReviews[companyId] = sampleReviews;
+        localStorage.setItem('companyReviews', JSON.stringify(existingReviews));
+        setReviews(sampleReviews);
+      }
     }
 
     // Calculate company rating
@@ -912,8 +1006,8 @@ const CompanyDetailPage = () => {
         {/* Action Button */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Şikayətini bildir</h3>
-            <p className="text-gray-600 mb-4">Sual, rəy və ya şikayətinizi paylaşın</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Şikayət göndər</h3>
+            <p className="text-gray-600 mb-4">Bu şirkət haqqında şikayətinizi paylaşın</p>
             <Link
               to={`/yeni-sikayetler?company=${encodeURIComponent(company.name)}&category=${encodeURIComponent(company.category)}`}
               className="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors duration-200"
@@ -921,7 +1015,7 @@ const CompanyDetailPage = () => {
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              Şikayətini bildir
+              Şikayət göndər
             </Link>
           </div>
         </div>

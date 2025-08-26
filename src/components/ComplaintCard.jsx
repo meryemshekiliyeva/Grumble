@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { getStatusConfig } from '../utils/statusConfig';
@@ -107,11 +107,30 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
 
     // Use complaintId to determine which comment set to use
     const hash = complaintId ? complaintId.split('').reduce((a, b) => a + b.charCodeAt(0), 0) : 0;
-    return commentSets[hash % commentSets.length];
+    const selectedComments = commentSets[hash % commentSets.length];
+
+    // Sort comments by time (newest first) - convert time strings to sortable values
+    const timeToMinutes = (timeStr) => {
+      if (timeStr.includes('dəqiqə')) return parseInt(timeStr);
+      if (timeStr.includes('saat')) return parseInt(timeStr) * 60;
+      if (timeStr.includes('gün')) return parseInt(timeStr) * 60 * 24;
+      return 0;
+    };
+
+    return selectedComments.sort((a, b) => timeToMinutes(b.time) - timeToMinutes(a.time));
   };
 
   const [commentsList, setCommentsList] = useState(() => generateUniqueComments(complaintId));
   const [commentCount, setCommentCount] = useState(commentsList.length);
+
+  // Check if user has liked this complaint
+  useEffect(() => {
+    if (isAuthenticated && user && complaintId) {
+      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+      const hasLiked = userLikes.some(like => like.complaintId === complaintId && like.userEmail === user.email);
+      setIsLiked(hasLiked);
+    }
+  }, [isAuthenticated, user, complaintId]);
 
   const handleLike = () => {
     if (!isAuthenticated) {
@@ -119,8 +138,34 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
       return;
     }
 
-    setIsLiked(!isLiked);
-    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
+    const newLikedState = !isLiked;
+    setIsLiked(newLikedState);
+    setLikeCount(prev => newLikedState ? prev + 1 : prev - 1);
+
+    // Save like to localStorage
+    if (newLikedState) {
+      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+      const likeData = {
+        id: `like-${Date.now()}`,
+        complaintId: complaintId,
+        complaintTitle: title,
+        company: company,
+        timestamp: new Date().toISOString(),
+        type: 'complaint',
+        userEmail: user.email
+      };
+      userLikes.push(likeData);
+      localStorage.setItem('userLikes', JSON.stringify(userLikes));
+      // Dispatch custom event to update profile stats
+      window.dispatchEvent(new CustomEvent('userDataUpdated'));
+    } else {
+      // Remove from user likes
+      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+      const filteredLikes = userLikes.filter(like => !(like.complaintId === complaintId && like.userEmail === user.email));
+      localStorage.setItem('userLikes', JSON.stringify(filteredLikes));
+      // Dispatch custom event to update profile stats
+      window.dispatchEvent(new CustomEvent('userDataUpdated'));
+    }
 
     // Call the parent onLike handler if provided
     if (onLike) {
@@ -182,10 +227,13 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
           text: messageText,
           timestamp: new Date().toISOString(),
           type: 'reply',
-          parentCommentId: activeReplyId
+          parentCommentId: activeReplyId,
+          authorEmail: user.email
         };
         userComments.push(commentData);
         localStorage.setItem('userComments', JSON.stringify(userComments));
+        // Dispatch custom event to update profile stats
+        window.dispatchEvent(new CustomEvent('userDataUpdated'));
       } else {
         // Adding a new comment
         const newComment = {
@@ -209,10 +257,13 @@ const ComplaintCard = ({ title, company, author, date, summary, status = 'pendin
           company: company,
           text: messageText,
           timestamp: new Date().toISOString(),
-          type: 'comment'
+          type: 'comment',
+          authorEmail: user.email
         };
         userComments.push(commentData);
         localStorage.setItem('userComments', JSON.stringify(userComments));
+        // Dispatch custom event to update profile stats
+        window.dispatchEvent(new CustomEvent('userDataUpdated'));
       }
 
       setMessageText('');

@@ -145,12 +145,12 @@ const NewComplaint = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Şikayətiniz Qəbul Edildi!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Rəyiniz Qəbul Edildi!</h2>
           <p className="text-gray-600 mb-6">
-            Şikayətiniz uğurla göndərildi və incelenmə üçün qəbul edildi.
+            Rəyiniz uğurla göndərildi və şirkət tərəfindən görüləcək.
           </p>
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <p className="text-sm text-gray-500 mb-1">Şikayət Nömrəsi:</p>
+            <p className="text-sm text-gray-500 mb-1">Rəy Nömrəsi:</p>
             <p className="text-lg font-bold text-blue-600">{complaintId}</p>
           </div>
           <div className="space-y-3">
@@ -158,7 +158,7 @@ const NewComplaint = () => {
               to="/my-complaints"
               className="block w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
             >
-              Şikayətlərimə Bax
+              Rəylərimə Bax
             </Link>
             <Link
               to="/"
@@ -190,10 +190,10 @@ const NewComplaint = () => {
             </div>
           </div>
           <h1 className="text-4xl font-black text-gray-900 mb-4 az-text">
-            Yeni Şikayət Göndər
+            Rəyini Bildir
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto az-text">
-            Təcrübənizi paylaşın və problemlərinizə həll tapın. Şikayətiniz şirkətlərə çatdırılacaq və həll yolları axtarılacaq.
+            Təcrübənizi paylaşın və şirkətlər haqqında rəyinizi bildirin. Rəyiniz digər istifadəçilərə kömək edəcək.
           </p>
         </div>
 
@@ -203,7 +203,7 @@ const NewComplaint = () => {
             {/* Title */}
             <div>
               <label htmlFor="title" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-                Şikayət Başlığı *
+                Rəy Başlığı *
               </label>
               <input
                 type="text"
@@ -303,10 +303,12 @@ const NewComplaint = () => {
               </div>
             )}
 
+
+
             {/* Summary */}
             <div>
               <label htmlFor="summary" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-                Şikayət Məzmunu *
+                Rəy Məzmunu *
               </label>
               <textarea
                 id="summary"
@@ -351,7 +353,7 @@ const NewComplaint = () => {
 
             {/* Tips */}
             <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
-              <h3 className="text-sm font-semibold text-blue-900 mb-3 az-text">💡 Effektiv şikayət üçün tövsiyələr:</h3>
+              <h3 className="text-sm font-semibold text-blue-900 mb-3 az-text">💡 Effektiv rəy üçün tövsiyələr:</h3>
               <ul className="text-sm text-blue-800 space-y-2">
                 <li className="flex items-start az-text">
                   <span className="text-blue-500 mr-2">•</span>
@@ -399,7 +401,7 @@ const NewComplaint = () => {
               </svg>
             </div>
             <h3 className="font-semibold text-gray-900 mb-2 az-text">Pulsuz Xidmət</h3>
-            <p className="text-sm text-gray-600 az-text">Şikayət bildirmək tamamilə pulsuzdur</p>
+            <p className="text-sm text-gray-600 az-text">Rəy bildirmək tamamilə pulsuzdur</p>
           </div>
 
           <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">

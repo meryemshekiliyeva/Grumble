@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useNotifications } from '../contexts/NotificationContext';
 
 const CompanyProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const { user, logout, updateProfile } = useAuth();
+  const { addReplyNotification } = useNotifications();
   const [activeTab, setActiveTab] = useState('profile');
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -271,11 +273,32 @@ const CompanyProfile = () => {
 
   const handleReviewResponse = (reviewId, response) => {
     setReviews(prev =>
-      prev.map(review =>
-        review.id === reviewId
-          ? { ...review, response, status: 'responded' }
-          : review
-      )
+      prev.map(review => {
+        if (review.id === reviewId) {
+          // Trigger notification for the user who wrote the review
+          if (review.email && review.email !== user?.email) {
+            // Create a notification for the review author
+            const notification = {
+              type: 'reply',
+              title: 'Rəyinizə cavab verildi',
+              message: `${user?.companyName || user?.name} şirkəti rəyinizə cavab verdi.`,
+              relatedReviewId: reviewId,
+              companyName: user?.companyName || user?.name,
+              timestamp: new Date().toISOString(),
+              isRead: false,
+              userId: review.email
+            };
+
+            // Save notification to localStorage for the specific user
+            const existingNotifications = JSON.parse(localStorage.getItem(`notifications_${review.email}`) || '[]');
+            const updatedNotifications = [{ ...notification, id: Date.now().toString() }, ...existingNotifications];
+            localStorage.setItem(`notifications_${review.email}`, JSON.stringify(updatedNotifications));
+          }
+
+          return { ...review, response, status: 'responded' };
+        }
+        return review;
+      })
     );
   };
 

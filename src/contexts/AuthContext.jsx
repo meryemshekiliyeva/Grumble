@@ -130,8 +130,8 @@ export const AuthProvider = ({ children }) => {
         {
           email: 'test@example.com',
           password: 'Test123!',
-          firstName: 'Əli',
-          lastName: 'Məmmədov',
+          firstName: 'Məryəm',
+          lastName: 'Şəkiliyeva',
           id: '1',
           phone: '+994501234567',
           avatar: null,
@@ -234,6 +234,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Function to clear all user data for testing
+  const clearUserData = () => {
+    localStorage.removeItem('userComplaints');
+    localStorage.removeItem('userComments');
+    localStorage.removeItem('userLikes');
+    localStorage.removeItem('notifications_test@example.com');
+    console.log('User data cleared for fresh initialization');
+  };
+
   const updateProfile = async (formData) => {
     try {
       const token = localStorage.getItem('token');
@@ -308,7 +317,35 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: data.company };
     } catch (error) {
       console.error('Company login error:', error);
-      return { success: false, message: error.message || 'Giriş zamanı xəta baş verdi' };
+
+      // Fallback for demo purposes when backend is not available
+      const mockCompanies = [
+        {
+          email: 'support@emirates.com',
+          password: 'Company123!',
+          companyName: 'Emirates',
+          firstName: 'Ahmed',
+          lastName: 'Al-Rashid',
+          id: 'emirates-1',
+          phone: '+971501234567',
+          userType: 'company',
+          category: 'Havayolu',
+          isVerified: true
+        }
+      ];
+
+      const company = mockCompanies.find(c => c.email === email && c.password === password);
+      if (company) {
+        const companyData = { ...company };
+        delete companyData.password;
+
+        localStorage.setItem('grumble_user', JSON.stringify(companyData));
+        setUser(companyData);
+        setIsAuthenticated(true);
+        return { success: true, user: companyData };
+      }
+
+      return { success: false, message: error.message || 'Email və ya şifrə yanlışdır' };
     }
   };
 
@@ -322,6 +359,7 @@ export const AuthProvider = ({ children }) => {
     register,
     updateProfile,
     checkAuthStatus,
+    clearUserData,
     isLoading,
     isAuthenticated: !!user
   };

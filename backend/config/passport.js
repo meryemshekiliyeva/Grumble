@@ -3,12 +3,13 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/User');
 
-// Google OAuth Strategy
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/api/auth/google/callback"
-}, async (accessToken, refreshToken, profile, done) => {
+// Google OAuth Strategy (only if credentials are provided)
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/api/auth/google/callback"
+  }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Check if user already exists with this Google ID
     let user = await User.findOne({ googleId: profile.id });
@@ -45,15 +46,17 @@ passport.use(new GoogleStrategy({
   } catch (error) {
     done(error, null);
   }
-}));
+  }));
+}
 
-// Facebook OAuth Strategy
-passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: "/api/auth/facebook/callback",
-  profileFields: ['id', 'emails', 'name', 'picture.type(large)']
-}, async (accessToken, refreshToken, profile, done) => {
+// Facebook OAuth Strategy (only if credentials are provided)
+if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_SECRET) {
+  passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "/api/auth/facebook/callback",
+    profileFields: ['id', 'emails', 'name', 'picture.type(large)']
+  }, async (accessToken, refreshToken, profile, done) => {
   try {
     // Check if user already exists with this Facebook ID
     let user = await User.findOne({ facebookId: profile.id });
@@ -93,7 +96,8 @@ passport.use(new FacebookStrategy({
   } catch (error) {
     done(error, null);
   }
-}));
+  }));
+}
 
 passport.serializeUser((user, done) => {
   done(null, user.id);

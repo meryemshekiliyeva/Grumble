@@ -57,7 +57,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Xidmətlərimiz</h4>
             <ul className="space-y-2">
-              <li><Link to="/complaint" className="text-sm text-gray-300 hover:text-white transition-colors">Şikayət bildirimi</Link></li>
+              <li><Link to="/complaint" className="text-sm text-gray-300 hover:text-white transition-colors">Rəy bildirimi</Link></li>
               <li><Link to="/monitoring" className="text-sm text-gray-300 hover:text-white transition-colors">Şirkət monitorinqi</Link></li>
               <li><Link to="/strategy" className="text-sm text-gray-300 hover:text-white transition-colors">Həll strategiyası</Link></li>
               <li><Link to="/support" className="text-sm text-gray-300 hover:text-white transition-colors">Müştəri dəstəyi</Link></li>

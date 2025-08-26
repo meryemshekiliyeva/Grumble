@@ -8,7 +8,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const { user, logout, updateProfile } = useAuth();
+  const { user, logout, updateProfile, clearUserData } = useAuth();
   const {
     notifications,
     markAsRead,
@@ -52,25 +52,54 @@ const Profile = () => {
 
   // Load user statistics
   useEffect(() => {
-    if (user) {
-      // Calculate actual statistics from localStorage data
-      const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
-      const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
-      const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
+    const updateStats = () => {
+      if (user) {
+        // Calculate actual statistics from localStorage data
+        const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+        const userLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
 
-      // Filter data for current user
-      const userSpecificComplaints = userComplaints.filter(c => c.authorEmail === user.email);
-      const userSpecificComments = userComments.filter(c => c.authorEmail === user.email);
-      const userSpecificLikes = userLikes.filter(l => l.userEmail === user.email);
+        // Get user reviews from companyReviews
+        const allCompanyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+        let userReviewsCount = 0;
+        Object.keys(allCompanyReviews).forEach(companyId => {
+          const companyReviewsList = allCompanyReviews[companyId] || [];
+          const userCompanyReviews = companyReviewsList.filter(review => review.email === user.email);
+          userReviewsCount += userCompanyReviews.length;
+        });
 
-      const stats = {
-        complaints: userSpecificComplaints.length,
-        comments: userSpecificComments.length,
-        likes: userSpecificLikes.length
-      };
+        // Filter data for current user
+        const userSpecificComplaints = userComplaints.filter(c => c.authorEmail === user.email);
+        const userSpecificLikes = userLikes.filter(l => l.userEmail === user.email);
 
-      setUserStats(stats);
-    }
+        const stats = {
+          complaints: userSpecificComplaints.length,
+          comments: userReviewsCount,
+          likes: userSpecificLikes.length
+        };
+
+        setUserStats(stats);
+      }
+    };
+
+    updateStats();
+
+    // Listen for localStorage changes to update stats in real-time
+    const handleStorageChange = (e) => {
+      if (e.key === 'userComplaints' || e.key === 'companyReviews' || e.key === 'userLikes') {
+        updateStats();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Also listen for custom events for same-tab updates
+    const handleCustomUpdate = () => updateStats();
+    window.addEventListener('userDataUpdated', handleCustomUpdate);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('userDataUpdated', handleCustomUpdate);
+    };
   }, [user]);
 
   // Initialize form data when user data is available
@@ -289,7 +318,7 @@ const Profile = () => {
     }
   };
 
-  const menuItems = [
+  const allMenuItems = [
     {
       id: 'profile',
       label: 'Profilim',
@@ -306,7 +335,8 @@ const Profile = () => {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
-      )
+      ),
+      userOnly: true // Only show for regular users, not companies
     },
     {
       id: 'comments',
@@ -315,7 +345,8 @@ const Profile = () => {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
         </svg>
-      )
+      ),
+      userOnly: true // Only show for regular users, not companies
     },
     {
       id: 'likes',
@@ -347,6 +378,14 @@ const Profile = () => {
       isLogout: true
     }
   ];
+
+  // Filter menu items based on user type
+  const menuItems = allMenuItems.filter(item => {
+    if (item.userOnly && user?.userType === 'company') {
+      return false; // Hide complaints and reviews for company accounts
+    }
+    return true;
+  });
 
   const handleEdit = (field, currentValue) => {
     setEditingField(field);
@@ -620,6 +659,30 @@ const Profile = () => {
               )}
             </div>
 
+            {/* Test Data Management - Only for test user */}
+            {user?.email === 'test@example.com' && (
+              <div className="bg-white rounded-lg shadow-sm border border-blue-200 p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold text-blue-900">Test Məlumatları</h3>
+                    <p className="text-sm text-blue-600 mt-1">Test məlumatlarını yenidən yükləmək üçün</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      clearUserData();
+                      window.location.reload();
+                    }}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Məlumatları Yenilə</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Account Management */}
             <div className="bg-white rounded-lg shadow-sm border border-red-200 p-6">
               <div className="flex items-center justify-between">
@@ -641,162 +704,147 @@ const Profile = () => {
           </div>
         );
 
+
+
+
+
+
       case 'complaints':
-        const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+        const allUserComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+        const userComplaints = allUserComplaints
+          .filter(complaint => complaint.authorEmail === user.email)
+          .sort((a, b) => new Date(b.timestamp || b.date) - new Date(a.timestamp || a.date));
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Şikayətlərim</h3>
-              <Link
-                to="/yeni-sikayetler"
-                className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                Yeni Şikayət
-              </Link>
-            </div>
-
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Şikayətlərim</h3>
             {userComplaints.length > 0 ? (
-              <div className="space-y-6">
-                {sortComplaints(userComplaints).map((complaint) => (
-                  <div key={complaint.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                    <div className="flex items-start justify-between mb-4">
+              <div className="space-y-4">
+                {userComplaints.map((complaint) => (
+                  <div key={complaint.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-start justify-between mb-2">
                       <div className="flex-1">
                         <Link
                           to={`/complaints/${complaint.id}`}
-                          className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors block"
+                          className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
                         >
                           {complaint.title}
                         </Link>
-                        <div className="flex items-center space-x-4 text-sm text-gray-600 mb-3">
-                          <span className="font-medium">{complaint.company}</span>
-                          <span>•</span>
-                          <span>{complaint.category}</span>
-                          <span>•</span>
-                          <span>{complaint.date}</span>
-                        </div>
-
-                        {/* Rating Section */}
-                        {complaint.rating && (
-                          <div className="flex items-center space-x-2 mb-3">
-                            <span className="text-sm text-gray-600">Reytinq:</span>
-                            <div className="flex items-center">
-                              {[1, 2, 3, 4, 5].map((star) => (
-                                <svg
-                                  key={star}
-                                  className={`w-4 h-4 ${
-                                    star <= complaint.rating ? 'text-yellow-400' : 'text-gray-300'
-                                  }`}
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                              <span className="ml-2 text-sm text-gray-600">{complaint.rating}/5</span>
-                            </div>
-                          </div>
-                        )}
-
-                        <p className="text-gray-700 text-sm leading-relaxed">{complaint.summary}</p>
+                        <p className="text-sm text-gray-600">{complaint.company}</p>
                       </div>
-
-                      <div className="ml-4 flex flex-col items-end space-y-2">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusConfig(complaint.status).bg} ${getStatusConfig(complaint.status).text} ${getStatusConfig(complaint.status).border} border`}>
-                          <span className="mr-1">{getStatusConfig(complaint.status).icon}</span>
-                          {getStatusConfig(complaint.status).label}
-                        </span>
-                      </div>
+                      <span className="text-xs text-gray-500">
+                        {complaint.date || new Date(complaint.timestamp).toLocaleDateString('az-AZ')}
+                      </span>
                     </div>
-
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      <div className="flex items-center space-x-4">
-                        <button className="flex items-center space-x-1 text-gray-500 hover:text-red-500 transition-colors">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                          </svg>
-                          <span className="text-sm">{complaint.likes || 0}</span>
-                        </button>
-                        <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-500 transition-colors">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                          </svg>
-                          <span className="text-sm">{complaint.comments || 0}</span>
-                        </button>
-                      </div>
-                      <span className="text-xs text-gray-500">#{complaint.id}</span>
+                    <p className="text-sm text-gray-700 mb-2">{(complaint.summary || complaint.description || '').substring(0, 100)}...</p>
+                    <div className="flex items-center space-x-4">
+                      <span className={`px-2 py-1 text-xs rounded-full ${getStatusConfig(complaint.status).bgColor} ${getStatusConfig(complaint.status).textColor}`}>
+                        {getStatusConfig(complaint.status).label}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {complaint.likes || 0} bəyənmə
+                      </span>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir şikayətiniz yoxdur</h3>
-                <p className="text-gray-500">Şikayətlərinizi burada izləyə bilərsiniz.</p>
+                <p className="text-gray-500">İlk şikayətinizi yazmağa başlayın.</p>
               </div>
             )}
           </div>
         );
 
       case 'comments':
-        const allUserComments = JSON.parse(localStorage.getItem('userComments') || '[]');
-        const userComments = allUserComments.filter(comment => comment.authorEmail === user.email);
+        // Get user reviews from companyReviews localStorage
+        const allCompanyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+        const userReviews = [];
+
+        // Extract user's reviews from all companies
+        Object.keys(allCompanyReviews).forEach(companyId => {
+          const companyReviewsList = allCompanyReviews[companyId] || [];
+          const userCompanyReviews = companyReviewsList.filter(review => review.email === user.email);
+          userCompanyReviews.forEach(review => {
+            userReviews.push({
+              ...review,
+              companyId: companyId
+            });
+          });
+        });
+
+        // Sort by date (newest first)
+        userReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Rəylərim</h3>
-            {userComments.length > 0 ? (
+            {userReviews.length > 0 ? (
               <div className="space-y-4">
-                {userComments.map((comment) => (
-                  <div key={comment.id} className="border border-gray-200 rounded-lg p-4">
+                {userReviews.map((review) => (
+                  <div key={review.id} className="border border-gray-200 rounded-lg p-4">
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex-1">
                         <Link
-                          to={`/complaints/${comment.complaintId}`}
+                          to={`/companies/${review.companyId}`}
                           className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
                         >
-                          {comment.complaintTitle}
+                          Şirkət Rəyi
                         </Link>
-                        <p className="text-sm text-gray-600">{comment.company}</p>
+                        <p className="text-sm text-gray-600">{review.companyId}</p>
                       </div>
                       <span className="text-xs text-gray-500">
-                        {new Date(comment.timestamp).toLocaleDateString('az-AZ')}
+                        {new Date(review.date).toLocaleDateString('az-AZ')}
                       </span>
                     </div>
-                    <p className="text-gray-700 text-sm">{comment.text}</p>
-                    <div className="mt-2">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        comment.type === 'reply' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-                      }`}>
-                        {comment.type === 'reply' ? 'Cavab' : 'Şərh'}
-                      </span>
+                    <div className="mb-2">
+                      <div className="flex items-center space-x-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <svg
+                            key={star}
+                            className={`w-4 h-4 ${star <= review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                        <span className="text-sm text-gray-600 ml-2">{review.rating}/5</span>
+                      </div>
                     </div>
+                    <p className="text-sm text-gray-700">{review.review}</p>
+                    {review.companyResponse && (
+                      <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+                        <p className="text-sm font-medium text-blue-900">Şirkət cavabı:</p>
+                        <p className="text-sm text-blue-800">{review.companyResponse.message}</p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center">
                   <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir rəyiniz yoxdur</h3>
-                <p className="text-gray-500">Şikayətlərə rəy yazmağa başlayın.</p>
+                <p className="text-gray-500">Şirkətlər haqqında rəy yazmağa başlayın.</p>
               </div>
             )}
           </div>
         );
-
       case 'likes':
         const allUserLikes = JSON.parse(localStorage.getItem('userLikes') || '[]');
-        const userLikes = allUserLikes.filter(like => like.userEmail === user.email);
+        const userLikes = allUserLikes
+          .filter(like => like.userEmail === user.email)
+          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Bəyəndiklərim</h3>

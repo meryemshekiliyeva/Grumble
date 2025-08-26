@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import StarRating from '../components/StarRating';
 import { getStatusConfig } from '../utils/statusConfig';
+import { formatDateAz } from '../utils/dateUtils';
 
 const ComplaintDetail = () => {
   const { id } = useParams();
@@ -58,7 +59,7 @@ const ComplaintDetail = () => {
             title: 'Faiz Problemi',
             company: 'JPMorgan Chase',
             category: 'Bank və Maliyyə',
-            author: 'Test User',
+            author: 'Məryəm Şəkiliyeva',
             authorEmail: 'test@example.com',
             date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
             summary: 'Faizlərin bu qədər yüksək olması qəbuledilməzdir',
@@ -72,7 +73,7 @@ const ComplaintDetail = () => {
             title: 'Gecikmiş Ödəniş',
             company: 'JPMorgan Chase',
             category: 'Bank və Maliyyə',
-            author: 'Test User',
+            author: 'Məryəm Şəkiliyeva',
             authorEmail: 'test@example.com',
             date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
             summary: 'Avtobuslar çox gecikir, xüsusilə də 119 nömrəli avtobus.',
@@ -134,6 +135,17 @@ const ComplaintDetail = () => {
               companyName: 'JPMorgan Chase',
               replies: []
             };
+          } else if (foundComplaint.id === 'SKEMI001') {
+            companyResponse = {
+              id: 'company-response-emirates1',
+              author: 'Emirates',
+              text: 'Hörmətli müştəri, uçuş gecikməsi üçün üzr istəyirik. Hava şəraiti səbəbindən yaranmış gecikmə idi. Kompensasiya məsələsi üçün müştəri xidmətlərimizlə əlaqə saxlayın.',
+              timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+              avatar: 'EM',
+              isCompany: true,
+              companyName: 'Emirates',
+              replies: []
+            };
           }
 
           if (companyResponse) {
@@ -143,7 +155,11 @@ const ComplaintDetail = () => {
           }
         }
 
-        setComments(existingComments);
+        // Sort comments by timestamp (newest first)
+        const sortedComments = existingComments.sort((a, b) =>
+          new Date(b.timestamp) - new Date(a.timestamp)
+        );
+        setComments(sortedComments);
       }
       
       setLoading(false);

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { getCompanyRating, getCompanyReviewStats } from '../utils/companyRating';
 
 const CompanyPage = () => {
   const { companyId } = useParams();
   const { user, isAuthenticated } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [companyRating, setCompanyRating] = useState(0);
+  const [reviewStats, setReviewStats] = useState({ totalReviews: 0, averageRating: 0 });
   const [newReview, setNewReview] = useState({
     rating: 5,
     comment: ''
@@ -40,6 +43,12 @@ const CompanyPage = () => {
   const company = companies[companyId] || companies['kapital-bank'];
 
   useEffect(() => {
+    // Load dynamic rating and stats
+    const rating = getCompanyRating(companyId);
+    const stats = getCompanyReviewStats(companyId);
+    setCompanyRating(rating);
+    setReviewStats(stats);
+
     // Load reviews from localStorage
     const existingReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
     if (existingReviews[companyId]) {
@@ -159,10 +168,10 @@ const CompanyPage = () => {
               {/* Rating */}
               <div className="flex items-center space-x-4 mb-2">
                 <div className="flex items-center">
-                  {renderStars(Math.floor(company.rating))}
-                  <span className="ml-2 text-lg font-semibold text-gray-900">{company.rating}/5</span>
+                  {renderStars(Math.floor(companyRating || company.rating))}
+                  <span className="ml-2 text-lg font-semibold text-gray-900">{(companyRating || company.rating).toFixed(1)}/5</span>
                 </div>
-                <span className="text-gray-600">Müştərin sayı: {company.totalReviews}</span>
+                <span className="text-gray-600">Müştərin sayı: {reviewStats.totalReviews || company.totalReviews}</span>
                 <a 
                   href={`https://${company.website}`}
                   target="_blank"
@@ -195,14 +204,20 @@ const CompanyPage = () => {
               </div>
             </div>
 
-            {/* Action Button */}
-            <div className="flex-shrink-0">
-              <button
-                onClick={() => setShowReviewForm(true)}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            {/* Action Buttons */}
+            <div className="flex-shrink-0 space-x-3">
+              <Link
+                to={`/review/${companyId}`}
+                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors inline-block"
               >
-                Yeni Şikayət
-              </button>
+                Şikayət göndər
+              </Link>
+              <Link
+                to="/yeni-sikayetler"
+                className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors inline-block"
+              >
+                Şikayət et
+              </Link>
             </div>
           </div>
         </div>
@@ -257,7 +272,7 @@ const CompanyPage = () => {
             {/* Reviews Section */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900">Rəyini bildir</h2>
+                <h2 className="text-xl font-semibold text-gray-900">Şikayət göndər</h2>
                 <span className="text-sm text-gray-500">Sual, rəy və ya şikayətinizi paylaşın</span>
               </div>
 
@@ -302,7 +317,7 @@ const CompanyPage = () => {
                         type="submit"
                         className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
                       >
-                        Rəy Göndər
+                        Şikayət Göndər
                       </button>
                       <button
                         type="button"

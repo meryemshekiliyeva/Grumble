@@ -1,11 +1,13 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import ReviewForm from '../components/ReviewForm';
 import { updateCompanyRating } from '../utils/companyRating';
 
 const ReviewPage = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Company data - in real app this would come from API
   const companies = {
@@ -136,7 +138,7 @@ const ReviewPage = () => {
       ...reviewData,
       id: Date.now(),
       date: new Date().toISOString(),
-      author: 'Current User' // In real app, get from auth context
+      author: user ? `${user.firstName} ${user.lastName}` : 'İstifadəçi'
     };
 
     // Update company rating and save review

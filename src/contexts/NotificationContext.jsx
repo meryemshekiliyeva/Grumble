@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
+import { formatDateAz } from '../utils/dateUtils';
 
 const NotificationContext = createContext();
 
@@ -23,6 +24,7 @@ export const NotificationProvider = ({ children }) => {
       const existingComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
       const testUserComplaints = existingComplaints.filter(c => c.authorEmail === userEmail);
 
+      // Always reinitialize to ensure fresh data
       if (testUserComplaints.length === 0) {
         const testComplaints = [
           {
@@ -30,10 +32,12 @@ export const NotificationProvider = ({ children }) => {
             title: 'Faiz Problemi',
             company: 'JPMorgan Chase',
             category: 'Bank və Maliyyə',
-            author: 'Test User',
+            author: 'Məryəm Şəkiliyeva',
             authorEmail: 'test@example.com',
-            date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
+            date: formatDateAz(new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)),
+            timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
             summary: 'Faizlərin bu qədər yüksək olması qəbuledilməzdir',
+            description: 'Faizlərin bu qədər yüksək olması qəbuledilməzdir. Bu vəziyyət müştərilər üçün çox çətindir.',
             status: 'in_progress',
             likes: 8,
             comments: 3,
@@ -44,14 +48,48 @@ export const NotificationProvider = ({ children }) => {
             title: 'Gecikmiş Ödəniş',
             company: 'JPMorgan Chase',
             category: 'Bank və Maliyyə',
-            author: 'Test User',
+            author: 'Məryəm Şəkiliyeva',
             authorEmail: 'test@example.com',
-            date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
-            summary: 'Avtobuslar çox gecikir, xüsusilə də 119 nömrəli avtobus.',
+            date: formatDateAz(new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)),
+            timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+            summary: 'Ödəniş gecikməsi problemi yaşayıram',
+            description: 'Ödəniş gecikməsi problemi yaşayıram. Bu vəziyyət çox narahatdır.',
             status: 'resolved',
             likes: 15,
             comments: 7,
             rating: 5
+          },
+          {
+            id: 'SKEMI001',
+            title: 'Uçuş Gecikməsi',
+            company: 'Emirates',
+            category: 'Havayolu',
+            author: 'Məryəm Şəkiliyeva',
+            authorEmail: 'test@example.com',
+            date: formatDateAz(new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)),
+            timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+            summary: 'Dubai-Bakı uçuşu 4 saat gecikdi. Heç bir kompensasiya təklif edilmədi.',
+            description: 'Dubai-Bakı uçuşu 4 saat gecikdi. Heç bir kompensasiya təklif edilmədi. Bu vəziyyət qəbuledilməzdir.',
+            status: 'pending',
+            likes: 12,
+            comments: 5,
+            rating: 2
+          },
+          {
+            id: 'SKUBE001',
+            title: 'Soyuq Yemək',
+            company: 'Uber Eats',
+            category: 'Yemək Çatdırılması',
+            author: 'Məryəm Şəkiliyeva',
+            authorEmail: 'test@example.com',
+            date: formatDateAz(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)),
+            timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+            summary: 'Sifariş etdiyim pizza tamamilə soyuq gəldi. Çatdırılma çox uzun çəkdi.',
+            description: 'Sifariş etdiyim pizza tamamilə soyuq gəldi. Çatdırılma çox uzun çəkdi. Xidmət keyfiyyəti çox pisdir.',
+            status: 'in_progress',
+            likes: 6,
+            comments: 2,
+            rating: 1
           }
         ];
 
@@ -67,22 +105,48 @@ export const NotificationProvider = ({ children }) => {
         const testComments = [
           {
             id: 'comment-test-1',
-            complaintId: 'SKJPM001',
-            complaintTitle: 'Faiz Problemi',
-            company: 'JPMorgan Chase',
-            text: 'Bu problem həqiqətən ciddidir və həll edilməlidir.',
+            complaintId: 'SKOTHER001',
+            complaintTitle: 'Başqa şikayət',
+            company: 'Digər Şirkət',
+            content: 'Bu şikayətə rəyim budur.',
+            text: 'Bu şikayətə rəyim budur.',
             timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'comment',
             authorEmail: userEmail
           },
           {
-            id: 'comment-test-2',
-            complaintId: 'SKJPM002',
-            complaintTitle: 'Gecikmiş Ödəniş',
-            company: 'JPMorgan Chase',
-            text: 'Mən də eyni problemi yaşayıram.',
+            id: 'review-emirates-1',
+            complaintId: null,
+            complaintTitle: 'Emirates Xidməti',
+            company: 'Emirates',
+            content: 'Uçuş keyfiyyəti yaxşıdır, lakin gecikməler problematikdir. Ümumiyyətlə məmnunam.',
+            text: 'Uçuş keyfiyyəti yaxşıdır, lakin gecikməler problematikdir. Ümumiyyətlə məmnunam.',
+            timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+            type: 'review',
+            rating: 4,
+            authorEmail: userEmail
+          },
+          {
+            id: 'review-uber-eats-1',
+            complaintId: null,
+            complaintTitle: 'Uber Eats Çatdırılma',
+            company: 'Uber Eats',
+            content: 'Çatdırılma çox uzun çəkir və yemək soyuq gəlir. Xidmət keyfiyyəti yaxşılaşdırılmalıdır.',
+            text: 'Çatdırılma çox uzun çəkir və yemək soyuq gəlir. Xidmət keyfiyyəti yaxşılaşdırılmalıdır.',
+            timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+            type: 'review',
+            rating: 2,
+            authorEmail: userEmail
+          },
+          {
+            id: 'reply-test-1',
+            complaintId: 'SKOTHER002',
+            complaintTitle: 'Başqa şikayət 2',
+            company: 'Digər Şirkət',
+            content: 'Bu şikayətə cavabım budur.',
+            text: 'Bu şikayətə cavabım budur.',
             timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-            type: 'comment',
+            type: 'reply',
             authorEmail: userEmail
           }
         ];
@@ -184,6 +248,17 @@ export const NotificationProvider = ({ children }) => {
             isRead: true,
             relatedComplaintId: 'SKJPM001',
             userId: user.email
+          },
+          {
+            id: '5',
+            type: 'reply',
+            title: 'Emirates şirkətindən cavab',
+            message: 'Emirates şirkəti uçuş gecikməsi şikayətinizə cavab verdi.',
+            timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+            isRead: false,
+            relatedComplaintId: 'SKEMI001',
+            companyName: 'Emirates',
+            userId: user.email
           }
         ];
       } else {
@@ -195,7 +270,11 @@ export const NotificationProvider = ({ children }) => {
       localStorage.setItem(`notifications_${user.email}`, JSON.stringify(sampleNotifications));
       setNotifications(sampleNotifications);
     } else {
-      setNotifications(userNotifications);
+      // Sort notifications by timestamp (newest first)
+      const sortedNotifications = userNotifications.sort((a, b) =>
+        new Date(b.timestamp) - new Date(a.timestamp)
+      );
+      setNotifications(sortedNotifications);
     }
 
     setUnreadCount(userNotifications.filter(n => !n.isRead).length);
@@ -322,9 +401,35 @@ export const NotificationProvider = ({ children }) => {
     }
   };
 
+  // Helper function to add notification to a specific user
+  const addNotificationToUser = (targetUserEmail, notification) => {
+    if (!targetUserEmail) return;
+
+    const newNotification = {
+      ...notification,
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+      isRead: false,
+      userId: targetUserEmail
+    };
+
+    // Get existing notifications for the target user
+    const existingNotifications = JSON.parse(localStorage.getItem(`notifications_${targetUserEmail}`) || '[]');
+    const updatedNotifications = [newNotification, ...existingNotifications];
+
+    // Save to localStorage for the target user
+    localStorage.setItem(`notifications_${targetUserEmail}`, JSON.stringify(updatedNotifications));
+
+    // If the target user is the current user, update the state
+    if (user && user.email === targetUserEmail) {
+      setNotifications(updatedNotifications);
+      setUnreadCount(prev => prev + 1);
+    }
+  };
+
   // Helper functions to create specific notification types
-  const addReplyNotification = (complaintId, companyName) => {
-    addNotification({
+  const addReplyNotification = (complaintId, companyName, targetUserEmail) => {
+    addNotificationToUser(targetUserEmail, {
       type: 'reply',
       title: 'Şikayətinizə cavab verildi',
       message: `${companyName} şirkəti şikayətinizə cavab verdi.`,
@@ -333,14 +438,14 @@ export const NotificationProvider = ({ children }) => {
     });
   };
 
-  const addStatusChangeNotification = (complaintId, companyName, newStatus) => {
+  const addStatusChangeNotification = (complaintId, companyName, newStatus, targetUserEmail) => {
     const statusLabels = {
       'in_progress': 'İcradadır',
       'resolved': 'Həll edilib',
       'rejected': 'Rədd edilib'
     };
 
-    addNotification({
+    addNotificationToUser(targetUserEmail, {
       type: 'status',
       title: 'Şikayətin statusu dəyişdi',
       message: `${companyName} şikayətinizin statusu "${statusLabels[newStatus] || newStatus}" olaraq dəyişdirildi.`,
@@ -349,8 +454,8 @@ export const NotificationProvider = ({ children }) => {
     });
   };
 
-  const addLikeNotification = (complaintId, likeCount) => {
-    addNotification({
+  const addLikeNotification = (complaintId, likeCount, targetUserEmail) => {
+    addNotificationToUser(targetUserEmail, {
       type: 'like',
       title: 'Şikayətiniz bəyənildi',
       message: `${likeCount} nəfər şikayətinizi bəyəndi.`,
@@ -358,8 +463,8 @@ export const NotificationProvider = ({ children }) => {
     });
   };
 
-  const addCommentNotification = (complaintId, commenterName) => {
-    addNotification({
+  const addCommentNotification = (complaintId, commenterName, targetUserEmail) => {
+    addNotificationToUser(targetUserEmail, {
       type: 'comment',
       title: 'Şikayətinizə şərh yazıldı',
       message: `${commenterName} şikayətinizə şərh yazdı.`,
@@ -374,6 +479,7 @@ export const NotificationProvider = ({ children }) => {
     markAsRead,
     markAllAsRead,
     addNotification,
+    addNotificationToUser,
     removeNotification,
     getNotificationIcon,
     getNotificationColor,

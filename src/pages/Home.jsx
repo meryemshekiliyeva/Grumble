@@ -6,6 +6,7 @@ import CompanyCard from '../components/CompanyCard';
 import CategoryCard from '../components/CategoryCard';
 import FAQItem from '../components/FAQItem';
 import { sortComplaints } from '../utils/statusConfig';
+import { formatDateAz } from '../utils/dateUtils';
 
 const mockComplaints = [
   {
@@ -48,8 +49,8 @@ const mockComplaints = [
     id: 'SKJPM001',
     title: 'Faiz Problemi',
     company: 'JPMorgan Chase',
-    author: 'Test User',
-    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
+    author: 'Məryəm Şəkiliyeva',
+    date: formatDateAz(new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)),
     summary: 'Faizlərin bu qədər yüksək olması qəbuledilməzdir',
     status: 'in_progress',
     rating: 4,
@@ -60,8 +61,8 @@ const mockComplaints = [
     id: 'SKJPM002',
     title: 'Gecikmiş Ödəniş',
     company: 'JPMorgan Chase',
-    author: 'Test User',
-    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
+    author: 'Məryəm Şəkiliyeva',
+    date: formatDateAz(new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)),
     summary: 'Ödəniş gecikməsi problemi yaşayıram',
     status: 'resolved',
     rating: 5,

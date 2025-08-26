@@ -7,7 +7,7 @@ const mockUsers = [
   { id: 3, name: 'Əli Məmmədov', email: 'ali@example.com', date: '2025-06-02', complaints: 1, status: 'Aktiv', role: 'user' },
   { id: 4, name: 'Leyla Həsənova', email: 'leyla@example.com', date: '2025-06-03', complaints: 3, status: 'Aktiv', role: 'user' },
   { id: 5, name: 'Rəşad Əliyev', email: 'reshad@example.com', date: '2025-06-04', complaints: 1, status: 'Dayandırılıb', role: 'user' },
-  { id: 6, name: 'Test İstifadəçi', email: 'test@example.com', date: '2025-08-20', complaints: 5, status: 'Aktiv', role: 'user' }
+  { id: 6, name: 'Məryəm Şəkiliyeva', email: 'test@example.com', date: '2025-08-20', complaints: 5, status: 'Aktiv', role: 'user' }
 ];
 
 const UserList = () => {
@@ -15,8 +15,40 @@ const UserList = () => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    // fetch('/api/users').then(res => res.json()).then(setUsers);
-    setUsers(mockUsers);
+    // Try to load real users from localStorage
+    const loadUsers = () => {
+      // Get all registered users from localStorage
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+      const registeredCompanies = JSON.parse(localStorage.getItem('registeredCompanies') || '[]');
+
+      if (registeredUsers.length > 0 || registeredCompanies.length > 0) {
+        const allUsers = [
+          ...registeredUsers.map(user => ({
+            id: user.id || user.email,
+            name: `${user.firstName} ${user.lastName}`,
+            email: user.email,
+            date: user.registrationDate || '2025-08-26',
+            complaints: 0, // Could be calculated from userComplaints
+            status: 'Aktiv',
+            role: 'user'
+          })),
+          ...registeredCompanies.map(company => ({
+            id: company.id || company.email,
+            name: company.companyName,
+            email: company.email,
+            date: company.registrationDate || '2025-08-26',
+            complaints: 0,
+            status: 'Aktiv',
+            role: 'company'
+          }))
+        ];
+        setUsers([...mockUsers, ...allUsers]);
+      } else {
+        setUsers(mockUsers);
+      }
+    };
+
+    loadUsers();
   }, []);
 
   const filtered = users.filter(

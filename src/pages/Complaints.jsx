@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ComplaintCard from '../components/ComplaintCard';
 import { sortComplaints } from '../utils/statusConfig';
+import { formatDateAz } from '../utils/dateUtils';
 
 
 const complaints = [
@@ -51,7 +52,7 @@ const complaints = [
 		title: 'Faiz Problemi',
 		company: 'JPMorgan Chase',
 		category: 'bank və maliyyə',
-		author: 'Test User',
+		author: 'Məryəm Şəkiliyeva',
 		date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
 		summary: 'Faizlərin bu qədər yüksək olması qəbuledilməzdir',
 		status: 'in_progress',
@@ -64,7 +65,7 @@ const complaints = [
 		title: 'Gecikmiş Ödəniş',
 		company: 'JPMorgan Chase',
 		category: 'bank və maliyyə',
-		author: 'Test User',
+		author: 'Məryəm Şəkiliyeva',
 		date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toLocaleDateString('az-AZ'),
 		summary: 'Ödəniş gecikməsi problemi yaşayıram',
 		status: 'resolved',

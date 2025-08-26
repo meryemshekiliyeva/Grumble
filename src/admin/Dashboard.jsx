@@ -33,14 +33,22 @@ const Dashboard = () => {
         });
       } catch (error) {
         console.error('Failed to load dashboard data:', error);
-        // Fallback to mock data
+        // Fallback to localStorage data first, then mock data
+        const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+        const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+        const registeredCompanies = JSON.parse(localStorage.getItem('registeredCompanies') || '[]');
+
+        const pendingCount = userComplaints.filter(c => c.status === 'pending').length;
+        const inProgressCount = userComplaints.filter(c => c.status === 'in_progress').length;
+        const resolvedCount = userComplaints.filter(c => c.status === 'resolved').length;
+
         setMetrics({
-          totalComplaints: 1247,
-          pendingComplaints: 89,
-          inProgressComplaints: 156,
-          resolvedComplaints: 1002,
-          activeUsers: 2847,
-          companies: 156,
+          totalComplaints: userComplaints.length || 1247,
+          pendingComplaints: pendingCount || 89,
+          inProgressComplaints: inProgressCount || 156,
+          resolvedComplaints: resolvedCount || 1002,
+          activeUsers: registeredUsers.length || 2847,
+          companies: registeredCompanies.length || 156,
         });
       }
     };

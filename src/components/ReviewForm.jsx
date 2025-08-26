@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import StarRating from './StarRating';
 
 const ReviewForm = ({ companyName, onSubmit }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     rating: 0,
-    title: '',
+    reviewTitle: '',
+    category: '',
+    companyName: '',
     review: '',
     photo: null,
     phone: '',
@@ -55,8 +57,18 @@ const ReviewForm = ({ companyName, onSubmit }) => {
       return;
     }
 
-    if (!formData.title.trim() && !companyName) {
-      alert('Şirkətin adını daxil edin');
+    if (!formData.reviewTitle.trim()) {
+      alert('Rəy başlığını daxil edin');
+      return;
+    }
+
+    if (!formData.category) {
+      alert('Kateqoriya seçin');
+      return;
+    }
+
+    if (!formData.companyName && !companyName) {
+      alert('Şirkət adını seçin');
       return;
     }
 
@@ -73,23 +85,48 @@ const ReviewForm = ({ companyName, onSubmit }) => {
     setLoading(true);
 
     try {
+      // Create review object
+      const reviewData = {
+        id: `review-${Date.now()}`,
+        reviewTitle: formData.reviewTitle,
+        category: formData.category,
+        companyName: companyName || formData.companyName,
+        content: formData.review,
+        rating: formData.rating,
+        author: user ? `${user.firstName} ${user.lastName}` : 'İstifadəçi',
+        authorEmail: user?.email,
+        timestamp: new Date().toISOString(),
+        type: 'review',
+        status: 'pending'
+      };
+
+      // Save to userComments (reviews are treated as comments in the profile)
+      const userComments = JSON.parse(localStorage.getItem('userComments') || '[]');
+      userComments.push(reviewData);
+      localStorage.setItem('userComments', JSON.stringify(userComments));
+
+      // Dispatch custom event to update profile stats
+      window.dispatchEvent(new CustomEvent('userDataUpdated'));
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       setSuccess(true);
-      
+
       // Reset form after success
       setTimeout(() => {
         setFormData({
           rating: 0,
-          title: '',
+          reviewTitle: '',
+          category: '',
+          companyName: '',
           review: '',
           photo: null,
           phone: '',
           agreeToTerms: false
         });
         setSuccess(false);
-        if (onSubmit) onSubmit(formData);
+        if (onSubmit) onSubmit(reviewData);
       }, 3000);
 
     } catch (error) {
@@ -153,47 +190,91 @@ const ReviewForm = ({ companyName, onSubmit }) => {
       <h3 className="text-xl font-semibold text-gray-900 mb-6">Rəy bildir</h3>
       
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Company Name */}
+        {/* Review Title */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Şirkətin adı*
+            Rəy Başlığı *
           </label>
           <input
             type="text"
-            name="title"
-            value={companyName || formData.title}
+            name="reviewTitle"
+            value={formData.reviewTitle}
             onChange={handleInputChange}
-            placeholder={companyName || "CityNet"}
+            placeholder="məs., Səhv yemək çatdırılması və gec çatdırılma"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             required
-            readOnly={!!companyName}
           />
+        </div>
+
+        {/* Category */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Kateqoriya *
+          </label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+            required
+          >
+            <option value="">Kateqoriya seçin</option>
+            <option value="Havayolu">Havayolu</option>
+            <option value="Yemək Çatdırılması">Yemək Çatdırılması</option>
+            <option value="Bank və Maliyyə">Bank və Maliyyə</option>
+            <option value="Telekommunikasiya">Telekommunikasiya</option>
+            <option value="E-ticarət">E-ticarət</option>
+            <option value="Kommunal Xidmətlər">Kommunal Xidmətlər</option>
+            <option value="Sağlamlıq">Sağlamlıq</option>
+            <option value="Təhsil">Təhsil</option>
+            <option value="Ümumi">Ümumi</option>
+          </select>
+        </div>
+
+        {/* Company Name */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Şirkət Adı *
+          </label>
+          <select
+            name="companyName"
+            value={companyName || formData.companyName}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+            required
+            disabled={!!companyName}
+          >
+            <option value="">Şirkət seçin</option>
+            <option value="Emirates">Emirates</option>
+            <option value="Uber Eats">Uber Eats</option>
+            <option value="JPMorgan Chase">JPMorgan Chase</option>
+            <option value="Azercell">Azercell</option>
+            <option value="Wolt">Wolt</option>
+            <option value="Kapital Bank">Kapital Bank</option>
+          </select>
         </div>
 
         {/* Rating */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Reytinqi seç*
+            Reytinq *
           </label>
           <div className="flex items-center space-x-2">
-            <StarRating 
+            <StarRating
               rating={formData.rating}
               onRatingChange={handleRatingChange}
               size="lg"
             />
             <span className="text-lg font-medium text-gray-700">
-              {formData.rating}/5
+              {formData.rating > 0 ? `${formData.rating}/5` : 'Reytinq seçin'}
             </span>
-            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
           </div>
         </div>
 
         {/* Review Text */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Rəyini bildir*
+            Rəy Məzmunu *
           </label>
           <textarea
             name="review"

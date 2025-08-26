@@ -93,7 +93,7 @@ const Login = () => {
 
       return {
         success: false,
-        message: 'Yanlış email və ya şifrə. Test hesabları: kapital@bank.az/Kapital123!, pasha@bank.az/Pasha123!, bir@bank.az/BirBank123! və ya qeydiyyatdan keçmiş şirkət hesabları üçün Company123! şifrəsini istifadə edin.'
+        message: 'Yanlış email və ya şifrə. Test hesabları: kapital@bank.az/Kapital123!, pasha@bank.az/Pasha123!, bir@bank.az/BirBank123!, support@emirates.com/Emirates123! və ya qeydiyyatdan keçmiş şirkət hesabları üçün Company123! şifrəsini istifadə edin.'
       };
 
     } catch (error) {
@@ -366,6 +366,7 @@ const Login = () => {
                   <p><strong>Kapital Bank:</strong> kapital@bank.az / Kapital123!</p>
                   <p><strong>Pasha Bank:</strong> pasha@bank.az / Pasha123!</p>
                   <p><strong>BirBank:</strong> bir@bank.az / BirBank123!</p>
+                  <p><strong>Emirates:</strong> support@emirates.com / Emirates123!</p>
                   <p className="mt-2"><strong>Qeydiyyatdan keçmiş şirkətlər:</strong> Company123!</p>
                 </div>
               </div>
