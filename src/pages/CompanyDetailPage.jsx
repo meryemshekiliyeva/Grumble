@@ -16,7 +16,7 @@ const CompanyDetailPage = () => {
   const companies = {
     'jpmorgan-chase': {
       name: 'JPMorgan Chase',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/JPMorgan_Chase_logo.svg/200px-JPMorgan_Chase_logo.svg.png',
+      logo: 'https://upload.wikimedia.org/wikipedia/en/6/6c/Jp_morgan_logo.jpg',
       rating: 3.0,
       totalReviews: 139,
       website: 'www.jpmorganchase.com',
@@ -38,7 +38,7 @@ const CompanyDetailPage = () => {
     },
     'att': {
       name: 'AT&T',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AT%26T_logo_2016.svg/200px-AT%26T_logo_2016.svg.png',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/3/31/AT%26T_logo_2016.svg',
       rating: 2.5,
       totalReviews: 247,
       website: 'www.att.com',
@@ -104,7 +104,7 @@ const CompanyDetailPage = () => {
     },
     'vodafone': {
       name: 'Vodafone',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Vodafone_icon.svg/200px-Vodafone_icon.svg.png',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/9/95/Vodafone_logo_2017.png',
       rating: 2.8,
       totalReviews: 128,
       website: 'www.vodafone.com',
@@ -126,7 +126,7 @@ const CompanyDetailPage = () => {
     },
     't-mobile': {
       name: 'T-Mobile',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/T-Mobile_logo.svg/200px-T-Mobile_logo.svg.png',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/T-Mobile_US_Logo_2020_RGB_Magenta_on_Transparent.svg',
       rating: 3.4,
       totalReviews: 112,
       website: 'www.t-mobile.com',
@@ -148,7 +148,7 @@ const CompanyDetailPage = () => {
     },
     'edf-energy': {
       name: 'EDF Energy',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/EDF_logo.svg/200px-EDF_logo.svg.png',
+      logo: 'https://www.edfenergy.com/themes/custom/edf/logos/edf-colour.svg',
       rating: 2.9,
       totalReviews: 98,
       website: 'www.edfenergy.com',
@@ -170,7 +170,7 @@ const CompanyDetailPage = () => {
     },
     'national-grid': {
       name: 'National Grid',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/National_Grid_logo.svg/200px-National_Grid_logo.svg.png',
+      logo: 'https://iconlogovector.com/uploads/images/2025/03/lg-67d5593d3836c-National-Grid.webp',
       rating: 3.1,
       totalReviews: 87,
       website: 'www.nationalgrid.com',
