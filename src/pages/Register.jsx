@@ -260,6 +260,18 @@ const Register = () => {
 
 
 
+            {/* Demo Info */}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+              <h4 className="text-sm font-semibold text-green-800 mb-2">Demo Məlumat:</h4>
+              <div className="text-xs text-green-700">
+                {activeTab === 'user' ? (
+                  <div>Qeydiyyatdan sonra demo hesabları ilə giriş edə bilərsiniz</div>
+                ) : (
+                  <div>Şirkət qeydiyyatından sonra şifrə: Company123! olacaq</div>
+                )}
+              </div>
+            </div>
+
             {/* Submit Button */}
             <div>
               <button

@@ -52,6 +52,11 @@ This is a comprehensive bank dashboard system integrated into the main Grumble p
 - **Password**: `Goldman123!`
 - **Features**: Full dashboard with sample reviews
 
+### Emirates
+- **Email**: `emirates@airline.com`
+- **Password**: `Emirates123!`
+- **Features**: Full dashboard with sample reviews
+
 ## How to Use
 
 ### 1. Access the Main Page

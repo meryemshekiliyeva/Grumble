@@ -316,40 +316,14 @@ const CompanyProfile = () => {
   const menuItems = [
     {
       id: 'profile',
-      label: 'Profilim',
+      label: 'Şirkət Profili',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       )
     },
-    {
-      id: 'pending-reviews',
-      label: 'Gözləyən Rəylər',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      )
-    },
-    {
-      id: 'responded-reviews',
-      label: 'Cavablandırılmış',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      )
-    },
-    {
-      id: 'notifications',
-      label: 'Bildirişlərim',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6a2 2 0 01-2-2V7a2 2 0 012-2h5m5 0v6m0 0l3-3m-3 3l-3-3" />
-        </svg>
-      )
-    },
+
     {
       id: 'logout',
       label: 'Çıxış',
@@ -363,8 +337,8 @@ const CompanyProfile = () => {
   ];
 
   const renderContent = () => {
-    switch (activeTab) {
-      case 'profile':
+    // Always show profile content
+    if (activeTab === 'profile') {
         return (
           <div className="space-y-6">
             {/* Success Message */}
@@ -427,20 +401,7 @@ const CompanyProfile = () => {
                     {user?.companyName || user?.name}
                   </h2>
                   <p className="text-gray-600">{user?.email}</p>
-                  <div className="flex space-x-6 mt-2">
-                    <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">{reviews.filter(r => r.status === 'pending').length}</div>
-                      <div className="text-sm text-gray-500">Gözləyən</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">{reviews.filter(r => r.status === 'responded').length}</div>
-                      <div className="text-sm text-gray-500">Cavablandırılmış</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">{reviews.length}</div>
-                      <div className="text-sm text-gray-500">Ümumi Rəylər</div>
-                    </div>
-                  </div>
+
                 </div>
               </div>
 
@@ -654,84 +615,8 @@ const CompanyProfile = () => {
             </div>
           </div>
         );
-
-      case 'pending-reviews':
-        const pendingReviews = getFilteredReviews();
-        return (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Gözləyən Rəylər</h3>
-            {pendingReviews.length > 0 ? (
-              <div className="space-y-4">
-                {pendingReviews.map((review) => (
-                  <ReviewCard
-                    key={review.id}
-                    review={review}
-                    onResponse={handleReviewResponse}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">Gözləyən rəy yoxdur</h3>
-                <p className="text-gray-500">Yeni rəylər burada görünəcək.</p>
-              </div>
-            )}
-          </div>
-        );
-
-      case 'responded-reviews':
-        const respondedReviews = getFilteredReviews();
-        return (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Cavablandırılmış Rəylər</h3>
-            {respondedReviews.length > 0 ? (
-              <div className="space-y-4">
-                {respondedReviews.map((review) => (
-                  <ReviewCard
-                    key={review.id}
-                    review={review}
-                    onResponse={handleReviewResponse}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">Cavablandırılmış rəy yoxdur</h3>
-                <p className="text-gray-500">Cavabladığınız rəylər burada görünəcək.</p>
-              </div>
-            )}
-          </div>
-        );
-
-      case 'notifications':
-        return (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Bildirişlərim</h3>
-            <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6a2 2 0 01-2-2V7a2 2 0 012-2h5m5 0v6m0 0l3-3m-3 3l-3-3" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bildirişiniz yoxdur</h3>
-              <p className="text-gray-500">Yeni bildirişlər burada görünəcək.</p>
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
     }
+    return null;
   };
 
   return (

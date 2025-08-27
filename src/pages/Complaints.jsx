@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ComplaintCard from '../components/ComplaintCard';
 import { sortComplaints } from '../utils/statusConfig';
 import { formatDateAz } from '../utils/dateUtils';
 
+const Complaints = () => {
+  const [complaints, setComplaints] = useState([]);
 
-const complaints = [
+  // Load complaints from localStorage
+  useEffect(() => {
+    const loadComplaints = () => {
+      // Load user-submitted complaints
+      const userComplaints = JSON.parse(localStorage.getItem('allComplaints') || '[]');
+
+      // Default complaints for demo
+      const defaultComplaints = [
 	{
 		id: 'SKNET001',
 		title: 'İnternet Bağlantı Problemləri',
@@ -137,11 +146,18 @@ const complaints = [
 		rating: 1,
 		likes: 25,
 		comments: 12
-	},
-];
+	}
+      ];
 
-const Complaints = () => {
-	const [search, setSearch] = useState('');
+      // Combine user complaints with default complaints
+      const allComplaints = [...userComplaints, ...defaultComplaints];
+      setComplaints(allComplaints);
+    };
+
+    loadComplaints();
+  }, []);
+
+  const [search, setSearch] = useState('');
 
 	const handleLike = (complaintId) => {
 		console.log('Liked complaint:', complaintId);

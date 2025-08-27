@@ -50,6 +50,11 @@ const Login = () => {
       password: 'Goldman123!',
       name: 'Goldman Sachs',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Goldman_Sachs.svg/200px-Goldman_Sachs.svg.png'
+    },
+    'emirates@airline.com': {
+      password: 'Emirates123!',
+      name: 'Emirates',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Emirates_logo.svg/200px-Emirates_logo.svg.png'
     }
   };
 
@@ -93,7 +98,7 @@ const Login = () => {
 
       return {
         success: false,
-        message: 'Yanlış email və ya şifrə. Test hesabları: kapital@bank.az/Kapital123!, pasha@bank.az/Pasha123!, bir@bank.az/BirBank123!, support@emirates.com/Emirates123! və ya qeydiyyatdan keçmiş şirkət hesabları üçün Company123! şifrəsini istifadə edin.'
+        message: 'Yanlış email və ya şifrə. Test hesabları: jpmorgan@bank.com/JPMorgan123!, hsbc@bank.com/HSBC123!, goldman@bank.com/Goldman123!, emirates@airline.com/Emirates123! və ya qeydiyyatdan keçmiş şirkət hesabları üçün Company123! şifrəsini istifadə edin.'
       };
 
     } catch (error) {
@@ -167,23 +172,28 @@ const Login = () => {
       const currentFormData = activeTab === 'user' ? formData : companyFormData;
 
       if (activeTab === 'user') {
-        const result = await login(currentFormData.email, currentFormData.password, currentFormData.rememberMe);
+        try {
+          const result = await login(currentFormData.email, currentFormData.password, currentFormData.rememberMe);
 
-        if (result.success) {
-          // Store remember me preference
-          if (currentFormData.rememberMe) {
-            localStorage.setItem('rememberedEmail', currentFormData.email);
+          if (result.success) {
+            // Store remember me preference
+            if (currentFormData.rememberMe) {
+              localStorage.setItem('rememberedEmail', currentFormData.email);
+            } else {
+              localStorage.removeItem('rememberedEmail');
+            }
+            navigate('/');
           } else {
-            localStorage.removeItem('rememberedEmail');
+            if (result.requiresVerification) {
+              // Redirect to email verification page
+              navigate(`/verify-email?email=${encodeURIComponent(result.email)}`);
+            } else {
+              setError(result.message || 'Giriş zamanı xəta baş verdi');
+            }
           }
-          navigate('/');
-        } else {
-          if (result.requiresVerification) {
-            // Redirect to email verification page
-            navigate(`/verify-email?email=${encodeURIComponent(result.email)}`);
-          } else {
-            setError(result.message || 'Giriş zamanı xəta baş verdi');
-          }
+        } catch (error) {
+          console.error('User login error:', error);
+          setError('Giriş zamanı xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.');
         }
       } else {
         // Company/Bank login
@@ -335,6 +345,27 @@ const Login = () => {
                 <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500 az-text">
                   Şifrəni unutmusunuz?
                 </Link>
+              </div>
+            </div>
+
+            {/* Demo Accounts Info */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+              <h4 className="text-sm font-semibold text-blue-800 mb-2">Demo Hesabları:</h4>
+              <div className="text-xs text-blue-700 space-y-1">
+                {activeTab === 'user' ? (
+                  <>
+                    <div>• test@example.com / Test123!</div>
+                    <div>• demo@example.com / Demo123!</div>
+                    <div>• admin@grumble.az / Admin123!</div>
+                  </>
+                ) : (
+                  <>
+                    <div>• jpmorgan@bank.com / JPMorgan123!</div>
+                    <div>• hsbc@bank.com / HSBC123!</div>
+                    <div>• goldman@bank.com / Goldman123!</div>
+                    <div>• emirates@airline.com / Emirates123!</div>
+                  </>
+                )}
               </div>
             </div>
 

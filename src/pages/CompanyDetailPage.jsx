@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import StarRating from '../components/StarRating';
-import ReviewForm from '../components/ReviewForm';
-import { getCompanyRating, updateCompanyRating, getCompanyReviewStats } from '../utils/companyRating';
 
 const CompanyDetailPage = () => {
   const { companyId } = useParams();
-  const [userRating, setUserRating] = useState(0);
-  const [showRatingForm, setShowRatingForm] = useState(false);
-  const [reviews, setReviews] = useState([]);
-  const [companyRating, setCompanyRating] = useState(0);
-  const [reviewStats, setReviewStats] = useState(null);
 
   // Company data
   const companies = {
@@ -801,68 +794,7 @@ const CompanyDetailPage = () => {
 
   const company = companies[companyId];
 
-  // Load reviews from localStorage
-  useEffect(() => {
-    const existingReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
-    if (existingReviews[companyId]) {
-      setReviews(existingReviews[companyId]);
-    } else {
-      // Initialize sample reviews for Emirates
-      if (companyId === 'emirates') {
-        const sampleReviews = [
-          {
-            id: 'emirates-review-1',
-            author: 'Məryəm Şəkiliyeva',
-            email: 'test@example.com',
-            rating: 4,
-            review: 'Uçuş keyfiyyəti yaxşıdır, lakin gecikməler problematikdir.',
-            date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-            status: 'pending',
-            companyResponse: null
-          },
-          {
-            id: 'emirates-review-2',
-            author: 'Məryəm Şəkiliyeva',
-            email: 'test@example.com',
-            rating: 5,
-            review: 'Əla xidmət və komfort. Təkrar seçərdim.',
-            date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-            status: 'pending',
-            companyResponse: null
-          }
-        ];
-        existingReviews[companyId] = sampleReviews;
-        localStorage.setItem('companyReviews', JSON.stringify(existingReviews));
-        setReviews(sampleReviews);
-      }
-      // Initialize sample reviews for Uber Eats
-      else if (companyId === 'uber-eats') {
-        const sampleReviews = [
-          {
-            id: 'uber-eats-review-1',
-            author: 'Məryəm Şəkiliyeva',
-            email: 'test@example.com',
-            rating: 2,
-            review: 'Çatdırılma çox uzun çəkir və yemək soyuq gəlir.',
-            date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-            status: 'pending',
-            companyResponse: null
-          }
-        ];
-        existingReviews[companyId] = sampleReviews;
-        localStorage.setItem('companyReviews', JSON.stringify(existingReviews));
-        setReviews(sampleReviews);
-      }
-    }
 
-    // Calculate company rating
-    const rating = getCompanyRating(companyId);
-    setCompanyRating(rating);
-
-    // Get review statistics
-    const stats = getCompanyReviewStats(companyId);
-    setReviewStats(stats);
-  }, [companyId]);
 
   if (!company) {
     return (
@@ -915,13 +847,13 @@ const CompanyDetailPage = () => {
               <div className="flex items-center space-x-4 mb-3">
                 <div className="flex items-center space-x-1">
                   <StarRating
-                    rating={companyRating || company.rating}
+                    rating={company.rating}
                     readonly={true}
                     size="md"
                   />
-                  <span className="text-lg font-semibold text-gray-900 ml-2">{companyRating || company.rating}/5</span>
+                  <span className="text-lg font-semibold text-gray-900 ml-2">{company.rating}/5</span>
                 </div>
-                <span className="text-gray-600">Müştərin sayı: {reviewStats?.totalReviews || company.totalReviews}</span>
+
                 {company.website && (
                   <a 
                     href={`https://${company.website}`}
@@ -942,21 +874,7 @@ const CompanyDetailPage = () => {
                 <span>{company.views} baxış</span>
               </div>
 
-              {/* Stats */}
-              <div className="flex items-center space-x-6">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">{company.stats.positive}% Cavab vermə faizi</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">{company.stats.resolved}% Həll olunmuş şikayətlər</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">{company.stats.negative}% Müştəri loyallığı</span>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
@@ -1018,81 +936,6 @@ const CompanyDetailPage = () => {
               Şikayət göndər
             </Link>
           </div>
-        </div>
-
-        {/* User Comments Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6">İstifadəçi Şərhləri</h3>
-
-          {/* Dynamic Reviews */}
-          <div className="space-y-6">
-            {reviews.length > 0 ? (
-              reviews.map((review, index) => (
-                <div key={review.id || index} className={`${index < reviews.length - 1 ? 'border-b border-gray-200 pb-6' : ''}`}>
-                  <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
-                      {review.author?.charAt(0) || 'U'}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="font-medium text-gray-900">{review.author || 'İstifadəçi'}</span>
-                        <span className="text-sm text-gray-500">
-                          {new Date(review.date).toLocaleDateString('az-AZ')}
-                        </span>
-                        <div className="flex items-center">
-                          <StarRating
-                            rating={review.rating || 0}
-                            readonly={true}
-                            size="sm"
-                          />
-                        </div>
-                      </div>
-                      <p className="text-gray-700">
-                        {review.review}
-                      </p>
-
-                      {/* Company Response */}
-                      {review.companyResponse && (
-                        <div className="mt-4 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
-                          <div className="flex items-start space-x-3">
-                            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                              {company.name.charAt(0)}
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center space-x-2 mb-2">
-                                <span className="font-medium text-blue-900">{company.name}</span>
-                                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                                  Şirkət Cavabı
-                                </span>
-                                <span className="text-sm text-blue-600">
-                                  {new Date(review.companyResponse.date).toLocaleDateString('az-AZ')}
-                                </span>
-                              </div>
-                              <p className="text-blue-800">
-                                {review.companyResponse.message}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                </div>
-                <p className="text-gray-500">Hələ heç bir şikayət yazılmayıb</p>
-                <p className="text-gray-400 text-sm">İlk şikayəti siz yazın!</p>
-              </div>
-            )}
-          </div>
-
-
         </div>
       </div>
     </div>

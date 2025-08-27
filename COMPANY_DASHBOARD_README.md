@@ -74,10 +74,11 @@ This is a comprehensive company dashboard system that opens after successful reg
   - Email: test@company.az
   - Contact: Əli Məmmədov
 
-### For Testing Login (Bank System):
+### For Testing Login (Company System):
 - **JPMorgan Chase**: `jpmorgan@bank.com` / `JPMorgan123!`
 - **HSBC**: `hsbc@bank.com` / `HSBC123!`
 - **Goldman Sachs**: `goldman@bank.com` / `Goldman123!`
+- **Emirates**: `emirates@airline.com` / `Emirates123!`
 
 ## Dashboard Features
 

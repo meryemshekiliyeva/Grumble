@@ -49,6 +49,34 @@ const NewComplaint = () => {
     });
   };
 
+  // Helper function to get company key for localStorage
+  const getCompanyKey = (companyName) => {
+    const companyMap = {
+      'JPMorgan Chase': 'jpmorgan-chase',
+      'HSBC': 'hsbc',
+      'Goldman Sachs': 'goldman-sachs',
+      'Emirates': 'emirates',
+      'AT&T': 'att',
+      'Vodafone': 'vodafone',
+      'T-Mobile': 't-mobile',
+      'Uber Eats': 'uber-eats',
+      'DoorDash': 'doordash',
+      'Deliveroo': 'deliveroo',
+      'Lufthansa': 'lufthansa',
+      'Delta Air Lines': 'delta-air-lines',
+      'EDF Energy': 'edf-energy',
+      'National Grid': 'national-grid',
+      'Veolia': 'veolia',
+      'Allianz': 'allianz',
+      'AXA': 'axa',
+      'Prudential': 'prudential',
+      'Amazon': 'amazon',
+      'Alibaba': 'alibaba',
+      'eBay': 'ebay'
+    };
+    return companyMap[companyName] || companyName.toLowerCase().replace(/\s+/g, '-');
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -68,17 +96,42 @@ const NewComplaint = () => {
       id: newComplaintId,
       ...formData,
       company: formData.company === 'digər' ? formData.customCompany : formData.company,
-      author: user.name,
+      author: user.firstName + ' ' + user.lastName,
       authorEmail: user.email,
-      date: new Date().toLocaleDateString('az-AZ'),
+      date: new Date().toISOString(),
       status: 'pending',
       likes: 0,
-      comments: 0
+      comments: 0,
+      review: formData.summary // Add review field for company detail page
     };
 
+    // Save to user's complaints
     const existingComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
     existingComplaints.push(complaint);
     localStorage.setItem('userComplaints', JSON.stringify(existingComplaints));
+
+    // Save to all complaints (for Complaints page)
+    const allComplaints = JSON.parse(localStorage.getItem('allComplaints') || '[]');
+    allComplaints.unshift(complaint); // Add to beginning for latest first
+    localStorage.setItem('allComplaints', JSON.stringify(allComplaints));
+
+    // Save to company reviews (for Company Detail page)
+    const companyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+    const companyKey = getCompanyKey(complaint.company);
+    if (!companyReviews[companyKey]) {
+      companyReviews[companyKey] = [];
+    }
+    companyReviews[companyKey].unshift({
+      id: newComplaintId,
+      author: complaint.author,
+      email: complaint.authorEmail,
+      rating: complaint.rating,
+      review: complaint.summary,
+      date: complaint.date,
+      status: 'pending',
+      companyResponse: null
+    });
+    localStorage.setItem('companyReviews', JSON.stringify(companyReviews));
 
     setShowSuccess(true);
   };
@@ -91,38 +144,34 @@ const NewComplaint = () => {
 
   const companiesByCategory = {
     'Telekommunikasiya': [
-      { name: 'Azercell', id: 'azercell' },
-      { name: 'Bakcell', id: 'bakcell' },
-      { name: 'Nar', id: 'nar' },
-      { name: 'CityNet', id: 'citynet' }
+      { name: 'AT&T', id: 'att' },
+      { name: 'Vodafone', id: 'vodafone' },
+      { name: 'T-Mobile', id: 't-mobile' }
     ],
     'Bank və Maliyyə': [
       { name: 'JPMorgan Chase', id: 'jpmorgan-chase' },
-      { name: 'Kapital Bank', id: 'kapital-bank' },
-      { name: 'Pasha Bank', id: 'pasha-bank' },
-      { name: 'Unibank', id: 'unibank' },
-      { name: 'Bank of Baku', id: 'bank-of-baku' },
-      { name: 'AccessBank', id: 'accessbank' }
+      { name: 'HSBC', id: 'hsbc' },
+      { name: 'Goldman Sachs', id: 'goldman-sachs' }
     ],
     'Yemək Çatdırılması': [
-      { name: 'Wolt', id: 'wolt' },
-      { name: 'Bolt Food', id: 'bolt-food' },
-      { name: 'Glovo', id: 'glovo' }
+      { name: 'Uber Eats', id: 'uber-eats' },
+      { name: 'DoorDash', id: 'doordash' },
+      { name: 'Deliveroo', id: 'deliveroo' }
     ],
     'Kommunal Xidmətlər': [
-      { name: 'Azersu', id: 'azersu' },
-      { name: 'Azerishiq', id: 'azerishiq' },
-      { name: 'Azerigas', id: 'azerigas' }
+      { name: 'EDF Energy', id: 'edf-energy' },
+      { name: 'National Grid', id: 'national-grid' },
+      { name: 'Veolia', id: 'veolia' }
     ],
     'E-ticarət': [
-      { name: 'Trendyol', id: 'trendyol' },
-      { name: 'Kontakt Home', id: 'kontakt-home' },
-      { name: 'Irshad', id: 'irshad' }
+      { name: 'Amazon', id: 'amazon' },
+      { name: 'Alibaba', id: 'alibaba' },
+      { name: 'eBay', id: 'ebay' }
     ],
     'Nəqliyyat': [
-      { name: 'Bolt', id: 'bolt' },
-      { name: 'BiP', id: 'bip' },
-      { name: 'AZAL', id: 'azal' }
+      { name: 'Uber', id: 'uber' },
+      { name: 'Lyft', id: 'lyft' },
+      { name: 'Bolt', id: 'bolt' }
     ],
     'Havayolu': [
       { name: 'Emirates', id: 'emirates' },
