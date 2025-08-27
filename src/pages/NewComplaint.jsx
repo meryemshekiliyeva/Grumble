@@ -24,30 +24,33 @@ const NewComplaint = () => {
 
   // Load companies and categories
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const [companiesRes, categoriesRes] = await Promise.all([
-          fetch('http://localhost:5000/api/companies'),
-          fetch('http://localhost:5000/api/categories')
-        ]);
+    // Mock categories data
+    const mockCategories = [
+      { _id: 'cat1', name: 'Havayolu', icon: '✈️', color: 'blue' },
+      { _id: 'cat2', name: 'Bank və Maliyyə', icon: '🏦', color: 'green' },
+      { _id: 'cat3', name: 'Telekommunikasiya', icon: '📱', color: 'purple' },
+      { _id: 'cat4', name: 'E-ticarət', icon: '🛒', color: 'orange' },
+      { _id: 'cat5', name: 'Yemək Çatdırılması', icon: '🍕', color: 'red' },
+      { _id: 'cat6', name: 'Nəqliyyat', icon: '🚗', color: 'yellow' }
+    ];
 
-        if (companiesRes.ok) {
-          const companiesData = await companiesRes.json();
-          setCompanies(companiesData.data || []);
-        }
+    // Mock companies data - using email as ID to match login credentials
+    const mockCompanies = [
+      { _id: 'emirates@airline.com', companyName: 'Emirates', category: 'Havayolu' },
+      { _id: 'lufthansa@airline.com', companyName: 'Lufthansa', category: 'Havayolu' },
+      { _id: 'delta@airline.com', companyName: 'Delta Air Lines', category: 'Havayolu' },
+      { _id: 'hsbc@bank.com', companyName: 'HSBC', category: 'Bank və Maliyyə' },
+      { _id: 'jpmorgan@bank.com', companyName: 'JPMorgan Chase', category: 'Bank və Maliyyə' },
+      { _id: 'goldman@bank.com', companyName: 'Goldman Sachs', category: 'Bank və Maliyyə' },
+      { _id: 'amazon@ecommerce.com', companyName: 'Amazon', category: 'E-ticarət' },
+      { _id: 'ebay@ecommerce.com', companyName: 'eBay', category: 'E-ticarət' },
+      { _id: 'ubereats@food.com', companyName: 'Uber Eats', category: 'Yemək Çatdırılması' },
+      { _id: 'doordash@food.com', companyName: 'DoorDash', category: 'Yemək Çatdırılması' }
+    ];
 
-        if (categoriesRes.ok) {
-          const categoriesData = await categoriesRes.json();
-          setCategories(categoriesData.data || []);
-        }
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadData();
+    setCategories(mockCategories);
+    setCompanies(mockCompanies);
+    setIsLoading(false);
   }, []);
 
   // Pre-fill form data from URL parameters
@@ -56,14 +59,18 @@ const NewComplaint = () => {
     const categoryParam = searchParams.get('category');
 
     if (companyParam || categoryParam) {
+      // Find company by name
+      const foundCompany = companies.find(comp => comp.companyName === companyParam);
+      const foundCategory = categories.find(cat => cat.name === categoryParam);
+
       setFormData(prev => ({
         ...prev,
-        company: companyParam === 'digər' ? 'digər' : companyParam || prev.company,
-        customCompany: companyParam && companyParam !== 'digər' ? companyParam : prev.customCompany,
-        category: categoryParam || prev.category
+        company: foundCompany ? foundCompany._id : (companyParam === 'digər' ? 'digər' : prev.company),
+        customCompany: (!foundCompany && companyParam && companyParam !== 'digər') ? companyParam : prev.customCompany,
+        category: foundCategory ? foundCategory._id : prev.category
       }));
     }
-  }, [searchParams]);
+  }, [searchParams, companies, categories]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -122,58 +129,114 @@ const NewComplaint = () => {
       return;
     }
 
-    try {
-      const token = localStorage.getItem('token');
+    // Generate a random complaint ID
+    const newComplaintId = 'SK' + Math.random().toString(36).substr(2, 9).toUpperCase();
 
-      // Prepare complaint data
-      const complaintData = {
-        title: formData.title,
-        description: formData.summary,
-        company: formData.company,
-        category: formData.category,
-        incidentDate: new Date().toISOString(),
-        isAnonymous: false,
-        isPublic: true
-      };
+    // Get company and category names
+    const selectedCategory = categories.find(cat => cat._id === formData.category);
+    const selectedCompany = companies.find(comp => comp._id === formData.company);
 
-      const response = await fetch('http://localhost:5000/api/complaints', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(complaintData)
-      });
+    // Get company and category names
+    const companyName = formData.company === 'digər' ? formData.customCompany : selectedCompany?.companyName;
+    const categoryName = selectedCategory?.name;
 
-      if (response.ok) {
-        const data = await response.json();
-        setComplaintId(data.data._id);
-        setShowSuccess(true);
+    // Create complaint object for company dashboard (detailed format)
+    const companyComplaint = {
+      _id: newComplaintId,
+      title: formData.title,
+      description: formData.summary,
+      company: {
+        _id: formData.company,
+        companyName: companyName
+      },
+      category: {
+        _id: formData.category,
+        name: categoryName
+      },
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      },
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      responses: []
+    };
 
-        // Reset form
-        setFormData({
-          title: '',
-          company: '',
-          customCompany: '',
-          category: '',
-          summary: '',
-          rating: 0,
-          attachments: null
-        });
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message || 'Şikayət göndərilmədi');
-      }
-    } catch (error) {
-      console.error('Error submitting complaint:', error);
-      alert('Server xətası baş verdi');
+    // Create complaint object for user pages (simplified format)
+    const userComplaint = {
+      id: newComplaintId,
+      title: formData.title,
+      company: companyName,
+      category: categoryName.toLowerCase(),
+      author: `${user.firstName} ${user.lastName}`,
+      authorEmail: user.email,
+      date: new Date().toLocaleDateString('az-AZ'),
+      summary: formData.summary,
+      status: 'pending',
+      rating: formData.rating || 1,
+      likes: 0,
+      comments: 0,
+      timestamp: new Date().toISOString()
+    };
+
+    // 1. Save to company complaints (for company dashboard)
+    const existingCompanyComplaints = JSON.parse(localStorage.getItem('companyComplaints') || '{}');
+    const companyId = formData.company;
+
+    if (!existingCompanyComplaints[companyId]) {
+      existingCompanyComplaints[companyId] = [];
     }
+
+    existingCompanyComplaints[companyId].unshift(companyComplaint);
+    localStorage.setItem('companyComplaints', JSON.stringify(existingCompanyComplaints));
+
+    // 2. Save to user complaints (for MyComplaints page)
+    const existingUserComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+    existingUserComplaints.unshift(userComplaint);
+    localStorage.setItem('userComplaints', JSON.stringify(existingUserComplaints));
+
+    // 3. Save to all complaints (for Complaints page)
+    const allComplaints = JSON.parse(localStorage.getItem('allComplaints') || '[]');
+    allComplaints.unshift(userComplaint);
+    localStorage.setItem('allComplaints', JSON.stringify(allComplaints));
+
+    // 4. Save to company reviews (for CompanyDetailPage)
+    const companyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+    const companyKey = companyName?.toLowerCase().replace(/\s+/g, '-') || 'unknown';
+
+    if (!companyReviews[companyKey]) {
+      companyReviews[companyKey] = [];
+    }
+
+    companyReviews[companyKey].unshift(userComplaint);
+    localStorage.setItem('companyReviews', JSON.stringify(companyReviews));
+
+    setComplaintId(newComplaintId);
+    setShowSuccess(true);
+
+    // Reset form
+    setFormData({
+      title: '',
+      company: '',
+      customCompany: '',
+      category: '',
+      summary: '',
+      rating: 0,
+      attachments: null
+    });
   };
 
   // Get companies for selected category
   const getCompaniesForCategory = () => {
     if (!formData.category) return [];
-    return companies.filter(company => company.category === formData.category);
+    // Find the selected category object
+    const selectedCategory = categories.find(cat => cat._id === formData.category);
+    if (!selectedCategory) return [];
+
+    // Filter companies by category name
+    return companies.filter(company => company.category === selectedCategory.name);
   };
 
 
@@ -187,12 +250,12 @@ const NewComplaint = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Rəyiniz Qəbul Edildi!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Şikayətiniz Qəbul Edildi!</h2>
           <p className="text-gray-600 mb-6">
-            Rəyiniz uğurla göndərildi və şirkət tərəfindən görüləcək.
+            Şikayətiniz uğurla göndərildi və şirkət tərəfindən görüləcək.
           </p>
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <p className="text-sm text-gray-500 mb-1">Rəy Nömrəsi:</p>
+            <p className="text-sm text-gray-500 mb-1">Şikayət Nömrəsi:</p>
             <p className="text-lg font-bold text-blue-600">{complaintId}</p>
           </div>
           <div className="space-y-3">
@@ -200,7 +263,7 @@ const NewComplaint = () => {
               to="/my-complaints"
               className="block w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
             >
-              Rəylərimə Bax
+              Şikayətlərimə Bax
             </Link>
             <Link
               to="/"
@@ -232,10 +295,10 @@ const NewComplaint = () => {
             </div>
           </div>
           <h1 className="text-4xl font-black text-gray-900 mb-4 az-text">
-            Rəyini Bildir
+            Şikayət Yaz
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto az-text">
-            Təcrübənizi paylaşın və şirkətlər haqqında rəyinizi bildirin. Rəyiniz digər istifadəçilərə kömək edəcək.
+            Təcrübənizi paylaşın və şirkətlər haqqında şikayətinizi bildirin. Şikayətiniz digər istifadəçilərə kömək edəcək.
           </p>
         </div>
 
@@ -245,7 +308,7 @@ const NewComplaint = () => {
             {/* Title */}
             <div>
               <label htmlFor="title" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-                Rəy Başlığı *
+                Şikayət Başlığı *
               </label>
               <input
                 type="text"
@@ -350,7 +413,7 @@ const NewComplaint = () => {
             {/* Summary */}
             <div>
               <label htmlFor="summary" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-                Rəy Məzmunu *
+                Şikayət Məzmunu *
               </label>
               <textarea
                 id="summary"
@@ -395,7 +458,7 @@ const NewComplaint = () => {
 
             {/* Tips */}
             <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
-              <h3 className="text-sm font-semibold text-blue-900 mb-3 az-text">💡 Effektiv rəy üçün tövsiyələr:</h3>
+              <h3 className="text-sm font-semibold text-blue-900 mb-3 az-text">💡 Effektiv şikayət üçün tövsiyələr:</h3>
               <ul className="text-sm text-blue-800 space-y-2">
                 <li className="flex items-start az-text">
                   <span className="text-blue-500 mr-2">•</span>
@@ -443,7 +506,7 @@ const NewComplaint = () => {
               </svg>
             </div>
             <h3 className="font-semibold text-gray-900 mb-2 az-text">Pulsuz Xidmət</h3>
-            <p className="text-sm text-gray-600 az-text">Rəy bildirmək tamamilə pulsuzdur</p>
+            <p className="text-sm text-gray-600 az-text">Şikayət bildirmək tamamilə pulsuzdur</p>
           </div>
 
           <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">

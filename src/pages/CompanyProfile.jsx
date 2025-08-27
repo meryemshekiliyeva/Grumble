@@ -324,27 +324,39 @@ const CompanyProfile = () => {
 
   // Load complaints for the company
   const loadComplaints = async (status = '') => {
-    if (!user?._id) return;
-
     setIsLoadingComplaints(true);
     try {
-      const token = localStorage.getItem('token');
-      const url = `/api/complaints/company/${user._id}${status ? `?status=${status}` : ''}`;
+      // Get company email from bankLogin data
+      const bankLogin = JSON.parse(localStorage.getItem('bankLogin') || '{}');
+      const companyEmail = bankLogin.email;
 
-      const response = await fetch(`http://localhost:5000${url}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setComplaints(data.data.complaints);
-        setComplaintsStats(data.data.stats);
-      } else {
-        console.error('Failed to load complaints');
+      if (!companyEmail) {
+        setComplaints([]);
+        setComplaintsStats({});
+        return;
       }
+
+      // Load from localStorage using company email as key
+      const allComplaints = JSON.parse(localStorage.getItem('companyComplaints') || '{}');
+      const companyComplaints = allComplaints[companyEmail] || [];
+
+      // Filter by status if provided
+      let filteredComplaints = companyComplaints;
+      if (status) {
+        filteredComplaints = companyComplaints.filter(complaint => complaint.status === status);
+      }
+
+      // Calculate stats
+      const stats = {
+        pending: companyComplaints.filter(c => c.status === 'pending').length,
+        in_progress: companyComplaints.filter(c => c.status === 'in_progress').length,
+        resolved: companyComplaints.filter(c => c.status === 'resolved').length,
+        rejected: companyComplaints.filter(c => c.status === 'rejected').length,
+        closed: companyComplaints.filter(c => c.status === 'closed').length
+      };
+
+      setComplaints(filteredComplaints);
+      setComplaintsStats(stats);
     } catch (error) {
       console.error('Error loading complaints:', error);
     } finally {
@@ -355,25 +367,48 @@ const CompanyProfile = () => {
   // Handle complaint response
   const handleComplaintResponse = async (complaintId, message) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/complaints/${complaintId}/respond`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message, isPublic: true })
-      });
+      // Get company email from bankLogin data
+      const bankLogin = JSON.parse(localStorage.getItem('bankLogin') || '{}');
+      const companyEmail = bankLogin.email;
 
-      if (response.ok) {
-        const data = await response.json();
-        // Reload complaints to show updated data
-        loadComplaints();
-        return { success: true, message: 'Cavab uğurla göndərildi' };
-      } else {
-        const errorData = await response.json();
-        return { success: false, message: errorData.message || 'Cavab göndərilmədi' };
+      if (!companyEmail) {
+        return { success: false, message: 'Şirkət məlumatları tapılmadı' };
       }
+
+      // Load from localStorage
+      const allComplaints = JSON.parse(localStorage.getItem('companyComplaints') || '{}');
+      const companyComplaints = allComplaints[companyEmail] || [];
+
+      // Find and update the complaint
+      const complaintIndex = companyComplaints.findIndex(c => c._id === complaintId);
+      if (complaintIndex === -1) {
+        return { success: false, message: 'Şikayət tapılmadı' };
+      }
+
+      // Add response
+      const response = {
+        author: companyEmail,
+        authorType: 'Company',
+        authorName: bankLogin.name,
+        message: message,
+        isPublic: true,
+        createdAt: new Date().toISOString()
+      };
+
+      companyComplaints[complaintIndex].responses.push(response);
+
+      // Update status to in_progress if it was pending
+      if (companyComplaints[complaintIndex].status === 'pending') {
+        companyComplaints[complaintIndex].status = 'in_progress';
+      }
+
+      // Save back to localStorage
+      allComplaints[companyEmail] = companyComplaints;
+      localStorage.setItem('companyComplaints', JSON.stringify(allComplaints));
+
+      // Reload complaints to show updated data
+      loadComplaints();
+      return { success: true, message: 'Cavab uğurla göndərildi' };
     } catch (error) {
       console.error('Error responding to complaint:', error);
       return { success: false, message: 'Server xətası' };

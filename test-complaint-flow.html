@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Complaint Flow</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .step { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Test Complaint Flow</h1>
+    
+    <div class="step info">
+        <h3>Step 1: Login as User</h3>
+        <p>Login with: <strong>test@example.com</strong> / <strong>Test123!</strong></p>
+        <button onclick="window.open('http://localhost:5175/login', '_blank')">Open Login Page</button>
+    </div>
+
+    <div class="step info">
+        <h3>Step 2: Submit Complaint</h3>
+        <p>Go to complaint form and submit a complaint about Emirates</p>
+        <button onclick="window.open('http://localhost:5175/yeni-sikayetler', '_blank')">Open Complaint Form</button>
+        <button onclick="simulateComplaint()">Simulate Complaint Submission</button>
+    </div>
+
+    <div class="step info">
+        <h3>Step 3: Check User's Complaints</h3>
+        <p>Check if complaint appears in "Şikayətlərim"</p>
+        <button onclick="window.open('http://localhost:5175/my-complaints', '_blank')">Open My Complaints</button>
+        <button onclick="checkUserComplaints()">Check localStorage</button>
+    </div>
+
+    <div class="step info">
+        <h3>Step 4: Check All Complaints</h3>
+        <p>Check if complaint appears in "Bütün Şikayətlər"</p>
+        <button onclick="window.open('http://localhost:5175/complaints', '_blank')">Open All Complaints</button>
+        <button onclick="checkAllComplaints()">Check localStorage</button>
+    </div>
+
+    <div class="step info">
+        <h3>Step 5: Check Emirates Company Page</h3>
+        <p>Check if complaint appears on Emirates company page</p>
+        <button onclick="window.open('http://localhost:5175/company/emirates', '_blank')">Open Emirates Page</button>
+        <button onclick="checkCompanyReviews()">Check localStorage</button>
+    </div>
+
+    <div class="step info">
+        <h3>Step 6: Login as Emirates Company</h3>
+        <p>Login with: <strong>emirates@airline.com</strong> / <strong>Emirates123!</strong></p>
+        <button onclick="window.open('http://localhost:5175/login', '_blank')">Open Login Page</button>
+    </div>
+
+    <div class="step info">
+        <h3>Step 7: Check Company Dashboard</h3>
+        <p>Check if complaint appears in Emirates company dashboard</p>
+        <button onclick="window.open('http://localhost:5175/company-profile', '_blank')">Open Company Profile</button>
+        <button onclick="checkCompanyComplaints()">Check localStorage</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        function simulateComplaint() {
+            // Simulate complaint submission
+            const complaint = {
+                id: 'SK' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                title: 'Test Complaint about Emirates',
+                company: 'Emirates',
+                category: 'havayolu',
+                author: 'Məryəm Şəkiliyeva',
+                authorEmail: 'test@example.com',
+                date: new Date().toLocaleDateString('az-AZ'),
+                summary: 'This is a test complaint about Emirates airline service.',
+                status: 'pending',
+                rating: 2,
+                likes: 0,
+                comments: 0,
+                timestamp: new Date().toISOString()
+            };
+
+            // Save to userComplaints
+            const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+            userComplaints.unshift(complaint);
+            localStorage.setItem('userComplaints', JSON.stringify(userComplaints));
+
+            // Save to allComplaints
+            const allComplaints = JSON.parse(localStorage.getItem('allComplaints') || '[]');
+            allComplaints.unshift(complaint);
+            localStorage.setItem('allComplaints', JSON.stringify(allComplaints));
+
+            // Save to companyReviews
+            const companyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+            if (!companyReviews['emirates']) {
+                companyReviews['emirates'] = [];
+            }
+            companyReviews['emirates'].unshift(complaint);
+            localStorage.setItem('companyReviews', JSON.stringify(companyReviews));
+
+            // Save to companyComplaints (for company dashboard)
+            const companyComplaints = JSON.parse(localStorage.getItem('companyComplaints') || '{}');
+            if (!companyComplaints['emirates@airline.com']) {
+                companyComplaints['emirates@airline.com'] = [];
+            }
+            
+            const detailedComplaint = {
+                _id: complaint.id,
+                title: complaint.title,
+                description: complaint.summary,
+                company: {
+                    _id: 'emirates@airline.com',
+                    companyName: 'Emirates'
+                },
+                category: {
+                    _id: 'cat1',
+                    name: 'Havayolu'
+                },
+                user: {
+                    _id: 'user1',
+                    firstName: 'Məryəm',
+                    lastName: 'Şəkiliyeva',
+                    email: 'test@example.com'
+                },
+                status: 'pending',
+                createdAt: new Date().toISOString(),
+                responses: []
+            };
+            
+            companyComplaints['emirates@airline.com'].unshift(detailedComplaint);
+            localStorage.setItem('companyComplaints', JSON.stringify(companyComplaints));
+
+            showResult('Complaint simulated successfully!', 'success');
+        }
+
+        function checkUserComplaints() {
+            const userComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
+            showResult('User Complaints: ' + JSON.stringify(userComplaints, null, 2), 'info');
+        }
+
+        function checkAllComplaints() {
+            const allComplaints = JSON.parse(localStorage.getItem('allComplaints') || '[]');
+            showResult('All Complaints: ' + JSON.stringify(allComplaints, null, 2), 'info');
+        }
+
+        function checkCompanyReviews() {
+            const companyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+            showResult('Company Reviews: ' + JSON.stringify(companyReviews, null, 2), 'info');
+        }
+
+        function checkCompanyComplaints() {
+            const companyComplaints = JSON.parse(localStorage.getItem('companyComplaints') || '{}');
+            showResult('Company Complaints: ' + JSON.stringify(companyComplaints, null, 2), 'info');
+        }
+
+        function showResult(message, type) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = 'step ' + type;
+            div.innerHTML = '<pre>' + message + '</pre>';
+            results.appendChild(div);
+        }
+    </script>
+</body>
+</html>

@@ -1,9 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import StarRating from '../components/StarRating';
+import ComplaintCard from '../components/ComplaintCard';
 
 const CompanyDetailPage = () => {
   const { companyId } = useParams();
+  const [reviews, setReviews] = useState([]);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
+
+  // Load reviews from localStorage
+  useEffect(() => {
+    const loadReviews = () => {
+      setIsLoadingReviews(true);
+      try {
+        // Load from companyReviews (for user complaints)
+        const companyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
+        const companyKey = companyId;
+        const companyComplaints = companyReviews[companyKey] || [];
+
+        setReviews(companyComplaints);
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+        setReviews([]);
+      } finally {
+        setIsLoadingReviews(false);
+      }
+    };
+
+    loadReviews();
+  }, [companyId]);
 
   // Company data
   const companies = {
@@ -917,6 +942,50 @@ const CompanyDetailPage = () => {
                   </a>
                 )}
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* Reviews Section */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Şikayətlər ({reviews.length})
+          </h2>
+
+          {isLoadingReviews ? (
+            <div className="text-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+              <p className="text-gray-500 mt-2">Şikayətlər yüklənir...</p>
+            </div>
+          ) : reviews.length > 0 ? (
+            <div className="space-y-4">
+              {reviews.slice(0, 5).map((review) => (
+                <ComplaintCard
+                  key={review.id}
+                  {...review}
+                  complaintId={review.id}
+                  onLike={() => {}}
+                  onComment={() => {}}
+                />
+              ))}
+              {reviews.length > 5 && (
+                <div className="text-center pt-4">
+                  <Link
+                    to={`/complaints?company=${encodeURIComponent(company.name)}`}
+                    className="text-blue-600 hover:text-blue-800 font-medium"
+                  >
+                    Bütün şikayətləri gör ({reviews.length})
+                  </Link>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <p className="text-gray-500">Hələ ki şikayət yoxdur</p>
+              <p className="text-gray-400 text-sm mt-1">İlk şikayəti siz yazın</p>
             </div>
           )}
         </div>
