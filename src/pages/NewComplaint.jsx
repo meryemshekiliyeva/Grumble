@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useNotifications } from '../contexts/NotificationContext';
 import StarRating from '../components/StarRating';
 
 const NewComplaint = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
+  const { addNotificationToUser } = useNotifications();
   const [searchParams] = useSearchParams();
   const [showSuccess, setShowSuccess] = useState(false);
   const [complaintId, setComplaintId] = useState(null);
@@ -212,6 +214,27 @@ const NewComplaint = () => {
 
     companyReviews[companyKey].unshift(userComplaint);
     localStorage.setItem('companyReviews', JSON.stringify(companyReviews));
+
+    // 5. Create notifications for both user and company
+
+    // Notification for the user (complaint submitted confirmation)
+    addNotificationToUser(user.email, {
+      type: 'complaint_submitted',
+      title: 'Şikayətiniz Qəbul Edildi',
+      message: `${companyName} şirkəti haqqında şikayətiniz uğurla göndərildi. Şikayət nömrəsi: ${newComplaintId}`,
+      relatedComplaintId: newComplaintId,
+      companyName: companyName
+    });
+
+    // Notification for the company (new complaint received)
+    addNotificationToUser(companyId, {
+      type: 'new_complaint',
+      title: 'Yeni Şikayət Alındı',
+      message: `${user.firstName} ${user.lastName} tərəfindən yeni şikayət göndərildi: "${formData.title}"`,
+      relatedComplaintId: newComplaintId,
+      customerName: `${user.firstName} ${user.lastName}`,
+      customerEmail: user.email
+    });
 
     setComplaintId(newComplaintId);
     setShowSuccess(true);

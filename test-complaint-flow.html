@@ -64,6 +64,20 @@
         <button onclick="checkCompanyComplaints()">Check localStorage</button>
     </div>
 
+    <div class="step info">
+        <h3>Step 8: Check User Notifications</h3>
+        <p>Check if user received notification about complaint submission</p>
+        <button onclick="window.open('http://localhost:5175/profile?tab=notifications', '_blank')">Open User Notifications</button>
+        <button onclick="checkUserNotifications()">Check localStorage</button>
+    </div>
+
+    <div class="step info">
+        <h3>Step 9: Check Company Notifications</h3>
+        <p>Check if Emirates received notification about new complaint</p>
+        <button onclick="window.open('http://localhost:5175/company-profile?tab=notifications', '_blank')">Open Company Notifications</button>
+        <button onclick="checkCompanyNotifications()">Check localStorage</button>
+    </div>
+
     <div id="results"></div>
 
     <script>
@@ -135,7 +149,41 @@
             companyComplaints['emirates@airline.com'].unshift(detailedComplaint);
             localStorage.setItem('companyComplaints', JSON.stringify(companyComplaints));
 
-            showResult('Complaint simulated successfully!', 'success');
+            // Create notifications
+            const currentTime = new Date().toISOString();
+
+            // User notification
+            const userNotifications = JSON.parse(localStorage.getItem('notifications_test@example.com') || '[]');
+            userNotifications.unshift({
+                id: 'notif_' + Date.now() + '_user',
+                type: 'complaint_submitted',
+                title: 'Şikayətiniz Qəbul Edildi',
+                message: 'Emirates şirkəti haqqında şikayətiniz uğurla göndərildi. Şikayət nömrəsi: ' + complaint.id,
+                relatedComplaintId: complaint.id,
+                companyName: 'Emirates',
+                timestamp: currentTime,
+                isRead: false,
+                userId: 'test@example.com'
+            });
+            localStorage.setItem('notifications_test@example.com', JSON.stringify(userNotifications));
+
+            // Company notification
+            const companyNotifications = JSON.parse(localStorage.getItem('notifications_emirates@airline.com') || '[]');
+            companyNotifications.unshift({
+                id: 'notif_' + Date.now() + '_company',
+                type: 'new_complaint',
+                title: 'Yeni Şikayət Alındı',
+                message: 'Məryəm Şəkiliyeva tərəfindən yeni şikayət göndərildi: "' + complaint.title + '"',
+                relatedComplaintId: complaint.id,
+                customerName: 'Məryəm Şəkiliyeva',
+                customerEmail: 'test@example.com',
+                timestamp: currentTime,
+                isRead: false,
+                userId: 'emirates@airline.com'
+            });
+            localStorage.setItem('notifications_emirates@airline.com', JSON.stringify(companyNotifications));
+
+            showResult('Complaint and notifications simulated successfully!', 'success');
         }
 
         function checkUserComplaints() {
@@ -156,6 +204,16 @@
         function checkCompanyComplaints() {
             const companyComplaints = JSON.parse(localStorage.getItem('companyComplaints') || '{}');
             showResult('Company Complaints: ' + JSON.stringify(companyComplaints, null, 2), 'info');
+        }
+
+        function checkUserNotifications() {
+            const userNotifications = JSON.parse(localStorage.getItem('notifications_test@example.com') || '[]');
+            showResult('User Notifications: ' + JSON.stringify(userNotifications, null, 2), 'info');
+        }
+
+        function checkCompanyNotifications() {
+            const companyNotifications = JSON.parse(localStorage.getItem('notifications_emirates@airline.com') || '[]');
+            showResult('Company Notifications: ' + JSON.stringify(companyNotifications, null, 2), 'info');
         }
 
         function showResult(message, type) {

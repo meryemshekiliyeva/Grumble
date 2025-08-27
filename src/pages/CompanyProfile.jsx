@@ -228,6 +228,8 @@ const CompanyProfile = () => {
     closed: 0
   });
   const [isLoadingComplaints, setIsLoadingComplaints] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [isLoadingNotifications, setIsLoadingNotifications] = useState(false);
 
   // Form data state
   const [formData, setFormData] = useState({
@@ -272,6 +274,9 @@ const CompanyProfile = () => {
 
     // Load reviews data (including complaints converted to reviews)
     loadReviews();
+
+    // Load notifications
+    loadNotifications();
   }, [user]);
 
   const loadReviews = () => {
@@ -600,6 +605,30 @@ const CompanyProfile = () => {
     }
   };
 
+  // Load notifications for the company
+  const loadNotifications = () => {
+    setIsLoadingNotifications(true);
+    try {
+      // Get company email from bankLogin data
+      const bankLogin = JSON.parse(localStorage.getItem('bankLogin') || '{}');
+      const companyEmail = bankLogin.email;
+
+      if (!companyEmail) {
+        setNotifications([]);
+        return;
+      }
+
+      // Load notifications from localStorage
+      const companyNotifications = JSON.parse(localStorage.getItem(`notifications_${companyEmail}`) || '[]');
+      setNotifications(companyNotifications);
+    } catch (error) {
+      console.error('Error loading notifications:', error);
+      setNotifications([]);
+    } finally {
+      setIsLoadingNotifications(false);
+    }
+  };
+
   const handleReviewResponse = async (reviewId, response) => {
     try {
       // Check if this is a complaint (converted to review format)
@@ -707,7 +736,8 @@ const CompanyProfile = () => {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6a2 2 0 01-2-2V7a2 2 0 012-2h5m5 0v6m0 0l3-3m-3 3l-3-3" />
         </svg>
-      )
+      ),
+      badge: notifications.filter(n => !n.isRead).length > 0 ? notifications.filter(n => !n.isRead).length : null
     },
 
     {
@@ -1091,15 +1121,74 @@ const CompanyProfile = () => {
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-6">Bildirişlərim</h3>
-            <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6a2 2 0 01-2-2V7a2 2 0 012-2h5m5 0v6m0 0l3-3m-3 3l-3-3" />
-                </svg>
+
+            {isLoadingNotifications ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+                <p className="text-gray-500 mt-2">Bildirişlər yüklənir...</p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bildirişiniz yoxdur</h3>
-              <p className="text-gray-500">Yeni bildirişlər burada görünəcək.</p>
-            </div>
+            ) : notifications.length > 0 ? (
+              <div className="space-y-4">
+                {notifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className={`p-4 rounded-lg border ${
+                      notification.isRead
+                        ? 'bg-gray-50 border-gray-200'
+                        : 'bg-blue-50 border-blue-200'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <div className={`w-2 h-2 rounded-full ${
+                            notification.type === 'new_complaint' ? 'bg-red-500' :
+                            notification.type === 'reply' ? 'bg-blue-500' :
+                            'bg-green-500'
+                          }`}></div>
+                          <h4 className="font-semibold text-gray-900">{notification.title}</h4>
+                          {!notification.isRead && (
+                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
+                              Yeni
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-700 mb-2">{notification.message}</p>
+                        <div className="flex items-center space-x-4 text-sm text-gray-500">
+                          <span>{new Date(notification.timestamp).toLocaleString('az-AZ')}</span>
+                          {notification.customerName && (
+                            <span>• {notification.customerName}</span>
+                          )}
+                          {notification.relatedComplaintId && (
+                            <span>• #{notification.relatedComplaintId}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {notification.type === 'new_complaint' && notification.relatedComplaintId && (
+                          <button
+                            onClick={() => setActiveTab('complaints')}
+                            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                          >
+                            Şikayətə bax
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6a2 2 0 01-2-2V7a2 2 0 012-2h5m5 0v6m0 0l3-3m-3 3l-3-3" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">Heç bir bildirişiniz yoxdur</h3>
+                <p className="text-gray-500">Yeni bildirişlər burada görünəcək.</p>
+              </div>
+            )}
           </div>
         );
 
