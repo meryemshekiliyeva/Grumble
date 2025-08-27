@@ -18,6 +18,37 @@ const NewComplaint = () => {
     rating: 0,
     attachments: null
   });
+  const [companies, setCompanies] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load companies and categories
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [companiesRes, categoriesRes] = await Promise.all([
+          fetch('http://localhost:5000/api/companies'),
+          fetch('http://localhost:5000/api/categories')
+        ]);
+
+        if (companiesRes.ok) {
+          const companiesData = await companiesRes.json();
+          setCompanies(companiesData.data || []);
+        }
+
+        if (categoriesRes.ok) {
+          const categoriesData = await categoriesRes.json();
+          setCategories(categoriesData.data || []);
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   // Pre-fill form data from URL parameters
   useEffect(() => {
@@ -77,7 +108,7 @@ const NewComplaint = () => {
     return companyMap[companyName] || companyName.toLowerCase().replace(/\s+/g, '-');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isAuthenticated) {
@@ -85,105 +116,67 @@ const NewComplaint = () => {
       return;
     }
 
-    console.log('New complaint:', formData);
-
-    // Generate a random complaint ID
-    const newComplaintId = 'SK' + Math.random().toString(36).substr(2, 9).toUpperCase();
-    setComplaintId(newComplaintId);
-
-    // Save complaint to localStorage (simulate database)
-    const complaint = {
-      id: newComplaintId,
-      ...formData,
-      company: formData.company === 'digər' ? formData.customCompany : formData.company,
-      author: user.firstName + ' ' + user.lastName,
-      authorEmail: user.email,
-      date: new Date().toISOString(),
-      status: 'pending',
-      likes: 0,
-      comments: 0,
-      review: formData.summary // Add review field for company detail page
-    };
-
-    // Save to user's complaints
-    const existingComplaints = JSON.parse(localStorage.getItem('userComplaints') || '[]');
-    existingComplaints.push(complaint);
-    localStorage.setItem('userComplaints', JSON.stringify(existingComplaints));
-
-    // Save to all complaints (for Complaints page)
-    const allComplaints = JSON.parse(localStorage.getItem('allComplaints') || '[]');
-    allComplaints.unshift(complaint); // Add to beginning for latest first
-    localStorage.setItem('allComplaints', JSON.stringify(allComplaints));
-
-    // Save to company reviews (for Company Detail page)
-    const companyReviews = JSON.parse(localStorage.getItem('companyReviews') || '{}');
-    const companyKey = getCompanyKey(complaint.company);
-    if (!companyReviews[companyKey]) {
-      companyReviews[companyKey] = [];
+    // Basic validation
+    if (!formData.title || !formData.company || !formData.category || !formData.summary) {
+      alert('Zəhmət olmasa bütün məcburi sahələri doldurun');
+      return;
     }
-    companyReviews[companyKey].unshift({
-      id: newComplaintId,
-      author: complaint.author,
-      email: complaint.authorEmail,
-      rating: complaint.rating,
-      review: complaint.summary,
-      date: complaint.date,
-      status: 'pending',
-      companyResponse: null
-    });
-    localStorage.setItem('companyReviews', JSON.stringify(companyReviews));
 
-    setShowSuccess(true);
+    try {
+      const token = localStorage.getItem('token');
+
+      // Prepare complaint data
+      const complaintData = {
+        title: formData.title,
+        description: formData.summary,
+        company: formData.company,
+        category: formData.category,
+        incidentDate: new Date().toISOString(),
+        isAnonymous: false,
+        isPublic: true
+      };
+
+      const response = await fetch('http://localhost:5000/api/complaints', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(complaintData)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setComplaintId(data.data._id);
+        setShowSuccess(true);
+
+        // Reset form
+        setFormData({
+          title: '',
+          company: '',
+          customCompany: '',
+          category: '',
+          summary: '',
+          rating: 0,
+          attachments: null
+        });
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Şikayət göndərilmədi');
+      }
+    } catch (error) {
+      console.error('Error submitting complaint:', error);
+      alert('Server xətası baş verdi');
+    }
   };
 
-  const categories = [
-    'Telekommunikasiya', 'Bank və Maliyyə', 'Yemək Çatdırılması', 'Nəqliyyat',
-    'Kommunal Xidmətlər', 'E-ticarət', 'Havayolu', 'Dövlət Xidmətləri',
-    'Sığorta', 'Təhsil', 'Səhiyyə', 'Turizm', 'Texnologiya'
-  ];
-
-  const companiesByCategory = {
-    'Telekommunikasiya': [
-      { name: 'AT&T', id: 'att' },
-      { name: 'Vodafone', id: 'vodafone' },
-      { name: 'T-Mobile', id: 't-mobile' }
-    ],
-    'Bank və Maliyyə': [
-      { name: 'JPMorgan Chase', id: 'jpmorgan-chase' },
-      { name: 'HSBC', id: 'hsbc' },
-      { name: 'Goldman Sachs', id: 'goldman-sachs' }
-    ],
-    'Yemək Çatdırılması': [
-      { name: 'Uber Eats', id: 'uber-eats' },
-      { name: 'DoorDash', id: 'doordash' },
-      { name: 'Deliveroo', id: 'deliveroo' }
-    ],
-    'Kommunal Xidmətlər': [
-      { name: 'EDF Energy', id: 'edf-energy' },
-      { name: 'National Grid', id: 'national-grid' },
-      { name: 'Veolia', id: 'veolia' }
-    ],
-    'E-ticarət': [
-      { name: 'Amazon', id: 'amazon' },
-      { name: 'Alibaba', id: 'alibaba' },
-      { name: 'eBay', id: 'ebay' }
-    ],
-    'Nəqliyyat': [
-      { name: 'Uber', id: 'uber' },
-      { name: 'Lyft', id: 'lyft' },
-      { name: 'Bolt', id: 'bolt' }
-    ],
-    'Havayolu': [
-      { name: 'Emirates', id: 'emirates' },
-      { name: 'Lufthansa', id: 'lufthansa' },
-      { name: 'Delta Air Lines', id: 'delta-air-lines' }
-    ],
-    'Sığorta': [
-      { name: 'Allianz', id: 'allianz' },
-      { name: 'AXA', id: 'axa' },
-      { name: 'Prudential', id: 'prudential' }
-    ]
+  // Get companies for selected category
+  const getCompaniesForCategory = () => {
+    if (!formData.category) return [];
+    return companies.filter(company => company.category === formData.category);
   };
+
+
 
   if (showSuccess) {
     return (
@@ -301,8 +294,8 @@ const NewComplaint = () => {
               >
                 <option value="">Kateqoriya seçin</option>
                 {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
+                  <option key={category._id} value={category._id}>
+                    {category.name}
                   </option>
                 ))}
               </select>
@@ -323,9 +316,9 @@ const NewComplaint = () => {
                   required
                 >
                   <option value="">Şirkət seçin</option>
-                  {companiesByCategory[formData.category]?.map((company) => (
-                    <option key={company.id} value={company.name}>
-                      {company.name}
+                  {getCompaniesForCategory().map((company) => (
+                    <option key={company._id} value={company._id}>
+                      {company.companyName}
                     </option>
                   ))}
                   <option value="digər">Digər (siyahıda yoxdur)</option>

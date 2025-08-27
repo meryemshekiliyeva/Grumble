@@ -3,6 +3,208 @@ import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-do
 import { useAuth } from '../contexts/AuthContext';
 import { useNotifications } from '../contexts/NotificationContext';
 
+// ComplaintsSection component
+const ComplaintsSection = ({ complaints, isLoading, onResponse, onFilterChange, stats }) => {
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [responseText, setResponseText] = useState({});
+  const [respondingTo, setRespondingTo] = useState(null);
+
+  const handleStatusFilter = (status) => {
+    setSelectedStatus(status);
+    onFilterChange(status);
+  };
+
+  const handleResponse = async (complaintId) => {
+    const message = responseText[complaintId];
+    if (!message || message.trim().length < 10) {
+      alert('Cavab ən azı 10 simvol olmalıdır');
+      return;
+    }
+
+    const result = await onResponse(complaintId, message.trim());
+    if (result.success) {
+      setResponseText({ ...responseText, [complaintId]: '' });
+      setRespondingTo(null);
+      alert('Cavab uğurla göndərildi');
+    } else {
+      alert(result.message);
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'pending': return 'bg-red-100 text-red-800';
+      case 'in_progress': return 'bg-blue-100 text-blue-800';
+      case 'resolved': return 'bg-green-100 text-green-800';
+      case 'rejected': return 'bg-gray-100 text-gray-800';
+      case 'closed': return 'bg-purple-100 text-purple-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getStatusText = (status) => {
+    switch (status) {
+      case 'pending': return 'Gözləyir';
+      case 'in_progress': return 'İşlənir';
+      case 'resolved': return 'Həll edildi';
+      case 'rejected': return 'Rədd edildi';
+      case 'closed': return 'Bağlandı';
+      default: return status;
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Filter buttons */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => handleStatusFilter('')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              selectedStatus === ''
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            Hamısı ({Object.values(stats).reduce((a, b) => a + b, 0)})
+          </button>
+          <button
+            onClick={() => handleStatusFilter('pending')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              selectedStatus === 'pending'
+                ? 'bg-red-500 text-white'
+                : 'bg-red-100 text-red-700 hover:bg-red-200'
+            }`}
+          >
+            Gözləyən ({stats.pending})
+          </button>
+          <button
+            onClick={() => handleStatusFilter('in_progress')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              selectedStatus === 'in_progress'
+                ? 'bg-blue-500 text-white'
+                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+            }`}
+          >
+            İşlənir ({stats.in_progress})
+          </button>
+          <button
+            onClick={() => handleStatusFilter('resolved')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              selectedStatus === 'resolved'
+                ? 'bg-green-500 text-white'
+                : 'bg-green-100 text-green-700 hover:bg-green-200'
+            }`}
+          >
+            Həll edildi ({stats.resolved})
+          </button>
+        </div>
+      </div>
+
+      {/* Complaints list */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6">
+          Şikayətlər {selectedStatus && `- ${getStatusText(selectedStatus)}`}
+        </h3>
+
+        {isLoading ? (
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+            <p className="text-gray-500 mt-2">Yüklənir...</p>
+          </div>
+        ) : complaints.length > 0 ? (
+          <div className="space-y-4">
+            {complaints.map((complaint) => (
+              <div key={complaint._id} className="border border-gray-200 rounded-lg p-4">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-900 mb-1">{complaint.title}</h4>
+                    <p className="text-sm text-gray-600 mb-2">{complaint.description}</p>
+                    <div className="flex items-center space-x-4 text-xs text-gray-500">
+                      <span>Müştəri: {complaint.user?.firstName} {complaint.user?.lastName}</span>
+                      <span>Kateqoriya: {complaint.category?.name}</span>
+                      <span>{new Date(complaint.createdAt).toLocaleDateString('az-AZ')}</span>
+                    </div>
+                  </div>
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(complaint.status)}`}>
+                    {getStatusText(complaint.status)}
+                  </span>
+                </div>
+
+                {/* Existing responses */}
+                {complaint.responses && complaint.responses.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    {complaint.responses.map((response, index) => (
+                      <div key={index} className="bg-blue-50 border-l-4 border-blue-400 p-3">
+                        <div className="flex justify-between items-start">
+                          <p className="text-sm text-blue-800">{response.message}</p>
+                          <span className="text-xs text-blue-600">
+                            {new Date(response.createdAt).toLocaleDateString('az-AZ')}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Response form */}
+                {complaint.status !== 'resolved' && complaint.status !== 'closed' && (
+                  <div className="mt-3">
+                    {respondingTo === complaint._id ? (
+                      <div className="space-y-2">
+                        <textarea
+                          value={responseText[complaint._id] || ''}
+                          onChange={(e) => setResponseText({ ...responseText, [complaint._id]: e.target.value })}
+                          placeholder="Cavabınızı yazın..."
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                          rows="3"
+                        />
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => handleResponse(complaint._id)}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                          >
+                            Cavab göndər
+                          </button>
+                          <button
+                            onClick={() => setRespondingTo(null)}
+                            className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm"
+                          >
+                            Ləğv et
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setRespondingTo(complaint._id)}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                      >
+                        Cavab ver
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">Şikayət yoxdur</h3>
+            <p className="text-gray-500">
+              {selectedStatus ? `${getStatusText(selectedStatus)} statusunda şikayət yoxdur.` : 'Hələ heç bir şikayət yoxdur.'}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const CompanyProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,6 +219,15 @@ const CompanyProfile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [complaints, setComplaints] = useState([]);
+  const [complaintsStats, setComplaintsStats] = useState({
+    pending: 0,
+    in_progress: 0,
+    resolved: 0,
+    rejected: 0,
+    closed: 0
+  });
+  const [isLoadingComplaints, setIsLoadingComplaints] = useState(false);
 
   // Form data state
   const [formData, setFormData] = useState({
@@ -56,6 +267,11 @@ const CompanyProfile = () => {
 
     // Load mock reviews data
     loadReviews();
+
+    // Load complaints for this company
+    if (user?._id) {
+      loadComplaints();
+    }
   }, [user]);
 
   const loadReviews = () => {
@@ -104,6 +320,64 @@ const CompanyProfile = () => {
     ];
 
     setReviews(mockReviews);
+  };
+
+  // Load complaints for the company
+  const loadComplaints = async (status = '') => {
+    if (!user?._id) return;
+
+    setIsLoadingComplaints(true);
+    try {
+      const token = localStorage.getItem('token');
+      const url = `/api/complaints/company/${user._id}${status ? `?status=${status}` : ''}`;
+
+      const response = await fetch(`http://localhost:5000${url}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setComplaints(data.data.complaints);
+        setComplaintsStats(data.data.stats);
+      } else {
+        console.error('Failed to load complaints');
+      }
+    } catch (error) {
+      console.error('Error loading complaints:', error);
+    } finally {
+      setIsLoadingComplaints(false);
+    }
+  };
+
+  // Handle complaint response
+  const handleComplaintResponse = async (complaintId, message) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:5000/api/complaints/${complaintId}/respond`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message, isPublic: true })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Reload complaints to show updated data
+        loadComplaints();
+        return { success: true, message: 'Cavab uğurla göndərildi' };
+      } else {
+        const errorData = await response.json();
+        return { success: false, message: errorData.message || 'Cavab göndərilmədi' };
+      }
+    } catch (error) {
+      console.error('Error responding to complaint:', error);
+      return { success: false, message: 'Server xətası' };
+    }
   };
 
   // Validation functions
@@ -324,6 +598,16 @@ const CompanyProfile = () => {
       )
     },
     {
+      id: 'complaints',
+      label: 'Şikayətlər',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 16.5c-.77.833.192 2.5 1.732 2.5z" />
+        </svg>
+      ),
+      badge: complaintsStats.pending > 0 ? complaintsStats.pending : null
+    },
+    {
       id: 'pending-reviews',
       label: 'Gözləyən Rəylər',
       icon: (
@@ -430,16 +714,20 @@ const CompanyProfile = () => {
                   <p className="text-gray-600">{user?.email}</p>
                   <div className="flex space-x-6 mt-2">
                     <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">{reviews.filter(r => r.status === 'pending').length}</div>
-                      <div className="text-sm text-gray-500">Gözləyən</div>
+                      <div className="text-xl font-bold text-red-600">{complaintsStats.pending}</div>
+                      <div className="text-sm text-gray-500">Gözləyən Şikayət</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">{reviews.filter(r => r.status === 'responded').length}</div>
-                      <div className="text-sm text-gray-500">Cavablandırılmış</div>
+                      <div className="text-xl font-bold text-blue-600">{complaintsStats.in_progress}</div>
+                      <div className="text-sm text-gray-500">İşlənir</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-xl font-bold text-gray-700">{reviews.length}</div>
-                      <div className="text-sm text-gray-500">Ümumi Rəylər</div>
+                      <div className="text-xl font-bold text-green-600">{complaintsStats.resolved}</div>
+                      <div className="text-sm text-gray-500">Həll Edildi</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-gray-700">{Object.values(complaintsStats).reduce((a, b) => a + b, 0)}</div>
+                      <div className="text-sm text-gray-500">Ümumi Şikayət</div>
                     </div>
                   </div>
 
@@ -657,6 +945,15 @@ const CompanyProfile = () => {
           </div>
         );
 
+      case 'complaints':
+        return <ComplaintsSection
+          complaints={complaints}
+          isLoading={isLoadingComplaints}
+          onResponse={handleComplaintResponse}
+          onFilterChange={loadComplaints}
+          stats={complaintsStats}
+        />;
+
       case 'pending-reviews':
         const pendingReviews = getFilteredReviews();
         return (
@@ -766,8 +1063,13 @@ const CompanyProfile = () => {
                   >
                     <span className="text-lg">{item.icon}</span>
                     <span className="font-medium">{item.label}</span>
-                    {item.id === 'pending-reviews' && reviews.filter(r => r.status === 'pending').length > 0 && (
+                    {item.badge && (
                       <span className="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded-full">
+                        {item.badge}
+                      </span>
+                    )}
+                    {item.id === 'pending-reviews' && reviews.filter(r => r.status === 'pending').length > 0 && (
+                      <span className="ml-auto bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
                         {reviews.filter(r => r.status === 'pending').length}
                       </span>
                     )}

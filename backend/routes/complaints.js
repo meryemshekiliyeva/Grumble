@@ -3,6 +3,7 @@ const { body, validationResult, query } = require('express-validator');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const Complaint = require('../models/Complaint');
 const Company = require('../models/Company');
 const Category = require('../models/Category');
@@ -314,6 +315,177 @@ router.post('/', auth, upload.array('attachments', 5), [
 
   } catch (error) {
     console.error('Create complaint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
+// @route   GET /api/complaints/company/:companyId
+// @desc    Get complaints for a specific company (for company dashboard)
+// @access  Private (Company only)
+router.get('/company/:companyId', auth, async (req, res) => {
+  try {
+    // Only companies can access this endpoint
+    if (req.userType !== 'company') {
+      return res.status(403).json({
+        success: false,
+        message: 'Yalnız şirkətlər bu məlumatlara daxil ola bilər'
+      });
+    }
+
+    // Check if the company is accessing their own complaints
+    if (req.userId !== req.params.companyId) {
+      return res.status(403).json({
+        success: false,
+        message: 'Yalnız öz şikayətlərinizi görə bilərsiniz'
+      });
+    }
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const status = req.query.status;
+    const skip = (page - 1) * limit;
+
+    // Build filter
+    const filter = { company: req.params.companyId };
+    if (status && ['pending', 'in_progress', 'resolved', 'rejected', 'closed'].includes(status)) {
+      filter.status = status;
+    }
+
+    // Get complaints
+    const complaints = await Complaint.find(filter)
+      .populate('user', 'firstName lastName email')
+      .populate('category', 'name icon color')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Complaint.countDocuments(filter);
+
+    // Get statistics
+    const stats = await Complaint.aggregate([
+      { $match: { company: new mongoose.Types.ObjectId(req.params.companyId) } },
+      {
+        $group: {
+          _id: '$status',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const statusStats = {
+      pending: 0,
+      in_progress: 0,
+      resolved: 0,
+      rejected: 0,
+      closed: 0
+    };
+
+    stats.forEach(stat => {
+      statusStats[stat._id] = stat.count;
+    });
+
+    res.json({
+      success: true,
+      data: {
+        complaints,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit)
+        },
+        stats: statusStats
+      }
+    });
+
+  } catch (error) {
+    console.error('Get company complaints error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server xətası'
+    });
+  }
+});
+
+// @route   POST /api/complaints/:id/respond
+// @desc    Add response to complaint (company response)
+// @access  Private (Company only)
+router.post('/:id/respond', auth, upload.array('attachments', 3), [
+  body('message').trim().isLength({ min: 10, max: 1000 }).withMessage('Cavab 10-1000 simvol arasında olmalıdır'),
+  body('isPublic').optional().isBoolean()
+], async (req, res) => {
+  try {
+    // Only companies can respond to complaints
+    if (req.userType !== 'company') {
+      return res.status(403).json({
+        success: false,
+        message: 'Yalnız şirkətlər şikayətlərə cavab verə bilər'
+      });
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation errors',
+        errors: errors.array()
+      });
+    }
+
+    const complaint = await Complaint.findById(req.params.id);
+    if (!complaint) {
+      return res.status(404).json({
+        success: false,
+        message: 'Şikayət tapılmadı'
+      });
+    }
+
+    // Check if company owns this complaint
+    if (complaint.company.toString() !== req.userId) {
+      return res.status(403).json({
+        success: false,
+        message: 'Bu şikayətə cavab vermək icazəniz yoxdur'
+      });
+    }
+
+    const { message, isPublic } = req.body;
+
+    // Process attachments
+    const attachments = req.files ? req.files.map(file => ({
+      filename: file.filename,
+      originalName: file.originalname,
+      url: `/uploads/complaints/${file.filename}`
+    })) : [];
+
+    // Add response using the model method
+    complaint.addResponse(req.userId, 'Company', message, attachments, isPublic !== false);
+
+    // Update status to in_progress if it was pending
+    if (complaint.status === 'pending') {
+      complaint.status = 'in_progress';
+    }
+
+    await complaint.save();
+
+    // Populate the response for return
+    await complaint.populate([
+      { path: 'user', select: 'firstName lastName email' },
+      { path: 'company', select: 'companyName logo' },
+      { path: 'category', select: 'name icon color' },
+      { path: 'responses.author' }
+    ]);
+
+    res.json({
+      success: true,
+      message: 'Cavab uğurla əlavə edildi',
+      data: complaint
+    });
+
+  } catch (error) {
+    console.error('Add response error:', error);
     res.status(500).json({
       success: false,
       message: 'Server xətası'
