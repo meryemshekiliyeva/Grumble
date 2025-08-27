@@ -265,61 +265,80 @@ const CompanyProfile = () => {
       setImagePreview(user.avatar);
     }
 
-    // Load mock reviews data
-    loadReviews();
-
-    // Load complaints for this company
+    // Load complaints for this company first, then reviews
     if (user?._id) {
       loadComplaints();
     }
+
+    // Load reviews data (including complaints converted to reviews)
+    loadReviews();
   }, [user]);
 
   const loadReviews = () => {
-    // Mock reviews data
-    const mockReviews = [
-      {
-        id: 1,
-        customerName: 'Əli Məmmədov',
-        email: 'ali@example.com',
-        rating: 4,
-        comment: 'Xidmət yaxşıdır, lakin gözləmə müddəti uzundur.',
-        status: 'pending',
-        createdAt: '2024-01-15T10:30:00Z',
-        response: null
-      },
-      {
-        id: 2,
-        customerName: 'Leyla Həsənova',
-        email: 'leyla@example.com',
-        rating: 5,
-        comment: 'Əla xidmət! Çox məmnunam.',
-        status: 'responded',
-        createdAt: '2024-01-14T14:20:00Z',
-        response: 'Təşəkkür edirik! Sizə xidmət etməkdən məmnunuq.'
-      },
-      {
-        id: 3,
-        customerName: 'Rəşad Quliyev',
-        email: 'rashad@example.com',
-        rating: 3,
-        comment: 'Orta səviyyədə xidmət.',
-        status: 'pending',
-        createdAt: '2024-01-13T09:15:00Z',
-        response: null
-      },
-      {
-        id: 4,
-        customerName: 'Nigar Əliyeva',
-        email: 'nigar@example.com',
-        rating: 5,
-        comment: 'Mükəmməl xidmət və peşəkar yanaşma!',
-        status: 'responded',
-        createdAt: '2024-01-12T16:45:00Z',
-        response: 'Çox sağ olun! Belə müştərilərə sahib olmaq bizim üçün böyük şərəfdir.'
-      }
-    ];
+    try {
+      // Get company email from bankLogin data
+      const bankLogin = JSON.parse(localStorage.getItem('bankLogin') || '{}');
+      const companyEmail = bankLogin.email;
 
-    setReviews(mockReviews);
+      if (!companyEmail) {
+        setReviews([]);
+        return;
+      }
+
+      // Load complaints from localStorage and convert them to reviews format
+      const allComplaints = JSON.parse(localStorage.getItem('companyComplaints') || '{}');
+      const companyComplaints = allComplaints[companyEmail] || [];
+
+      // Convert complaints to reviews format
+      const complaintsAsReviews = companyComplaints.map(complaint => ({
+        id: complaint._id,
+        customerName: `${complaint.user.firstName} ${complaint.user.lastName}`,
+        email: complaint.user.email,
+        rating: 2, // Default rating for complaints
+        comment: `${complaint.title}\n\n${complaint.description}`,
+        status: complaint.responses && complaint.responses.length > 0 ? 'responded' : 'pending',
+        createdAt: complaint.createdAt,
+        response: complaint.responses && complaint.responses.length > 0 ? complaint.responses[complaint.responses.length - 1].message : null,
+        type: 'complaint', // Mark as complaint
+        originalComplaint: complaint // Keep reference to original complaint
+      }));
+
+      // Mock reviews data (keeping some for demo)
+      const mockReviews = [
+        {
+          id: 'review_1',
+          customerName: 'Əli Məmmədov',
+          email: 'ali@example.com',
+          rating: 4,
+          comment: 'Xidmət yaxşıdır, lakin gözləmə müddəti uzundur.',
+          status: 'pending',
+          createdAt: '2024-01-15T10:30:00Z',
+          response: null,
+          type: 'review'
+        },
+        {
+          id: 'review_2',
+          customerName: 'Leyla Həsənova',
+          email: 'leyla@example.com',
+          rating: 5,
+          comment: 'Əla xidmət! Çox məmnunam.',
+          status: 'responded',
+          createdAt: '2024-01-14T14:20:00Z',
+          response: 'Təşəkkür edirik! Sizə xidmət etməkdən məmnunuq.',
+          type: 'review'
+        }
+      ];
+
+      // Combine complaints and reviews, sort by date (newest first)
+      const allReviews = [...complaintsAsReviews, ...mockReviews].sort((a, b) =>
+        new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      setReviews(allReviews);
+    } catch (error) {
+      console.error('Error loading reviews:', error);
+      setReviews([]);
+    }
   };
 
   // Load complaints for the company
@@ -406,8 +425,9 @@ const CompanyProfile = () => {
       allComplaints[companyEmail] = companyComplaints;
       localStorage.setItem('companyComplaints', JSON.stringify(allComplaints));
 
-      // Reload complaints to show updated data
+      // Reload complaints and reviews to show updated data
       loadComplaints();
+      loadReviews();
       return { success: true, message: 'Cavab uğurla göndərildi' };
     } catch (error) {
       console.error('Error responding to complaint:', error);
@@ -580,35 +600,55 @@ const CompanyProfile = () => {
     }
   };
 
-  const handleReviewResponse = (reviewId, response) => {
-    setReviews(prev =>
-      prev.map(review => {
-        if (review.id === reviewId) {
-          // Trigger notification for the user who wrote the review
-          if (review.email && review.email !== user?.email) {
-            // Create a notification for the review author
-            const notification = {
-              type: 'reply',
-              title: 'Rəyinizə cavab verildi',
-              message: `${user?.companyName || user?.name} şirkəti rəyinizə cavab verdi.`,
-              relatedReviewId: reviewId,
-              companyName: user?.companyName || user?.name,
-              timestamp: new Date().toISOString(),
-              isRead: false,
-              userId: review.email
-            };
+  const handleReviewResponse = async (reviewId, response) => {
+    try {
+      // Check if this is a complaint (converted to review format)
+      const review = reviews.find(r => r.id === reviewId);
 
-            // Save notification to localStorage for the specific user
-            const existingNotifications = JSON.parse(localStorage.getItem(`notifications_${review.email}`) || '[]');
-            const updatedNotifications = [{ ...notification, id: Date.now().toString() }, ...existingNotifications];
-            localStorage.setItem(`notifications_${review.email}`, JSON.stringify(updatedNotifications));
-          }
-
-          return { ...review, response, status: 'responded' };
+      if (review && review.type === 'complaint' && review.originalComplaint) {
+        // Handle complaint response using the existing complaint response function
+        const result = await handleComplaintResponse(reviewId, response);
+        if (result.success) {
+          // Reload reviews to reflect the changes
+          loadReviews();
         }
-        return review;
-      })
-    );
+        return result;
+      } else {
+        // Handle regular review response
+        setReviews(prev =>
+          prev.map(review => {
+            if (review.id === reviewId) {
+              // Trigger notification for the user who wrote the review
+              if (review.email && review.email !== user?.email) {
+                // Create a notification for the review author
+                const notification = {
+                  type: 'reply',
+                  title: 'Rəyinizə cavab verildi',
+                  message: `${user?.companyName || user?.name} şirkəti rəyinizə cavab verdi.`,
+                  relatedReviewId: reviewId,
+                  companyName: user?.companyName || user?.name,
+                  timestamp: new Date().toISOString(),
+                  isRead: false,
+                  userId: review.email
+                };
+
+                // Save notification to localStorage for the specific user
+                const existingNotifications = JSON.parse(localStorage.getItem(`notifications_${review.email}`) || '[]');
+                const updatedNotifications = [{ ...notification, id: Date.now().toString() }, ...existingNotifications];
+                localStorage.setItem(`notifications_${review.email}`, JSON.stringify(updatedNotifications));
+              }
+
+              return { ...review, response, status: 'responded' };
+            }
+            return review;
+          })
+        );
+        return { success: true, message: 'Cavab uğurla göndərildi' };
+      }
+    } catch (error) {
+      console.error('Error responding to review:', error);
+      return { success: false, message: 'Server xətası' };
+    }
   };
 
   const getFilteredReviews = () => {
