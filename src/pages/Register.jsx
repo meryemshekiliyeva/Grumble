@@ -5,6 +5,7 @@ import { getRegistrationEmailTemplate, sendEmail } from '../utils/emailTemplates
 import UserRegistrationForm from '../components/UserRegistrationForm';
 import CompanyRegistrationForm from '../components/CompanyRegistrationForm';
 import SocialLogin from '../components/SocialLogin';
+import api from '../services/api';
 
 const Register = () => {
   const [searchParams] = useSearchParams();
@@ -17,6 +18,7 @@ const Register = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    phone: '',
     agreeToTerms: false
   });
   const [error, setError] = useState('');
@@ -39,6 +41,26 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Handle phone number formatting
+    if (name === 'phone') {
+      // Remove any non-digit characters and limit to 9 digits
+      const cleanValue = value.replace(/\D/g, '').slice(0, 9);
+
+      if (activeTab === 'user') {
+        setFormData({
+          ...formData,
+          [name]: cleanValue
+        });
+      } else {
+        setCompanyFormData({
+          ...companyFormData,
+          [name]: cleanValue
+        });
+      }
+      return;
+    }
+
     if (activeTab === 'user') {
       setFormData({
         ...formData,
@@ -117,6 +139,9 @@ const Register = () => {
           return;
         }
 
+        // Format phone number for backend (add +994 prefix if phone is provided)
+        const formattedPhone = formData.phone ? `+994${formData.phone}` : '';
+
         // Register user
         const result = await register({
           firstName: formData.firstName,
@@ -124,7 +149,7 @@ const Register = () => {
           email: formData.email,
           password: formData.password,
           confirmPassword: formData.confirmPassword,
-          phone: formData.phone
+          phone: formattedPhone
         });
 
         if (result.success) {
@@ -148,30 +173,38 @@ const Register = () => {
 
       } else {
         // Handle company registration
-        if (!companyFormData.firstName || !companyFormData.lastName || !companyFormData.companyName || !companyFormData.email) {
+        if (!companyFormData.firstName || !companyFormData.lastName || !companyFormData.companyName ||
+            !companyFormData.email || !companyFormData.phone) {
           setError('Bütün sahələri doldurun');
           setLoading(false);
           return;
         }
 
-        // Store registered company data
-        const registeredCompanies = JSON.parse(localStorage.getItem('registeredCompanies') || '[]');
-        const newCompany = {
-          ...companyFormData,
-          registeredAt: new Date().toISOString(),
-          id: Date.now()
-        };
-        registeredCompanies.push(newCompany);
-        localStorage.setItem('registeredCompanies', JSON.stringify(registeredCompanies));
+        // Format phone number for backend (add +994 prefix)
+        const formattedPhone = companyFormData.phone ? `+994${companyFormData.phone}` : '';
 
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Register company using API
+        const result = await api.auth.registerCompany({
+          firstName: companyFormData.firstName,
+          lastName: companyFormData.lastName,
+          companyName: companyFormData.companyName,
+          email: companyFormData.email,
+          password: 'Company123!', // Default password for demo
+          phone: formattedPhone
+        });
 
-        setSuccess('Şirkət qeydiyyatı uğurla tamamlandı! Giriş üçün şifrə: Company123! - Giriş səhifəsinə yönləndirilirsiniz...');
-
-        setTimeout(() => {
-          navigate('/login?type=company');
-        }, 3000);
+        if (result.success) {
+          setSuccess('Şirkət qeydiyyatı uğurla tamamlandı! Giriş üçün şifrə: Company123! - Giriş səhifəsinə yönləndirilirsiniz...');
+          setTimeout(() => {
+            navigate('/login?type=company');
+          }, 2000);
+        } else {
+          if (result.errors && result.errors.length > 0) {
+            setError(result.errors.map(err => err.msg).join(', '));
+          } else {
+            setError(result.message || 'Şirkət qeydiyyatı zamanı xəta baş verdi');
+          }
+        }
       }
     } catch (err) {
       setError('Qeydiyyat zamanı xəta baş verdi');

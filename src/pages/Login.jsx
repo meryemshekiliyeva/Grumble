@@ -294,19 +294,24 @@ const Login = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
-                Email adresin
+                {activeTab === 'user' ? 'Email və ya telefon nömrəsi' : 'Email adresin'}
               </label>
               <input
                 id="email"
                 name="email"
-                type="email"
+                type={activeTab === 'user' ? 'text' : 'email'}
                 autoComplete="email"
                 required
                 value={activeTab === 'user' ? formData.email : companyFormData.email}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm az-text"
-                placeholder={activeTab === 'user' ? 'sizin@email.com' : 'sirket@email.com'}
+                placeholder={activeTab === 'user' ? 'sizin@email.com və ya +994XXXXXXXXX' : 'sirket@email.com'}
               />
+              {activeTab === 'user' && (
+                <p className="mt-1 text-xs text-gray-500">
+                  Email və ya telefon nömrəsi (+994XXXXXXXXX) ilə giriş edə bilərsiniz
+                </p>
+              )}
             </div>
 
             <div>

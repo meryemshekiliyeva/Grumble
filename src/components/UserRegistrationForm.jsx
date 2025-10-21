@@ -78,6 +78,30 @@ const UserRegistrationForm = ({ formData, handleChange }) => {
         />
       </div>
 
+      {/* Phone Number */}
+      <div>
+        <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
+          Əlaqə nömrəsi <span className="text-gray-500 text-xs">(məcburi deyil)</span>
+        </label>
+        <div className="flex">
+          <div className="flex items-center px-3 py-3 border border-r-0 border-gray-200 rounded-l-xl bg-gray-50 text-gray-500 text-sm">
+            +994
+          </div>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            value={formData.phone}
+            onChange={handleChange}
+            className="flex-1 px-4 py-3 border border-gray-200 rounded-r-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm az-text"
+            placeholder="123456789"
+          />
+        </div>
+        <p className="mt-1 text-xs text-gray-500">
+          Telefon nömrəsi məcburi deyil, lakin təqdim etsəniz +994XXXXXXXXX formatında olmalıdır
+        </p>
+      </div>
+
       {/* Password */}
       <div>
         <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2 az-text">

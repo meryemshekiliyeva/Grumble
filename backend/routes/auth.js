@@ -438,10 +438,19 @@ router.post('/register/company', [
 });
 
 // @route   POST /api/auth/login/user
-// @desc    Login user
+// @desc    Login user with email or phone
 // @access  Public
 router.post('/login/user', [
-  body('email').isEmail().normalizeEmail().withMessage('Düzgün email daxil edin'),
+  body('identifier').custom((value) => {
+    // Check if it's an email or phone number
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const isPhone = /^\+994[0-9]{9}$/.test(value);
+
+    if (!isEmail && !isPhone) {
+      throw new Error('Email və ya telefon nömrəsi daxil edin');
+    }
+    return true;
+  }),
   body('password').exists().withMessage('Şifrə tələb olunur')
 ], async (req, res) => {
   try {
@@ -454,14 +463,18 @@ router.post('/login/user', [
       });
     }
 
-    const { email, password } = req.body;
+    const { identifier, password } = req.body;
 
-    // Find user
-    const user = await User.findOne({ email }).select('+password');
+    // Determine if identifier is email or phone
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+    const query = isEmail ? { email: identifier.toLowerCase() } : { phone: identifier };
+
+    // Find user by email or phone
+    const user = await User.findOne(query).select('+password');
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'Email və ya şifrə yanlışdır'
+        message: 'Email/telefon və ya şifrə yanlışdır'
       });
     }
 

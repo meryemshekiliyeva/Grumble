@@ -43,10 +43,10 @@ class ApiService {
 
   // Auth endpoints
   auth = {
-    login: (email, password) => 
+    login: (identifier, password) =>
       this.request('/auth/login/user', {
         method: 'POST',
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ identifier, password })
       }),
 
     loginCompany: (email, password) => 

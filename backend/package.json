@@ -5,9 +5,14 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "echo 'No build step required for backend'",
     "dev": "nodemon server.js",
+    "prod": "NODE_ENV=production node server.js",
     "test": "jest",
-    "seed": "node scripts/seedData.js"
+    "test:watch": "jest --watch",
+    "seed": "node scripts/seedData.js",
+    "seed:prod": "NODE_ENV=production node scripts/seedData.js",
+    "lint": "echo \"No linting configured\" && exit 0"
   },
   "keywords": ["complaints", "api", "nodejs", "express"],
   "author": "Grumble Team",

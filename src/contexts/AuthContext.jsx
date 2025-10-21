@@ -113,9 +113,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (email, password) => {
+  const login = async (identifier, password) => {
     try {
-      const data = await apiService.auth.login(email, password);
+      const data = await apiService.auth.login(identifier, password);
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('grumble_user', JSON.stringify(data.user));
@@ -351,7 +351,7 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
-    isAuthenticated,
+    isAuthenticated: !!user,
     isLoading,
     login,
     loginCompany,
@@ -359,9 +359,7 @@ export const AuthProvider = ({ children }) => {
     register,
     updateProfile,
     checkAuthStatus,
-    clearUserData,
-    isLoading,
-    isAuthenticated: !!user
+    clearUserData
   };
 
   return (
