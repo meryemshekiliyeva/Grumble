@@ -4,7 +4,7 @@ const CompanyRegistrationForm = ({ formData, handleChange }) => {
   return (
     <>
       {/* Name Fields */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700 mb-2 az-text">
             Ad<span className="text-red-500">*</span>

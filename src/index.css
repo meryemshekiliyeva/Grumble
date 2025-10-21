@@ -151,6 +151,31 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  /* Mobile-specific improvements */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
+
+  /* Ensure mobile forms are properly sized */
+  .max-w-md {
+    max-width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  /* Better mobile button sizing */
+  button, .btn {
+    min-height: 44px; /* iOS recommended touch target size */
+    touch-action: manipulation; /* Prevent double-tap zoom */
+  }
+
+  /* Mobile input improvements */
+  input, textarea, select {
+    font-size: 16px; /* Prevent zoom on iOS */
+    min-height: 44px;
+  }
 }
 
 @media (min-width: 769px) {
